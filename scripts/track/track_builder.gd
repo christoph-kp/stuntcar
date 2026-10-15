@@ -77,7 +77,10 @@ func build(track_data) -> void:
 	make_gate(1.0, data.track_name.to_upper(), Color("a3dbc6"), Color("163949"))
 	make_gate(data.length_m - 3.0, "ZIEL", Color("f4bc73"), Color("203d4c"))
 	for jump in data.jumps:
-		make_gate(jump.start_m - 22.0, "SPRUNG", Color("f4bc73"), Color("203d4c"))
+		# On the tall forest ramps, place the sign before the climb so the
+		# follow camera cannot pass through the panel above the car.
+		var warning_distance: float = 65.0 if data.scenario == "forest" else 22.0
+		make_gate(jump.start_m - warning_distance, "SPRUNG", Color("f4bc73"), Color("203d4c"))
 		make_gate(jump.end_m + 15.0, "LANDUNG", Color("a3dbc6"), Color("203d4c"))
 	make_landscape()
 

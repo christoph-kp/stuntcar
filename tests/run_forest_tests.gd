@@ -40,7 +40,7 @@ func run() -> void:
 		var blocked := false
 		var missing := false
 		# Check the actual rendered triangles, not the terrain height helper.
-		for distance in range(0, 601, 25):
+		for distance in range(0, int(track.length_m) + 1, 25):
 			var frame: Dictionary = track.sample(distance)
 			for side in [-3.5, 0.0, 3.5]:
 				var start: Vector3 = frame.position + track.right(frame.heading) * side + Vector3.UP * 100

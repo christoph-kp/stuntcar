@@ -7,6 +7,7 @@ const CommandRouter = preload("res://scripts/input/command_router.gd")
 const CarView = preload("res://scripts/vehicle/car_view.gd")
 const FollowCamera = preload("res://scripts/camera/follow_camera.gd")
 const GameUI = preload("res://scripts/ui/game_ui.gd")
+const RaceAudio = preload("res://scripts/audio/race_audio.gd")
 const VoiceBridge = preload("res://scripts/input/voice_bridge.gd")
 
 var track
@@ -19,6 +20,7 @@ var car: CharacterBody3D
 var camera: Camera3D
 var ui: CanvasLayer
 var sound: AudioStreamPlayer
+var race_audio
 var key_left := KEY_A
 var key_right := KEY_D
 var pending: Array[int] = []
@@ -56,10 +58,9 @@ func _ready() -> void:
 	add_child(ui)
 	ui.menu_selected.connect(func(index): session.activate(index))
 	update_key_names()
-	sound = AudioStreamPlayer.new()
-	sound.stream = make_tone()
-	sound.volume_db = -18
-	add_child(sound)
+	race_audio = RaceAudio.new()
+	add_child(race_audio)
+	sound = race_audio.hint
 	voice = VoiceBridge.new()
 	add_child(voice)
 	voice.unavailable.connect(on_voice_unavailable)
@@ -129,12 +130,13 @@ func _physics_process(delta: float) -> void:
 		car.drive(model, delta)
 	elif session.state == "FALLING":
 		car.fall(delta)
+	race_audio.update(model, session, delta)
 	if session.state == "RUNNING":
 		var curve: Dictionary = track.next_curve(model.distance_m)
 		if not curve.is_empty() and model.distance_m >= curve.start_m - model.input_window_m() and not hinted_ids.has(curve.id):
 			hinted_ids[curve.id] = true
 			if session.sound_enabled:
-				sound.play()
+				race_audio.play_hint()
 	previous_state = session.state
 	sync_voice_context()
 
@@ -198,6 +200,7 @@ func on_action(action: String) -> void:
 			save_settings()
 		"quit": get_tree().quit()
 		"reset_car":
+			if race_audio != null: race_audio.reset()
 			if voice != null: voice.invalidate()
 			if is_instance_valid(car):
 				car.place(model)
@@ -258,6 +261,8 @@ func save_settings() -> void:
 	config.set_value("input", "right", key_right)
 	config.set_value("game", "hint_seconds", model.hint_seconds)
 	config.set_value("game", "sound", session.sound_enabled)
+	for key in ["engine_volume", "environment_volume", "hint_volume"]:
+		config.set_value("audio", key, session.get(key))
 	var error := config.save(settings_path)
 	if error != OK:
 		push_warning("Die Einstellungen gelten für diese Sitzung. Speichern war nicht möglich.")
@@ -289,17 +294,7 @@ func load_settings() -> void:
 	if typeof(enabled) == TYPE_BOOL:
 		session.sound_enabled = enabled
 
-func make_tone() -> AudioStreamWAV:
-	var bytes := PackedByteArray()
-	var count := 6600
-	bytes.resize(count * 2)
-	for i in range(count):
-		var phase := float(i) / 22050.0
-		var envelope := sin(float(i) / count * PI)
-		var value := int(sin(phase * TAU * 660.0) * envelope * 14000)
-		bytes.encode_s16(i * 2, value)
-	var stream := AudioStreamWAV.new()
-	stream.format = AudioStreamWAV.FORMAT_16_BITS
-	stream.mix_rate = 22050
-	stream.data = bytes
-	return stream
+	for key in ["engine_volume", "environment_volume", "hint_volume"]:
+		var volume = config.get_value("audio", key, session.get(key))
+		if (typeof(volume) == TYPE_FLOAT or typeof(volume) == TYPE_INT) and is_finite(float(volume)):
+			session.set(key, clampf(float(volume), 0.0, 1.0))

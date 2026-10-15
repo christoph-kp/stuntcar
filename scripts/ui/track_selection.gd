@@ -147,7 +147,7 @@ func render(value, left_key: String, right_key: String, speech_status: String = 
 	errors.visible = not session.catalog_errors.is_empty()
 	errors.text = "Dateien prüfen:\n" + "\n".join(session.catalog_errors)
 	footer.text = "[ %s ] Nächster Eintrag     [ %s ] Auswählen     ·     Du kannst auch klicken." % [left_key, right_key]
-	if session.voice_enabled: footer.text += "\nSprache: nächstes · wählen"
+	if session.voice_enabled: footer.text += "\nSprache: next · select"
 	if previous_index == session.menu_index: return
 	previous_index = session.menu_index
 	for i in range(buttons.size()):

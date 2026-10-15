@@ -1,0 +1,56 @@
+{
+  "engine": {
+    "source": "car_engine_qubodup.wav",
+    "start_s": 0,
+    "source_duration_s": 4,
+    "crossfade_s": 0.05,
+    "filters": "highpass=f=60,lowpass=f=6000",
+    "duration_s": 3.95,
+    "peak_before_encode": 0.7
+  },
+  "forest": {
+    "source": "forest_birds.mp3",
+    "start_s": 2,
+    "source_duration_s": 28,
+    "crossfade_s": 1.5,
+    "filters": "highpass=f=180,lowpass=f=10000",
+    "duration_s": 26.5,
+    "peak_before_encode": 0.7
+  },
+  "wind": {
+    "source": "wind.ogg",
+    "start_s": 0,
+    "source_duration_s": 8,
+    "crossfade_s": 0.4,
+    "filters": "highpass=f=150,lowpass=f=6000",
+    "duration_s": 5.559,
+    "peak_before_encode": 0.7
+  },
+  "road": {
+    "source": "wind.ogg",
+    "start_s": 0,
+    "source_duration_s": 8,
+    "crossfade_s": 0.4,
+    "filters": "highpass=f=65,lowpass=f=350",
+    "duration_s": 5.559,
+    "peak_before_encode": 0.7
+  },
+  "landing": {
+    "source": "impact_soft.ogg",
+    "start_s": 0,
+    "source_duration_s": 2,
+    "crossfade_s": 0.0,
+    "filters": "lowpass=f=2000,apad=pad_dur=0.15",
+    "duration_s": 0.677,
+    "peak_before_encode": 0.7
+  },
+  "suspension": {
+    "source": "impact_metal.ogg",
+    "start_s": 0,
+    "source_duration_s": 2,
+    "crossfade_s": 0.0,
+    "filters": "lowpass=f=2600,apad=pad_dur=0.15",
+    "duration_s": 0.315,
+    "peak_before_encode": 0.7
+  }
+}

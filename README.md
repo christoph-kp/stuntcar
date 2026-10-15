@@ -3,17 +3,20 @@
 Ein erster Prototyp mit Godot 4.5.1. Das Spiel verwendet eigene Strecken und kostenlose 3D-Modelle.
 
 Das Auto und der Asphalt aus der Qualitätsprobe stehen auf allen vier Strecken bereit.
-Im Wald und in den Alpen wachsen die detaillierten Kiefern aus der Probe.
+Die Strecke „Erste Fahrt“ führt durch einen Wald mit Tannen, Kiefern und bewachsenen Hängen.
+Moosige Felsen, Farne und Gras ergänzen den Waldboden.
+Die Alpen verwenden weiterhin die Kiefern aus der Probe.
 Das Spiel verwendet jetzt den Grafikmodus Forward+ für Licht, Reflexionen und Schatten.
 Die Steuerung, die Sprünge und die Steilkurven bleiben erhalten.
-Die Felsen und die übrigen Landschaftsmodelle stammen weiterhin aus dem ersten Paket.
+Die übrigen Landschaften verwenden weiterhin das erste Paket.
 Die Quellen und Nutzungsrechte stehen in [assets/quality/README.md](assets/quality/README.md).
+Die zusätzlichen Waldmodelle stehen unter der Lizenz CC0. Ihre Quellen stehen in [assets/forest/README.md](assets/forest/README.md).
 
 Das Spiel enthält vier Strecken mit dem neuen Auto und vier Landschaften:
 
 | Strecke | Länge | Inhalt | Dauer bei normalem Tempo |
 |---|---|---|---|
-| Erste Fahrt | 600 m | Nebelwald, drei Kurven und eine Kuppe | etwa 27 Sekunden |
+| Erste Fahrt | 940 m | Wald, zwei große Sprünge und drei Steilkurven | etwa 43 Sekunden |
 | Höhenfahrt | 1250 m | Alpenpass, fünf Kurven und ein Sprung | etwa 57 Sekunden |
 | Sprungstrecke | 1350 m | Felsenschlucht, fünf Kurven und zwei Sprünge | etwa 62 Sekunden |
 | Küstenfahrt | 600 m | Regenküste, drei Kurven und eine Kuppe | etwa 27 Sekunden |
@@ -87,39 +90,41 @@ Du kannst die Sprache unter „Einstellungen → Steuerung“ einschalten. Wähl
 
 Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter „Systemeinstellungen → Ton → Eingabe“ ein anderes Mikrofon.
 
-| Wirkung | Deutsch | Englisch |
-|---|---|---|
-| Links korrigieren | links | left |
-| Rechts korrigieren | rechts | right |
-| Tempo erhöhen | schneller, Gas, Gas geben | faster, gas, accelerate, throttle |
-| Tempo senken | langsamer, Bremsen, Bremse | slower, brake, brakes |
-| Fahrt pausieren | Pause | pause |
-| Fahrt fortsetzen | weiter | continue, resume |
-| Fahrt starten | Start, starten | start |
-| Nächsten Menüeintrag wählen | nächstes | next |
-| Menüeintrag öffnen | wählen | select |
+| Wirkung | Englischer Befehl |
+|---|---|
+| Links korrigieren | left |
+| Rechts korrigieren | right |
+| Tempo erhöhen | faster, gas, accelerate, throttle |
+| Tempo senken | slower, brake, brakes |
+| Fahrt pausieren | pause |
+| Fahrt fortsetzen | continue, resume |
+| Fahrt starten | start |
+| Nächsten Menüeintrag wählen | next |
+| Menüeintrag öffnen | select |
 
-Beide Sprachen funktionieren ohne Umschalten. Du kannst „links links links links links“ direkt hintereinander sagen. Die Erkennung verarbeitet bestätigte Wörter bereits während des Sprechens. Menüs warten weiterhin auf das Ende einer Äußerung.
+Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche bleibt auf Deutsch.
 
-Ein erneut gesprochenes „links“ oder „rechts“ korrigiert erneut. Es pausiert die Fahrt nicht. Die Richtung wirkt genauso wie die entsprechende Taste.
+Du kannst „left left left left left“ direkt hintereinander sagen. Die Erkennung prüft jedes Wort mit zwei Verfahren. Ein Verfahren kennt die Befehle. Das andere Verfahren kennt einen freien Wortschatz. Während des Sprechens müssen beide Verfahren den Befehl bestätigen. Die Erkennung gibt bestätigte Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
-Jedes „schneller“ oder „Gas“ erhöht das gewünschte Tempo um rund 18 km/h. Jedes „langsamer“ oder „Bremsen“ senkt es entsprechend. Das Auto beschleunigt oder bremst deutlich und ohne Sprung im Tempo. Wiederholte Befehle zählen einzeln.
+Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Richtung wirkt genauso wie die entsprechende Taste.
 
-Zum Beispiel erhöht „schneller, schneller“ das Zieltempo von 79 auf 115 km/h. „Langsamer, langsamer“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo. An der Grenze zeigt das Spiel „Höchsttempo erreicht“ oder „Niedrigstes Tempo erreicht“.
+Jedes „faster“ erhöht das gewünschte Tempo um rund 18 km/h. Jedes „slower“ senkt es entsprechend. Wiederholte Befehle zählen einzeln.
+
+Zum Beispiel erhöht „faster, faster“ das Zieltempo von 79 auf 115 km/h. „Slower, slower“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo.
 
 Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
 
-Der Bereich reicht von etwa 50 bis 166 km/h. „Bremsen“ hält das Auto nicht an. Für eine bewusste Pause sage „Pause“.
+Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht an. Für eine bewusste Pause sage „Pause“.
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
 Die Anzeige „Deine Sprache“ zeigt das Mikrofon und seinen Pegel. „Prüfe“ zeigt vermutete Wörter. Diese Wörter lösen noch nicht unbedingt einen Befehl aus. „Ausgeführt“ bestätigt einen Befehl. Die Nummer steigt bei jeder ausgeführten Wiederholung. „Unklar“ zeigt eine Äußerung ohne erkannten Befehl.
 
-Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „links“ im Startmenü nicht.
+Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „left“ im Startmenü nicht.
 
-Die Erkennung reagiert nicht innerhalb von zehn Millisekunden. Die Messreihe ergab etwa 75 bis 764 Millisekunden nach dem geschätzten Wortende. Der mittlere Wert lag bei etwa 351 Millisekunden. Diese Messung nutzt künstliche Sprache. Sie enthält die Erkennung, die lokale Verbindung und die Befehlsverarbeitung im Spiel. Sie enthält nicht die Verzögerung des echten Mikrofons. Weitere Messungen stehen in `docs/prototype-test.md`.
+Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
-Fahrbefehle verändern kein Menü. Nutze dort „nächstes“ und „wählen“. Sprache und Tasten bleiben gleichzeitig verfügbar.
+Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprache und Tasten bleiben gleichzeitig verfügbar.
 
 ## Mikrofon und Einrichtung
 
@@ -129,11 +134,13 @@ Die Erkennung läuft lokal mit Vosk. Sie sendet keine Tonaufnahmen ins Internet.
 
 Auf diesem Mac sind die Bibliotheken und Sprachmodelle bereits eingerichtet. Ein anderer Mac braucht einmalig Python 3.11 oder neuer. Öffne dort `Sprache einrichten.command`. Diese Einrichtung braucht eine Internetverbindung. Danach funktioniert die Sprachsteuerung ohne Internet.
 
+Die Einrichtung lädt nur das englische Modell. Alte zweisprachige Vergleichstests brauchen zusätzlich das deutsche Modell. `python3 voice/setup.py --with-german` richtet auch dieses Modell ein.
+
 Die Sprachmodelle liegen unter `.tools/voice-models`. Die Hilfsprogramme liegen unter `.tools/voice-env`. Diese lokalen Dateien gehören nicht zum Spielcode.
 
 Falls das Mikrofon fehlt, prüfe „Systemeinstellungen → Datenschutz & Sicherheit → Mikrofon“. Erlaube dort den Zugriff für die angezeigte Anwendung. Starte das Spiel danach erneut.
 
-Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Steuerung“ erneut „Sprache + Tasten“. Setze die Fahrt danach bewusst mit „weiter“ oder D fort.
+Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Steuerung“ erneut „Sprache + Tasten“. Setze die Fahrt danach bewusst mit „resume“ oder D fort.
 
 Die künstlichen Sprachproben prüfen die Erkennung technisch. Die neue Erkennung braucht noch einen Test mit deiner Stimme. Hintergrundgeräusche und die Aussprache können das Ergebnis verändern.
 
@@ -145,7 +152,7 @@ Vor einem Sprung zeigt das Spiel eine nötige Korrektur an. Ein kurzer Druck zur
 
 Der Flug folgt einem vorgegebenen Bogen. So reicht jedes erlaubte Tempo für die Lücke. Das Auto hebt sichtbar ab und federt bei der Landung kurz ein. Die Kamera zeigt die Abfahrt und hält die Landung im Blick.
 
-Die Kurven haben nun eine geneigte Fahrbahn. Die erste Strecke nutzt geringe Neigungen. Die beiden neuen Strecken enthalten Steilkurven mit bis zu 40 Grad. Das Auto folgt der Neigung. Absprung und Landung bleiben quer zur Fahrbahn eben.
+Die Kurven haben eine geneigte Fahrbahn. Die Waldstrecke enthält Steilkurven mit 38, 45 und 42 Grad Neigung. Zwei Rampen führen über jeweils 50 Meter breite Lücken. Beim normalen Tempo dauert jeder Flug etwa 2,3 Sekunden. Das Auto erreicht rund 70 Meter Höhe über dem Nullpunkt der Spielwelt. Der Wald bleibt unten im Tal. Das Auto folgt der Neigung. Absprung und Landung bleiben quer zur Fahrbahn eben.
 
 Weitere Strecken entstehen aus `tracks/templates/strecke.json`. Jede Strecke ist eine eigene Textdatei mit einem Namen. Du kannst Dateien hinzufügen oder entfernen. `Strecken prüfen.command` prüft die Dateien mit einem Doppelklick. Die Anleitung steht in [tracks/README.md](tracks/README.md). Das Spiel nimmt gültige Streckendateien beim nächsten Start automatisch in die Auswahl auf.
 
@@ -175,6 +182,9 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_jump_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_catalog_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_landscape_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_forest_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --fixed-fps 60 --path . --script tests/run_forest_fall_test.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_stunt_track_tests.gd
 .tools/voice-env/bin/python -m unittest discover -s voice/tests
 ```
 
@@ -187,3 +197,21 @@ Führe diese Aufrufe im Projektordner aus:
 - [Vosk-Sprachmodelle](https://alphacephei.com/vosk/models): Kleine deutsche und englische Modelle 0.15. Beide nutzen die Lizenz Apache 2.0.
 - [Vosk](https://alphacephei.com/vosk/install): Lokale Spracherkennung.
 - [sounddevice](https://python-sounddevice.readthedocs.io/en/latest/installation.html): Zugriff auf das Mikrofon.
+
+## Spielton
+
+Der Motor folgt der Geschwindigkeit. Im Flug endet das Rollgeräusch.
+Die Landung erzeugt einen kurzen Stoß. Auf der Waldstrecke laufen leise Waldgeräusche.
+
+Unter „Einstellungen → Lautstärke“ lassen sich Motor, Umgebung und Hinweise getrennt einstellen.
+„Ton: Aus“ schaltet alle Spielgeräusche aus.
+Die Quellen und die Bearbeitung stehen in [assets/audio/README.md](assets/audio/README.md).
+Der Motorton stammt von qubodup und nutzt CC BY 3.0.
+Die Namensnennung in [assets/audio/CREDITS.txt](assets/audio/CREDITS.txt) muss der Weitergabe des Spiels beiliegen.
+Die Aufnahme [docs/tonprobe.wav](docs/tonprobe.wav) zeigt eine Fahrt mit einem Sprung.
+
+Zusätzlicher Tontest:
+
+```sh
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_audio_tests.gd
+```

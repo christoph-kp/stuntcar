@@ -21,7 +21,7 @@ func run() -> void:
 	var track_script = load("res://scripts/track/track_data.gd")
 	var drive_script = load("res://scripts/vehicle/drive_model.gd")
 	var track = track_script.new()
-	check(absf(track.length_m - 600.0) < 1.0, "Strecke umfasst 600 Meter")
+	check(absf(track.length_m - 940.0) < 1.0, "Die Stuntstrecke umfasst 940 Meter")
 	var start: Dictionary = track.sample(20.0)
 	check(absf(start.position.x) < 0.01 and absf(start.position.z + 20.0) < 0.01, "Startgerade zeigt geradeaus")
 	for curve in track.curves:
@@ -71,7 +71,7 @@ func run() -> void:
 		single.step(1.0 / 60.0)
 		if single.off_road:
 			break
-	check(single.off_road and single.distance_m < 400.0, "Eine Eingabe gilt nicht für die nächste Kurve")
+	check(single.off_road and single.distance_m < track.curves[1].end_m, "Eine Eingabe gilt nicht für die nächste Kurve")
 	for curve in track.curves:
 		var late = drive_script.new(track)
 		late.reset(curve.start_m - 20.0)

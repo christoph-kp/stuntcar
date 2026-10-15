@@ -12,6 +12,9 @@ var retry_count := 0
 var checkpoint_m := 0.0
 var total_time := 0.0
 var sound_enabled := true
+var engine_volume := 0.75
+var environment_volume := 0.5
+var hint_volume := 1.0
 var voice_enabled := false
 var paused_from := "RUNNING"
 var control_return := "MENU"
@@ -37,7 +40,7 @@ func submit_voice(command: String) -> bool:
 			if state not in ["MENU", "FINISHED"]: return false
 			restart()
 		"next", "select":
-			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS"]: return false
+			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS", "AUDIO"]: return false
 			press(-1 if command == "next" else 1)
 		_: return false
 	return true
@@ -51,7 +54,8 @@ func entries() -> Array[String]:
 		"MENU": return ["Fahrt starten", "Strecke wählen", "Einstellungen", "Beenden"]
 		"PAUSED": return ["Weiterfahren", "Neu starten", "Einstellungen", voice_entry, "Beenden"]
 		"FINISHED": return ["Noch einmal fahren", "Zur Übersicht", "Strecke wählen", "Beenden"]
-		"SETTINGS": return ["Hinweis: %d Sekunden" % int(model.hint_seconds), "Ton: " + ("Ein" if sound_enabled else "Aus"), "Tasten ändern", voice_entry, "Zurück"]
+		"SETTINGS": return ["Hinweis: %d Sekunden" % int(model.hint_seconds), "Ton: " + ("Ein" if sound_enabled else "Aus"), "Tasten ändern", voice_entry, "Lautstärke", "Zurück"]
+		"AUDIO": return ["Motor: %d %%" % roundi(engine_volume * 100), "Umgebung: %d %%" % roundi(environment_volume * 100), "Hinweise: %d %%" % roundi(hint_volume * 100), "Zurück"]
 		"CONTROL": return ["Zwei Tasten", "Sprache + Tasten"]
 		"TRACKS":
 			var result: Array[String] = []
@@ -107,9 +111,21 @@ func activate(index: int) -> void:
 				action_requested.emit("save_settings")
 			elif index == 2: action_requested.emit("rebind")
 			elif index == 3: open_controls()
+			elif index == 4:
+				state = "AUDIO"
+				menu_index = 0
 			else:
 				state = previous_state
 				menu_index = 0
+
+		"AUDIO":
+			if index < 3:
+				var key: String = ["engine_volume", "environment_volume", "hint_volume"][index]
+				set(key, fmod(float(get(key)) + 0.25, 1.25))
+				action_requested.emit("save_settings")
+			else:
+				state = "SETTINGS"
+				menu_index = 4
 
 		"CONTROL":
 			control_mode = "keys" if index == 0 else "voice"

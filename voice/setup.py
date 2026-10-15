@@ -1,4 +1,5 @@
 """Install the local helper and verified model archives inside this project."""
+import argparse
 import hashlib
 import os
 from pathlib import Path
@@ -17,6 +18,9 @@ ARCHIVES = {
 def main():
     if sys.version_info < (3, 11):
         raise RuntimeError('Die Einrichtung braucht Python 3.11 oder neuer.')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--with-german', action='store_true', help='Zusatzmodell für alte Vergleichstests')
+    args = parser.parse_args()
     environment = ROOT / '.tools' / 'voice-env'
     if not environment.exists():
         venv.EnvBuilder(with_pip=True).create(environment)
@@ -25,6 +29,8 @@ def main():
     models = ROOT / '.tools' / 'voice-models'
     models.mkdir(parents=True, exist_ok=True)
     for language, checksum in ARCHIVES.items():
+        if language == 'de' and not args.with_german:
+            continue
         name = f'vosk-model-small-{language}-0.15'
         if (models / name / 'am' / 'final.mdl').is_file():
             continue

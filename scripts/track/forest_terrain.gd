@@ -29,7 +29,8 @@ func height_at(x: float, z: float) -> float:
 	var hills := 22.0 + noise.get_noise_2d(x, z) * 28.0
 	var rise := smoothstep(10.0, 48.0, nearest.x)
 	var distant := smoothstep(80.0, 180.0, nearest.x) * 20.0
-	return nearest.y - 7.5 + rise * hills + distant
+	# Keep the forest in the valley. Raised ramps must stand above the trees.
+	return minf(nearest.y, 12.0) - 7.5 + rise * hills + distant
 
 func create_mesh() -> MeshInstance3D:
 	var bounds := AABB(track.points[0], Vector3.ZERO)
@@ -63,6 +64,8 @@ func create_mesh() -> MeshInstance3D:
 	var node := MeshInstance3D.new()
 	node.name = "ForestTerrain"
 	node.mesh = surface.commit()
+	# The car can land on the forest floor before its automatic restart.
+	node.create_trimesh_collision()
 	var mat := ShaderMaterial.new()
 	mat.shader = load("res://assets/forest/terrain.gdshader")
 	mat.set_shader_parameter("earth", load("res://assets/forest/ground/color.jpg"))

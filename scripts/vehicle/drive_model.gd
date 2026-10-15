@@ -71,6 +71,10 @@ func request_turn(direction: int) -> void:
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
 		jump_assist_until = maxf(jump.end_m + 24.0, distance_m + 24.0)
 		manual_remaining = 0.0
+		# A turn cue can arrive during landing. Keep that authorization while
+		# the same command centers the car for the last part of the jump.
+		if not curve.is_empty() and curve.turn_sign == direction and distance_m >= curve.start_m - input_window_m():
+			active_curve_id = curve.id
 		return
 	jump_assist_until = -1.0
 	var window := input_window_m()

@@ -1,0 +1,16 @@
+Motoraufnahme: Car Engine Loop 96kHz, 4s — qubodup
+Quelle: https://opengameart.org/content/car-engine-loop-96khz-4s
+Lizenz: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+https://creativecommons.org/licenses/by/3.0/
+Bearbeitung: ein Kanal; Hochpass 60 Hz; Tiefpass 6000 Hz; Überblendung 50 ms; Pegelanpassung; Ogg Vorbis.
+Die Nennung des Autors bedeutet keine Unterstützung dieses Spiels durch den Autor.
+
+Wald: forest_birds.wav — ktokrzysiek
+https://freesound.org/people/ktokrzysiek/sounds/392603/
+Fahrtwind: wind whoosh loop — SketchMan3; Grundlage: JaggedStone
+https://opengameart.org/content/wind-whoosh-loop
+https://opengameart.org/content/loopable-dungeon-ambience
+Landungen: Impact Sounds — Kenney
+https://kenney.nl/assets/impact-sounds
+Diese drei Quellen nutzen CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/
