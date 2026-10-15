@@ -1,0 +1,56 @@
+Clef-Versuch mit Streckenkontext
+15. Oktober 2026
+
+Stand
+
+Der Vergleich ist vorbereitet. Eine Messung mit Clef fehlt noch.
+Die .env enthält den Token unter CLOUDFLARE.
+Die Cloudflare-Kontoabfrage liefert keine Kontokennung.
+Für die Modelladresse fehlt deshalb CLOUDFLARE_ACCOUNT_ID.
+
+Prüfung
+
+Der Versuch nutzt zehn künstliche Sprachproben.
+Er sendet jede Probe mit drei verschiedenen Angaben:
+- ohne Streckenkontext;
+- zehn Meter vor einer Rechtskurve;
+- zehn Meter vor einer Linkskurve.
+
+Die Streckendatei liefert die Kurven, die Sprünge und die Streckenlänge.
+Die Positionen sind simuliert. Das Auto fährt bei diesem Versuch nicht.
+Der Versuch setzt das Tempo auf 22 Meter pro Sekunde.
+
+Clef soll left, right, faster, slower oder keinen Befehl erkennen.
+Eine zweite Frage prüft die Anzahl der Wiederholungen von null bis fünf.
+Stille und eine fremde Äußerung müssen null Befehle ergeben.
+Die Streckenangaben dürfen einen klar gesprochenen Befehl nicht ersetzen.
+
+Zeitmessung
+
+Die Messung beginnt vor der HTTP-Anfrage und endet nach der Antwort.
+Sie enthält die Übertragung und die Antwortzeit des Dienstes.
+Sie enthält keine Mikrofonaufnahme und keine Reaktion des Spiels.
+Die vollständige Aufnahme liegt bereits vor jeder Anfrage vor.
+Die Erkennung von fünf Wörtern in einer fertigen Aufnahme belegt keine laufende Einzelworterkennung.
+
+Zugang
+
+Ergänze die .env um CLOUDFLARE_ACCOUNT_ID mit der 32-stelligen Kontokennung.
+Das Prüfprogramm akzeptiert CLOUDFLARE_API_TOKEN, CLOUDFLARE_AUTH_TOKEN oder CLOUDFLARE als Token-Feld.
+Es führt den Inhalt der .env nicht als Programm aus.
+Es nimmt den Token weder in den Text für Clef noch in den Bericht auf.
+Es öffnet kein Mikrofon und führt keine Fahrbefehle aus.
+
+Prüfprogramm
+
+tools/voice/clef_probe.py
+
+Aufruf aus diesem Arbeitsordner:
+/Users/stefan/Documents/railsapps/stuntcar/.tools/voice-env/bin/python tools/voice/clef_probe.py --env /Users/stefan/Documents/railsapps/stuntcar/.env --track /Users/stefan/Documents/railsapps/stuntcar/tracks/01_erste_fahrt.json --output docs/clef-vergleich.json
+
+Mit --limit 1 prüft das Programm zuerst nur eine Aufnahme.
+Ohne diese Begrenzung sendet es höchstens 30 Modellanfragen.
+Bei einem Dienstfehler beendet es den Versuch und speichert den bisherigen Stand.
+
+Quelle der Modellschnittstelle:
+https://developers.cloudflare.com/workers-ai/models/clef-omni/
