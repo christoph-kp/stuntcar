@@ -598,3 +598,12 @@ msgstr "Voice practice"
 
 msgid "I18N_PRACTICE_UNKNOWN"
 msgstr "Not recognized as a command."
+
+msgid "I18N_PRACTICE_WORD_FAST"
+msgstr "fast"
+
+msgid "I18N_PRACTICE_PROGRESS"
+msgstr "%d / %d"
+
+msgid "I18N_PRACTICE_RESTART_SHORT"
+msgstr "Restart"

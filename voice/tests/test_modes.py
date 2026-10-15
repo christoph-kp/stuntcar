@@ -55,6 +55,26 @@ class RecognitionModes(unittest.TestCase):
         self.assertEqual(status['direction'], 'left')
         self.assertEqual(events[0]['strength'], .5)
 
+    def test_spoken_faster_variants_preserve_repeats_without_double_action(self):
+        for variant in ('fasta', 'foster'):
+            stream, decoder, _ = self.stream('direct')
+            events, _ = self.feed(stream, decoder, variant)
+            self.assertEqual([event['command'] for event in events], ['faster'])
+            events, _ = self.feed(stream, decoder, 'faster')
+            self.assertEqual(events, [])
+            events, _ = self.feed(stream, decoder, 'faster foster')
+            self.assertEqual([event['command'] for event in events], ['faster'])
+        stream, decoder, fallback = self.stream('checked')
+        decoder.text, fallback.text = 'faster', 'foster'
+        self.assertEqual(stream.feed(array('h', [1500] * 800).tobytes())[0], [])
+        events, _ = stream.feed(array('h', [1500] * 800).tobytes())
+        self.assertEqual([event['command'] for event in events], ['faster'])
+
+    def test_similar_words_do_not_turn_unknown_sentences_into_commands(self):
+        for text in ('my foster brother', 'not foster', 'fasta please', 'father', 'after', 'cause'):
+            stream, decoder, _ = self.stream('direct')
+            self.assertEqual(self.feed(stream, decoder, text)[0], [], text)
+
     def test_checked_keeps_stability_wait(self):
         stream, decoder, fallback = self.stream('checked')
         events, _ = self.feed(stream, decoder, 'left', fallback)

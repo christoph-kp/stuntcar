@@ -3,6 +3,7 @@ extends RefCounted
 const WORDS := ["left", "right", "faster", "slower"]
 const REPEATS := 3
 const WAIT_SECONDS := 4.0
+const TRANSITION_SECONDS := 0.8
 var phase := "ready"
 var mode := "direct"
 var attempted := 0
@@ -11,6 +12,7 @@ var wrong := 0
 var missed := 0
 var remaining_s := 0.0
 var last_heard := ""
+var last_expected := ""
 var last_result := ""
 var generation := 0
 var results := {
@@ -31,6 +33,7 @@ func prepare(selected_mode: String) -> void:
 	missed = 0
 	remaining_s = 0.0
 	last_heard = ""
+	last_expected = ""
 	last_result = ""
 	generation += 1
 
@@ -57,12 +60,14 @@ func step(delta: float, microphone_ready: bool) -> void:
 	remaining_s = maxf(0.0, remaining_s - maxf(delta, 0.0))
 	if remaining_s > 0.0: return
 	if phase == "transition":
-		phase = "listening"
-		remaining_s = WAIT_SECONDS
+		phase = "done" if attempted >= WORDS.size() * REPEATS else "listening"
+		remaining_s = 0.0 if phase == "done" else WAIT_SECONDS
+		generation += 1
 	else:
 		unrecognized("")
 
 func finish_attempt(result: String, heard: String) -> void:
+	last_expected = expected_word()
 	last_result = result
 	last_heard = heard.left(70)
 	match result:
@@ -70,15 +75,9 @@ func finish_attempt(result: String, heard: String) -> void:
 		"wrong": wrong += 1
 		"missed": missed += 1
 	attempted += 1
-	remaining_s = WAIT_SECONDS
-	if attempted >= WORDS.size() * REPEATS:
-		phase = "done"
-		remaining_s = 0.0
-		generation += 1
-	elif attempted % REPEATS == 0:
-		phase = "transition"
-		remaining_s = 0.75
-		generation += 1
+	phase = "transition"
+	remaining_s = TRANSITION_SECONDS
+	generation += 1
 	store_result()
 
 func store_result() -> void:

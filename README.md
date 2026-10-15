@@ -108,7 +108,9 @@ Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter �
 
 Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche erscheint auf Englisch.
 
-Du kannst „left left left left left“ direkt hintereinander sagen. Ein gesprochenes Wort genügt für einen Befehl. Der neue Standard nutzt einen Erkenner ohne zusätzliche Bestätigung. Die Einstellung „Two checks“ nutzt zwei Erkenner für dieselbe Äußerung. Sie verlangt kein zweites gesprochenes Wort. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
+Du kannst „left left left left left“ direkt hintereinander sagen. Ein gesprochenes Wort genügt für einen Befehl. Der neue Standard nutzt einen Erkenner ohne zusätzliche Bestätigung. Die Einstellung „Two checks“ nutzt zwei Erkenner für dieselbe Äußerung. Sie verlangt kein zweites gesprochenes Wort.
+
+Die Ergebnisse „fasta“ und „foster“ gelten ebenfalls als „faster“. Diese begrenzte Zuordnung gilt auch während der Fahrt. Sie ersetzt keine vollständigen fremden Sätze durch einen Befehl. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
 Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Lautstärke bestimmt die Stärke der Korrektur. Die Tasten nutzen weiter die normale Stärke.
 
@@ -142,9 +144,13 @@ Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprac
 
 ## Die Sprachübung
 
-Öffne „Settings → Voice practice“. Wähle „Start exercise“. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „faster“ und „slower“ jeweils dreimal ab. Für jeden Versuch bleiben vier Sekunden. Nach drei Versuchen wechselt das Wort.
+Öffne „Settings → Voice practice“. Wähle „Start exercise“. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „fast“ und „slower“ jeweils dreimal ab. Das Wort steht direkt am passenden Pfeil.
 
-Das Pfeilkreuz bestätigt den erkannten Fahrbefehl. Die Seite zeigt das erkannte Wort und die Anzahl der richtigen Antworten. Sie zählt falsche Befehle und nicht erkannte Antworten getrennt. Eine fehlende Antwort zählt nach vier Sekunden als nicht erkannt. Der Prozentwert gilt für diese Übungsrunde.
+Für jeden Versuch bleiben vier Sekunden. Nach jeder Antwort blendet das Wort aus. Die kurze Pause dauert 0,8 Sekunden. Danach blendet die nächste Aufforderung ein. Die Pause nimmt keine weiteren Antworten an.
+
+Das Pfeilkreuz bestätigt den erkannten Fahrbefehl. Ein Haken zeigt eine richtige Antwort. Ein Kreuz zeigt eine falsche oder nicht erkannte Antwort. Während der Übung erscheint nur das gefragte Wort mit der Versuchsnummer. Die ausführliche Trefferzahl erscheint am Ende.
+
+Sie zählt falsche Befehle und nicht erkannte Antworten getrennt. Eine fehlende Antwort zählt nach vier Sekunden als nicht erkannt. Der Prozentwert gilt für diese Übungsrunde.
 
 Die Taste „Mode“ wechselt zwischen einem Erkenner und zwei Erkennern. Die Seite behält das letzte Ergebnis beider Modi bis zum Spielende. Eine neue Runde ersetzt das Ergebnis ihres Modus. Die Moduswahl gilt auch für die Fahrt. Das Spiel speichert diese Wahl.
 
@@ -207,6 +213,7 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_compass_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_strength_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_cues_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
