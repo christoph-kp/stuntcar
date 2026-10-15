@@ -29,6 +29,14 @@ func next_attempt(scene) -> void:
 	scene._physics_process(0.2)
 	scene._process(0.016)
 
+func finish_calibration(scene) -> void:
+	scene.voice.device_name = "Test microphone"
+	for value in [1000.0, 2000.0, 4000.0]:
+		for index in range(5): packet(scene, {"type":"feedback", "rms":value, "peak_rms":value, "level":1.0})
+		scene._physics_process(0.016)
+		scene._physics_process(1.0)
+	scene._process(0.016)
+
 func run() -> void:
 	var scene = load("res://scenes/main.tscn").instantiate()
 	scene.settings_path = "/private/tmp/stuntcar-practice-scene-%d.cfg" % OS.get_process_id()
@@ -52,6 +60,7 @@ func run() -> void:
 	var target: float = scene.model.target_speed_mps
 	scene.ui.practice_panel.selected.emit(0)
 	scene._physics_process(0.016)
+	finish_calibration(scene)
 	command(scene, "left")
 	check(scene.session.practice.correct == 1 and scene.session.practice.attempted == 1, "Ein einziges gesprochenes Wort zählt in der echten Spielszene.")
 	check(scene.ui.practice_panel.compass.tip_lit("left"), "Die Spitze des linken Pfeils bestätigt das Wort.")
@@ -84,6 +93,7 @@ func run() -> void:
 	var old_epoch: int = scene.voice.epoch
 	scene.ui.practice_panel.selected.emit(0)
 	scene._physics_process(0.016)
+	finish_calibration(scene)
 	packet(scene, {"type":"command", "epoch":old_epoch, "command":"left"})
 	scene._physics_process(0.016)
 	check(scene.session.practice.attempted == 0, "Ein alter Befehl zählt nach einem neuen Start nicht.")
@@ -122,6 +132,7 @@ func run() -> void:
 	check(scene.session.state == "PRACTICE" and scene.session.practice.phase == "ready", "Ein Mikrofonfehler lässt die Übungsseite bedienbar.")
 	scene.ui.practice_panel.selected.emit(0)
 	scene._physics_process(0.016)
+	finish_calibration(scene)
 	check(scene.voice.enabled and scene.session.voice_enabled and scene.session.practice.phase == "listening", "Start kann das Mikrofon nach einem Fehler erneut einschalten.")
 	scene._notification(MainLoop.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	check(scene.session.practice.phase == "ready", "Ein Fensterwechsel beendet den laufenden Versuch ohne falsche Treffer.")

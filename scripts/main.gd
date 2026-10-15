@@ -104,6 +104,10 @@ func _physics_process(delta: float) -> void:
 	if voice != null:
 		voice.poll()
 		var events: Array[Dictionary] = voice.take_commands()
+		for level_event in voice.take_level_events():
+			if level_event.epoch != voice.epoch: continue
+			session.practice.capture_level(level_event.rms, level_event.peak_rms)
+			sync_voice_context()
 		var feedback_events: Array[Dictionary] = voice.take_feedback_events()
 		if session.state == "PRACTICE":
 			events.append_array(feedback_events)
@@ -112,6 +116,7 @@ func _physics_process(delta: float) -> void:
 			if packet.epoch != voice.epoch or binding_stage > 0: continue
 			var word := str(packet.get("text", packet.get("command", ""))).left(40)
 			var strength := VoiceStrength.normalize(packet.get("strength", VoiceStrength.NORMAL))
+			strength = session.practice.calibration.strength_for(packet.get("peak_rms"), strength, voice.device_name)
 			if session.state == "PRACTICE":
 				if packet.get("type", "") == "feedback":
 					session.practice.unrecognized(str(packet.heard))
@@ -132,9 +137,12 @@ func _physics_process(delta: float) -> void:
 				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word
 	if session.state == "PRACTICE":
 		if session.practice.phase == "waiting" and voice.is_ready:
-			session.practice.start(session.voice_mode)
+			session.practice.begin_calibration(session.voice_mode)
 			sync_voice_context()
 		session.practice.step(delta, voice.is_ready)
+		if session.practice.phase == "calibrated":
+			if session.practice.calibration.accept_profile(voice.device_name): save_settings()
+			session.practice.start(session.voice_mode)
 	var both := (held.has(key_left) and held.has(key_right)) or (pending.has(-1) and pending.has(1))
 	if not both and not pending.is_empty():
 		session.press(pending[0])
@@ -190,8 +198,9 @@ func _process(delta: float) -> void:
 	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
 	ui.voice_ready = voice.is_ready
 	ui.voice_visible = session.voice_enabled
-	ui.voice_compass.set_input(voice.input_direction, voice.input_level)
-	ui.practice_panel.compass.set_input(voice.input_direction, voice.input_level)
+	var personal_level: float = session.practice.calibration.strength_for(voice.input_rms, voice.input_level, voice.device_name)
+	ui.voice_compass.set_input(voice.input_direction, personal_level)
+	ui.practice_panel.compass.set_input(voice.input_direction, personal_level)
 	ui.render(session, message)
 
 func _notification(what: int) -> void:
@@ -215,7 +224,7 @@ func on_action(action: String) -> void:
 		"practice_start":
 			session.voice_enabled = true
 			if voice.is_ready:
-				session.practice.start(session.voice_mode)
+				session.practice.begin_calibration(session.voice_mode)
 			else:
 				session.practice.wait_for_microphone(session.voice_mode)
 				if not voice.enabled: voice.start(session.voice_mode)
@@ -297,6 +306,7 @@ func save_settings() -> void:
 	var config := ConfigFile.new()
 	config.set_value("input", "mode", control_mode)
 	config.set_value("input", "voice_mode", session.voice_mode)
+	config.set_value("input", "voice_calibration", session.practice.calibration.profile_data())
 	config.set_value("game", "track", track.source_path)
 	config.set_value("input", "left", key_left)
 	config.set_value("input", "right", key_right)
@@ -312,6 +322,7 @@ func load_settings() -> void:
 	var config := ConfigFile.new()
 	if config.load(settings_path) != OK:
 		return
+	session.practice.calibration.load_profile(config.get_value("input", "voice_calibration", {}))
 	var voice_mode = config.get_value("input", "voice_mode", "direct")
 	if voice_mode in ["direct", "checked"]: session.voice_mode = voice_mode
 	var mode = config.get_value("input", "mode", "")

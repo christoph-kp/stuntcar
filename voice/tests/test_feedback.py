@@ -46,6 +46,17 @@ class VoiceFeedback(unittest.TestCase):
         self.assertLess(strengths[1], .67)
         self.assertGreaterEqual(strengths[2], .67)
 
+    def test_raw_levels_keep_loud_signals_distinct_above_old_limit(self):
+        samples = array('h', [6000] * 800).tobytes()
+        stream = StreamingRecognizer(self.engine)
+        _, feedback = stream.feed(samples)
+        self.assertAlmostEqual(feedback['rms'], 6000)
+        self.assertAlmostEqual(feedback['peak_rms'], 6000)
+        self.assertEqual(feedback['level'], 1.0)
+        events, _ = self.run_audio(bytes(16000) + speech_at_level(6000) + bytes(32000))
+        self.assertEqual([event['command'] for event in events], ['left'])
+        self.assertGreater(events[0]['peak_rms'], 3000)
+
     def test_feedback_has_direction_only_for_confirmed_speech(self):
         events, feedback = self.run_audio(bytes(16000) + speech_at_level(1500) + bytes(32000))
         self.assertEqual(len(events), 1)

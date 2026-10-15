@@ -1,4 +1,4 @@
-"""Whole-utterance commands with a small list of known spoken variants."""
+"""Exact aliases and a one-edit match for English driving commands."""
 import re
 import unicodedata
 
@@ -13,12 +13,46 @@ ALIASES = {
     'start': 'start', 'starten': 'start',
 }
 
+# Keep this set separate from aliases. German words and menu commands stay exact.
+DRIVING_WORDS = {
+    'left': 'left', 'right': 'right', 'fast': 'faster',
+    'faster': 'faster', 'slower': 'slower',
+}
+
+
+def _within_one_edit(text, word):
+    """Check Levenshtein distance <= 1 without a full distance matrix."""
+    if abs(len(text) - len(word)) > 1:
+        return False
+    left = right = edits = 0
+    while left < len(text) and right < len(word):
+        if text[left] == word[right]:
+            left += 1
+            right += 1
+            continue
+        edits += 1
+        if edits > 1:
+            return False
+        if len(text) >= len(word):
+            left += 1
+        if len(word) >= len(text):
+            right += 1
+    return edits + len(text) - left + len(word) - right <= 1
+
+
 def normalize_command(text):
     if not isinstance(text, str):
         return None
     text = unicodedata.normalize('NFC', text).lower().strip()
     text = re.sub(r'[.!?,;:]+$', '', text).strip()
-    return ALIASES.get(text)
+    exact = ALIASES.get(text)
+    if exact is not None:
+        return exact
+    if not re.fullmatch(r'[a-z]{4,7}', text):
+        return None
+    matches = {command for word, command in DRIVING_WORDS.items()
+               if _within_one_edit(text, word)}
+    return matches.pop() if len(matches) == 1 else None
 
 def choose_command(results):
     candidates = []

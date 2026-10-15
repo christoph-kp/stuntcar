@@ -607,3 +607,21 @@ msgstr "%d / %d"
 
 msgid "I18N_PRACTICE_RESTART_SHORT"
 msgstr "Restart"
+
+msgid "I18N_CALIBRATION_START"
+msgstr "Calibrate voice"
+
+msgid "I18N_CALIBRATION_NORMAL"
+msgstr "Speak normally"
+
+msgid "I18N_CALIBRATION_LOUDER"
+msgstr "Speak louder"
+
+msgid "I18N_CALIBRATION_LOUDEST"
+msgstr "Speak very loudly"
+
+msgid "I18N_CALIBRATION_MORE"
+msgstr "Speak a little louder"
+
+msgid "I18N_CALIBRATION_SAVED"
+msgstr "Level saved"

@@ -17,6 +17,18 @@ func prepare_feedback(scene) -> void:
 	scene.voice.consume_bytes((JSON.stringify({"type":"command", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "command":"left", "strength":0.9}) + "\n").to_utf8_buffer())
 	scene._physics_process(0.3)
 
+func prepare_volume(scene, stage: int = 0) -> void:
+	scene.session.practice.begin_calibration("direct")
+	scene.sync_voice_context()
+	for previous in range(stage):
+		for index in range(5):
+			scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, previous), "peak_rms":1000.0 * pow(2.0, previous), "level":1.0})
+		scene._physics_process(0.016)
+		scene._physics_process(1.0)
+	for index in range(3):
+		scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, stage), "peak_rms":1000.0 * pow(2.0, stage), "level":1.0})
+	scene._physics_process(0.016)
+
 func capture(scene, path: String, prepare: Callable, phase: String) -> void:
 	# Erst das Fenster stabilisieren, dann den künstlichen Testzustand setzen.
 	for retry in range(3):
@@ -46,12 +58,16 @@ func run() -> void:
 	scene.sync_voice_context()
 	scene.ui.practice_panel.compass.set_process(false)
 	DisplayServer.window_set_size(Vector2i(1280, 800))
+	await capture(scene, "res://docs/voice-calibration.png", func(): prepare_volume(scene), "calibrating")
+	for stage in [1, 2]:
+		await capture(scene, "/private/tmp/voice-calibration-stage-%d.png" % stage, func(): prepare_volume(scene, stage), "calibrating")
 	await capture(scene, "res://docs/voice-practice.png", func(): prepare_prompt(scene), "listening")
 	await capture(scene, "res://docs/voice-practice-feedback.png", func(): prepare_feedback(scene), "transition")
 	# Die weiteren Bilder zeigen ausschließlich künstliche Testzustände.
 	for attempt in [3, 6, 9]:
 		await capture(scene, "/private/tmp/practice-prompt-%d.png" % attempt, func(): prepare_prompt(scene, attempt), "listening")
 	DisplayServer.window_set_size(Vector2i(960, 640))
+	await capture(scene, "/private/tmp/voice-calibration-small.png", func(): prepare_volume(scene, 2), "calibrating")
 	await capture(scene, "/private/tmp/stuntcar-practice-small.png", func(): prepare_prompt(scene), "listening")
 	await capture(scene, "/private/tmp/practice-result-small.png", func():
 		scene.session.practice.attempted = 12

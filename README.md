@@ -110,7 +110,9 @@ Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorer
 
 Du kannst „left left left left left“ direkt hintereinander sagen. Ein gesprochenes Wort genügt für einen Befehl. Der neue Standard nutzt einen Erkenner ohne zusätzliche Bestätigung. Die Einstellung „Two checks“ nutzt zwei Erkenner für dieselbe Äußerung. Sie verlangt kein zweites gesprochenes Wort.
 
-Die Ergebnisse „fasta“ und „foster“ gelten ebenfalls als „faster“. Diese begrenzte Zuordnung gilt auch während der Fahrt. Sie ersetzt keine vollständigen fremden Sätze durch einen Befehl. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
+Die Ergebnisse „fasta“ und „foster“ gelten ebenfalls als „faster“. Bei anderen unbekannten Fahrwörtern erlaubt der Vergleich höchstens ein anderes, fehlendes oder zusätzliches Zeichen. Der Treffer muss eindeutig zu einem Fahrbefehl passen. „Fast“ und „faster“ gelten als ein Fahrbefehl. Menübefehle bleiben exakt. Der Vergleich ersetzt keine vollständigen fremden Sätze durch einen Befehl.
+
+Der Vergleich ergänzt keine Wartezeit. Der technische Nachweis steht in `docs/levenshtein-command-check.txt`. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
 Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Lautstärke bestimmt die Stärke der Korrektur. Die Tasten nutzen weiter die normale Stärke.
 
@@ -136,7 +138,7 @@ Die Sprachfahrt zeigt ein Pfeilkreuz rechts neben der Strecke. Links und rechts 
 
 Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Solange die Spitze leuchtet, zeigen die Balken die übernommene Stärke. Ein neuer Livepegel verändert diese Bestätigung nicht. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
 
-Die Balken und die Steuerung nutzen dieselben drei Pegelstufen. Das Spiel nutzt die Stärke des bestätigten Befehls. Die laufende Pegelanzeige allein steuert das Auto nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Eine persönliche Abstimmung der drei Stufen fehlt noch. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
+Die Balken und die Steuerung nutzen dieselben drei Pegelstufen. Das Spiel nutzt die Stärke des bestätigten Befehls. Die laufende Pegelanzeige allein steuert das Auto nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Die persönliche Kalibrierung unter „Settings → Voice practice“ ersetzt die festen Pegelgrenzen. Ohne gültige Kalibrierung nutzt das Spiel weiter die bisherigen Grenzen. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
 
 Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
@@ -144,7 +146,17 @@ Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprac
 
 ## Die Sprachübung
 
-Öffne „Settings → Voice practice“. Wähle „Start exercise“. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „fast“ und „slower“ jeweils dreimal ab. Das Wort steht direkt am passenden Pfeil.
+Öffne „Settings → Voice practice“. Wähle „Calibrate voice“. Sprich zuerst normal. Sprich danach lauter. Sprich zuletzt sehr laut. Die Balken steigen von links nach rechts an.
+
+Die Balken zeigen den aktuellen Mikrofonpegel. Die kurze Linie darunter zeigt den Fortschritt der Aufnahme. Jede Stufe braucht mehrere kurze Pegelmessungen. Eine kurze Bestätigung trennt die Stufen. Bei fast gleichen Pegeln fordert die Seite zum lauteren Sprechen auf.
+
+Das Spiel speichert erst nach allen drei Stufen ein neues Profil. Ein Abbruch behält das bisherige Profil. Das Profil gehört zum Namen des Mikrofons. Ein anderes Mikrofon verwendet die bisherigen festen Grenzen.
+
+Die drei persönlichen Stufen entsprechen einem, zwei und drei Balken. Sie bestimmen auch die Stärke beim Lenken, Beschleunigen und Bremsen. Das Spiel speichert keine Tonaufnahme.
+
+![Die persönliche Lautstärke-Kalibrierung mit künstlichem Testpegel](docs/voice-calibration.png)
+
+Nach der Kalibrierung beginnt automatisch die Wortübung. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „fast“ und „slower“ jeweils dreimal ab. Das Wort steht direkt am passenden Pfeil.
 
 Für jeden Versuch bleiben vier Sekunden. Nach jeder Antwort blendet das Wort aus. Die kurze Pause dauert 0,8 Sekunden. Danach blendet die nächste Aufforderung ein. Die Pause nimmt keine weiteren Antworten an.
 
@@ -214,6 +226,8 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_strength_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_cues_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd

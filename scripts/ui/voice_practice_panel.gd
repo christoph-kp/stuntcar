@@ -3,6 +3,7 @@ extends PanelContainer
 # Eine kurze Pause trennt jede Aufforderung sichtbar von der nächsten.
 
 signal selected(index: int)
+const VoiceLevelMeter = preload("res://scripts/ui/voice_level_meter.gd")
 const VoiceCompass = preload("res://scripts/ui/voice_compass.gd")
 const INK := Color("142f3e")
 const PAPER := Color("f4f5e9")
@@ -15,6 +16,8 @@ const PROMPT_RECTS := {
 	"faster": Rect2(-120, -232, 240, 64),
 	"slower": Rect2(-120, 168, 240, 64)
 }
+var meter: Control
+var calibration_prompt: Label
 var compass: Control
 var prompt: Label
 var phase_label: Label
@@ -75,6 +78,10 @@ func _ready() -> void:
 	field.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layout.add_child(field)
+	meter = VoiceLevelMeter.new()
+	centered(meter, field, Rect2(-260, -40, 520, 210))
+	calibration_prompt = text_label("", 36, MINT)
+	centered(calibration_prompt, field, Rect2(-400, -170, 800, 90))
 	compass = VoiceCompass.new()
 	centered(compass, field, Rect2(-140, -140, 280, 280))
 	prompt = text_label("", 44, MINT)
@@ -132,9 +139,13 @@ func render(value, voice_ready: bool, voice_status: String) -> void:
 	session = value
 	var practice = session.practice
 	var phase: String = practice.phase
+	var calibrating := phase == "calibrating"
 	var done := phase == "done"
 	var transition := phase == "transition"
-	var active := phase in ["waiting", "listening", "transition"]
+	var active := phase in ["waiting", "listening", "transition", "calibrating"]
+	compass.visible = not calibrating
+	meter.visible = calibrating
+	calibration_prompt.visible = calibrating
 	var expected: String = practice.last_expected if transition else practice.expected_word()
 	prompt.visible = phase in ["listening", "transition"]
 	prompt.text = word_text(expected)
@@ -167,6 +178,19 @@ func render(value, voice_ready: bool, voice_status: String) -> void:
 	buttons[0].text = tr("I18N_PRACTICE_RESTART_SHORT") if active else (tr("I18N_PRACTICE_AGAIN") if done else tr("I18N_PRACTICE_START"))
 	buttons[1].text = tr("I18N_PRACTICE_MODE") % mode_name(session.voice_mode)
 	buttons[2].text = tr("I18N_PRACTICE_BACK")
+	if calibrating:
+		var calibration = practice.calibration
+		var keys := ["I18N_CALIBRATION_NORMAL", "I18N_CALIBRATION_LOUDER", "I18N_CALIBRATION_LOUDEST"]
+		calibration_prompt.text = tr(calibration.error) if not calibration.error.is_empty() else tr(keys[calibration.stage])
+		calibration_prompt.modulate.a = 1.0
+		if calibration.phase == "transition":
+			calibration_prompt.text = tr("I18N_CALIBRATION_SAVED")
+			calibration_prompt.modulate.a = clampf(calibration.remaining_s / 0.18, 0.0, 1.0)
+		phase_label.visible = true
+		phase_label.text = tr("I18N_PRACTICE_PROGRESS") % [calibration.stage + 1, 3]
+		meter.set_signal(calibration.live_rms, calibration.phase == "transition", float(calibration.samples.size()) / calibration.SAMPLE_COUNT)
+	elif phase == "ready":
+		buttons[0].text = tr("I18N_CALIBRATION_START")
 	for index in range(buttons.size()):
 		var current: bool = index == session.menu_index
 		buttons[index].add_theme_stylebox_override("normal", box_style(MINT if current else Color("294553")))

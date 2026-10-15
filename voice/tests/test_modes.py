@@ -75,6 +75,29 @@ class RecognitionModes(unittest.TestCase):
             stream, decoder, _ = self.stream('direct')
             self.assertEqual(self.feed(stream, decoder, text)[0], [], text)
 
+    def test_close_driving_word_acts_without_wait_or_duplicate_event(self):
+        stream, decoder, _ = self.stream('direct')
+        events, _ = self.feed(stream, decoder, 'light')
+        self.assertEqual([event['command'] for event in events], ['right'])
+        for text in ('right', 'righht'):
+            self.assertEqual(self.feed(stream, decoder, text)[0], [])
+        events, _ = self.feed(stream, decoder, 'right light')
+        self.assertEqual([event['command'] for event in events], ['right'])
+        self.assertEqual(self.feed(stream, decoder, 'righht right')[0], [])
+
+    def test_command_words_preserve_close_repeated_commands(self):
+        self.assertEqual(command_words('faste fastter slowwer'), [
+            {'command': 'faster', 'text': 'faste'},
+            {'command': 'faster', 'text': 'fastter'},
+            {'command': 'slower', 'text': 'slowwer'},
+        ])
+
+    def test_close_words_in_full_unknown_text_do_not_emit(self):
+        for text in ('not light', 'light please', 'my slowwer brother',
+                     'paus', 'nexxt', 'resum', 'stat', 'selekt'):
+            stream, decoder, _ = self.stream('direct')
+            self.assertEqual(self.feed(stream, decoder, text)[0], [], text)
+
     def test_checked_keeps_stability_wait(self):
         stream, decoder, fallback = self.stream('checked')
         events, _ = self.feed(stream, decoder, 'left', fallback)

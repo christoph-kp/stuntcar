@@ -1,0 +1,41 @@
+Prüfung des Wortabgleichs, 15.10.2026
+
+Der Abgleich prüft zuerst die vorhandenen exakten Wörter.
+Danach prüft er nur left, right, fast, faster und slower.
+Ein unbekanntes Wort braucht mindestens vier englische Buchstaben.
+Der Abstand darf höchstens ein Zeichen betragen.
+Ein zusätzliches Zeichen, ein fehlendes Zeichen oder ein anderes Zeichen zählt als ein Abstand.
+Ein Tausch von zwei Zeichen zählt als zwei Abstände.
+Mehrere passende Wörter dürfen nur denselben Fahrbefehl liefern.
+Menübefehle und deutsche Wörter brauchen weiterhin einen exakten Eintrag.
+Unbekannte Sätze lösen keinen Befehl aus.
+Wiederholte Fahrbefehle bleiben erhalten.
+Eine Änderung der Schreibweise erzeugt keinen zusätzlichen Befehl.
+Der Abgleich ergänzt keine Wartezeit und keinen weiteren Spracherkenner.
+
+Test vor der Änderung:
+python3 -m unittest voice.tests.test_protocol voice.tests.test_modes
+23 Tests, 12 erwartete Fehler bei den neuen Wortvarianten.
+
+Test nach der Änderung:
+.tools/voice-env/bin/python -m unittest discover -s voice/tests
+56 Tests bestanden, 21,695 Sekunden.
+Dieser vollständige Lauf enthält auch die neuen Tests für ungekürzte Pegeldaten.
+
+Zusatzprüfung:
+961 Wortpaare stimmten mit dem vollständigen Levenshtein-Abstand überein.
+Das kleine Fahrwortverzeichnis enthält keinen Gleichstand zwischen verschiedenen Befehlen.
+Ein zusätzliches Testverzeichnis prüft die Ablehnung solcher Gleichstände.
+
+Zeitmessung:
+.tools/voice-env/bin/python tools/voice/benchmark_command_matching.py
+7 Läufe mit 20000 Wiederholungen je Wortgruppe.
+Median je Aufruf:
+Exakte Wörter: 0,379 Mikrosekunden.
+Ähnliche Wörter: 2,080 Mikrosekunden.
+Abgelehnte Wörter: 1,829 Mikrosekunden.
+Abgelehnte Sätze: 0,631 Mikrosekunden.
+
+Diese Messung prüft nur den Wortabgleich.
+Sie lädt kein Sprachmodell und prüft kein Mikrofon.
+Sie misst nicht die gesamte Zeit bis zur Reaktion des Spiels.

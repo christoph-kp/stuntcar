@@ -99,7 +99,8 @@ class StreamingRecognizer:
             event = dict(words[index])
             # Keep the voice peak through the decoder's short confirmation delay.
             # This is a signal level, not calibrated sound pressure.
-            event['strength'] = min(1.0, max((level for _, level in self.recent_levels), default=0.0) / 3000)
+            event['peak_rms'] = max((level for _, level in self.recent_levels), default=0.0)
+            event['strength'] = min(1.0, event['peak_rms'] / 3000)
             events.append(event)
             self.emitted.append(commands[index])
         return events
@@ -143,7 +144,8 @@ class StreamingRecognizer:
         self.heard = ' '.join(word['text'] for word in confirmed) if confirmed else next(
             (text for text in texts[self.restricted_count:] if text), next((text for text in texts if text), ''))
         events = self.new_commands(confirmed) if self.active else []
-        status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening'}
+        status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening',
+                  'rms': rms, 'peak_rms': max((level for _, level in self.recent_levels), default=0.0)}
         status['direction'] = (confirmed[-1]['command'] if confirmed and rms >= 180
                                and confirmed[-1]['command'] in {'left', 'right', 'faster', 'slower'} else '')
         if self.active:

@@ -1,5 +1,8 @@
 extends RefCounted
 
+const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
+var calibration = VoiceCalibration.new()
+
 const WORDS := ["left", "right", "faster", "slower"]
 const REPEATS := 3
 const WAIT_SECONDS := 4.0
@@ -25,6 +28,7 @@ func expected_word() -> String:
 	return WORDS[mini(attempted / REPEATS, WORDS.size() - 1)]
 
 func prepare(selected_mode: String) -> void:
+	calibration.reset()
 	mode = selected_mode if selected_mode in ["direct", "checked"] else "direct"
 	phase = "ready"
 	attempted = 0
@@ -43,6 +47,17 @@ func start(selected_mode: String) -> void:
 	remaining_s = WAIT_SECONDS
 	store_result()
 
+func begin_calibration(selected_mode: String) -> void:
+	prepare(selected_mode)
+	calibration.begin()
+	phase = "calibrating"
+
+func capture_level(rms: Variant, peak_rms: Variant) -> void:
+	if phase != "calibrating": return
+	var previous: String = calibration.phase
+	calibration.receive(rms, peak_rms)
+	if calibration.phase != previous: generation += 1
+
 func wait_for_microphone(selected_mode: String) -> void:
 	prepare(selected_mode)
 	phase = "waiting"
@@ -56,6 +71,13 @@ func unrecognized(heard: String) -> void:
 	if phase == "listening": finish_attempt("missed", heard)
 
 func step(delta: float, microphone_ready: bool) -> void:
+	if phase == "calibrating":
+		if not microphone_ready: return
+		var previous: String = calibration.phase
+		calibration.step(delta)
+		if calibration.phase != previous: generation += 1
+		if calibration.phase == "done": phase = "calibrated"
+		return
 	if not microphone_ready or phase not in ["listening", "transition"]: return
 	remaining_s = maxf(0.0, remaining_s - maxf(delta, 0.0))
 	if remaining_s > 0.0: return

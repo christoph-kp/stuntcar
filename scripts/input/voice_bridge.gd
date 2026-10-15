@@ -1,5 +1,6 @@
 extends Node
 
+const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 
 signal unavailable(message: String)
@@ -21,6 +22,9 @@ var status_text := tr("I18N_VOICE_OFF")
 var buffer := PackedByteArray()
 var commands: Array[Dictionary] = []
 var input_level := 0.0
+var input_rms := -1.0
+var input_peak_rms := -1.0
+var level_events: Array[Dictionary] = []
 var input_direction := ""
 var level_ms := 0
 var heard_text := ""
@@ -63,6 +67,9 @@ func stop() -> void:
 	epoch += 1
 	status_text = tr("I18N_VOICE_OFF")
 	input_level = 0.0
+	input_rms = -1.0
+	input_peak_rms = -1.0
+	level_events.clear()
 	input_direction = ""
 	feedback_events.clear()
 	heard_text = ""
@@ -79,6 +86,9 @@ func invalidate() -> void:
 	feedback_state = "listening"
 	feedback_events.clear()
 	input_level = 0.0
+	input_rms = -1.0
+	input_peak_rms = -1.0
+	level_events.clear()
 	input_direction = ""
 	commands.clear()
 	if peer != null and authenticated:
@@ -89,6 +99,8 @@ func poll() -> void:
 	var now := Time.get_ticks_msec()
 	if now - level_ms > 300:
 		input_level = 0.0
+		input_rms = 0.0
+		input_peak_rms = 0.0
 		input_direction = ""
 	if is_ready and now - last_message_ms > 3000:
 		fail(tr("I18N_VOICE_CONNECTION_LOST"))
@@ -151,6 +163,13 @@ func accept_packet(packet: Dictionary) -> void:
 			var level = packet.get("level", 0.0)
 			var valid_level := typeof(level) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(level))
 			input_level = clampf(float(level), 0.0, 1.0) if valid_level else 0.0
+			input_rms = float(packet.rms) if VoiceCalibration.valid_signal(packet.get("rms")) else -1.0
+			input_peak_rms = float(packet.peak_rms) if VoiceCalibration.valid_signal(packet.get("peak_rms")) else -1.0
+			if input_rms >= 0.0 and input_peak_rms >= input_rms:
+				if level_events.size() >= 64:
+					fail(tr("I18N_VOICE_TOO_MANY"))
+					return
+				level_events.append({"epoch":epoch, "rms":input_rms, "peak_rms":input_peak_rms})
 			level_ms = Time.get_ticks_msec()
 			var direction := str(packet.get("direction", ""))
 			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""
@@ -182,6 +201,11 @@ func accept_packet(packet: Dictionary) -> void:
 func take_commands() -> Array[Dictionary]:
 	var result := commands.duplicate()
 	commands.clear()
+	return result
+
+func take_level_events() -> Array[Dictionary]:
+	var result := level_events.duplicate()
+	level_events.clear()
 	return result
 
 func take_feedback_events() -> Array[Dictionary]:
