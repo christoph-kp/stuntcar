@@ -3,6 +3,8 @@ extends CanvasLayer
 signal menu_selected(index: int)
 const TrackSelection = preload("res://scripts/ui/track_selection.gd")
 const VoiceCompass = preload("res://scripts/ui/voice_compass.gd")
+const PracticePanel = preload("res://scripts/ui/voice_practice_panel.gd")
+var practice_panel: PanelContainer
 var track_selection: PanelContainer
 const INK := Color("142f3e")
 const PAPER := Color("f4f5e9")
@@ -23,6 +25,7 @@ var status_label: Label
 var voice_label: Label
 var voice_text := tr("I18N_VOICE_OFF")
 var voice_visible := false
+var voice_ready := false
 var voice_compass: Control
 var progress: ProgressBar
 var minimap: Control
@@ -138,6 +141,9 @@ func _ready() -> void:
 	menu_footer = label("", 15, MINT)
 	menu_footer.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(menu_footer)
+	practice_panel = PracticePanel.new()
+	root.add_child(practice_panel)
+	practice_panel.selected.connect(func(index): menu_selected.emit(index))
 	track_selection = TrackSelection.new()
 	root.add_child(track_selection)
 	track_selection.selected.connect(func(index): menu_selected.emit(index))
@@ -166,8 +172,13 @@ func label(text: String, size: int, color: Color) -> Label:
 	return result
 
 func render(session, rebind_message: String = "") -> void:
+	practice_panel.visible = session.state == "PRACTICE"
 	track_selection.visible = session.state == "TRACKS"
-	hud.visible = session.state != "TRACKS"
+	hud.visible = session.state not in ["TRACKS", "PRACTICE"]
+	if session.state == "PRACTICE":
+		menu_panel.visible = false
+		practice_panel.render(session, voice_ready, voice_text)
+		return
 	if session.state == "TRACKS":
 		menu_panel.visible = false
 		track_selection.render(session, left_name, right_name, voice_text)

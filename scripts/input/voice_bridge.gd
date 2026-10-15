@@ -9,6 +9,8 @@ var peer: StreamPeerTCP
 var child_pid := -1
 var enabled := false
 var is_ready := false
+var recognition_mode := "direct"
+var feedback_events: Array[Dictionary] = []
 var authenticated := false
 var token := ""
 var epoch := 0
@@ -26,8 +28,9 @@ var feedback_state := "listening"
 var device_name := ""
 var feedback_ms := 0
 
-func start() -> void:
+func start(mode: String = "direct") -> void:
 	stop()
+	recognition_mode = mode if mode in ["direct", "checked"] else "direct"
 	var python := ProjectSettings.globalize_path("res://.tools/voice-env/bin/python")
 	if not FileAccess.file_exists(python):
 		fail(tr("I18N_VOICE_SETUP_MISSING"))
@@ -42,7 +45,7 @@ func start() -> void:
 	status_text = tr("I18N_VOICE_STARTING")
 	child_pid = OS.create_process(python, PackedStringArray([
 		ProjectSettings.globalize_path("res://voice/recognizer.py"),
-		"--port", str(server.get_local_port()), "--token", token]))
+		"--port", str(server.get_local_port()), "--token", token, "--mode", recognition_mode]))
 	if child_pid < 0: fail(tr("I18N_VOICE_START_FAILED"))
 
 func stop() -> void:
@@ -61,6 +64,7 @@ func stop() -> void:
 	status_text = tr("I18N_VOICE_OFF")
 	input_level = 0.0
 	input_direction = ""
+	feedback_events.clear()
 	heard_text = ""
 	device_name = ""
 
@@ -73,6 +77,7 @@ func invalidate() -> void:
 	epoch += 1
 	heard_text = ""
 	feedback_state = "listening"
+	feedback_events.clear()
 	input_level = 0.0
 	input_direction = ""
 	commands.clear()
@@ -137,6 +142,8 @@ func accept_packet(packet: Dictionary) -> void:
 	match packet.get("type", ""):
 		"ready":
 			is_ready = true
+			var mode := str(packet.get("mode", recognition_mode))
+			if mode in ["direct", "checked"]: recognition_mode = mode
 			device_name = str(packet.get("device", tr("I18N_VOICE_DEFAULT_DEVICE"))).left(60)
 			status_text = tr("I18N_VOICE_READY")
 		"feedback":
@@ -149,6 +156,11 @@ func accept_packet(packet: Dictionary) -> void:
 			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""
 			var heard := str(packet.get("heard", "")).left(70)
 			var state := str(packet.get("state", "listening"))
+			if state == "unknown" and not heard.is_empty():
+				if feedback_events.size() >= 16:
+					fail(tr("I18N_VOICE_TOO_MANY"))
+					return
+				feedback_events.append({"type":"feedback", "epoch":epoch, "seq":last_seq, "heard":heard})
 			if not heard.is_empty() or Time.get_ticks_msec() - feedback_ms > 2000:
 				heard_text = heard
 				feedback_state = state
@@ -170,6 +182,11 @@ func accept_packet(packet: Dictionary) -> void:
 func take_commands() -> Array[Dictionary]:
 	var result := commands.duplicate()
 	commands.clear()
+	return result
+
+func take_feedback_events() -> Array[Dictionary]:
+	var result := feedback_events.duplicate()
+	feedback_events.clear()
 	return result
 
 func _exit_tree() -> void:

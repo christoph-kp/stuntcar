@@ -493,3 +493,108 @@ msgstr "LAND HERE"
 
 msgid "I18N_TRACK_TEMPLATE_NAME"
 msgstr "My Track"
+
+msgid "I18N_PRACTICE_TITLE"
+msgstr "Your voice exercise."
+
+msgid "I18N_PRACTICE_HELP"
+msgstr "Say each word once. Each word appears three times."
+
+msgid "I18N_PRACTICE_COMPASS"
+msgstr "Voice input"
+
+msgid "I18N_PRACTICE_WORD_LEFT"
+msgstr "left"
+
+msgid "I18N_PRACTICE_WORD_RIGHT"
+msgstr "right"
+
+msgid "I18N_PRACTICE_WORD_FASTER"
+msgstr "faster"
+
+msgid "I18N_PRACTICE_WORD_SLOWER"
+msgstr "slower"
+
+msgid "I18N_PRACTICE_READY"
+msgstr "Ready?"
+
+msgid "I18N_PRACTICE_PLAN"
+msgstr "Four words · 12 attempts"
+
+msgid "I18N_PRACTICE_WAITING"
+msgstr "Wait for the microphone."
+
+msgid "I18N_PRACTICE_SAY"
+msgstr "Say this word · %d of %d · %.1f s"
+
+msgid "I18N_PRACTICE_NEXT"
+msgstr "Next word …"
+
+msgid "I18N_PRACTICE_COMPLETE"
+msgstr "Complete"
+
+msgid "I18N_PRACTICE_DONE"
+msgstr "The exercise is complete."
+
+msgid "I18N_PRACTICE_CORRECT"
+msgstr "Correct"
+
+msgid "I18N_PRACTICE_WRONG"
+msgstr "Wrong word"
+
+msgid "I18N_PRACTICE_MISSED"
+msgstr "No answer in time"
+
+msgid "I18N_PRACTICE_HEARD"
+msgstr "Heard: %s"
+
+msgid "I18N_PRACTICE_NO_WORD"
+msgstr "No word found."
+
+msgid "I18N_PRACTICE_SCORE"
+msgstr "Correct: %d / %d · %d %%"
+
+msgid "I18N_PRACTICE_COUNTS"
+msgstr "Wrong: %d · Not recognized: %d"
+
+msgid "I18N_PRACTICE_MICROPHONE"
+msgstr "Microphone: %s"
+
+msgid "I18N_PRACTICE_COMPARE_EMPTY"
+msgstr "%s: no result yet"
+
+msgid "I18N_PRACTICE_COMPARE"
+msgstr "%s: %d / %d correct · %d %%"
+
+msgid "I18N_PRACTICE_START"
+msgstr "Start exercise"
+
+msgid "I18N_PRACTICE_RESTART"
+msgstr "Restart exercise"
+
+msgid "I18N_PRACTICE_AGAIN"
+msgstr "Try again"
+
+msgid "I18N_PRACTICE_MODE"
+msgstr "Mode: %s"
+
+msgid "I18N_PRACTICE_MODE_ONE"
+msgstr "One check"
+
+msgid "I18N_PRACTICE_MODE_TWO"
+msgstr "Two checks"
+
+msgid "I18N_PRACTICE_BACK"
+msgstr "Back"
+
+msgid "I18N_PRACTICE_DIRECT_HELP"
+msgstr "One check. No second confirmation. Say each word once."
+
+msgid "I18N_PRACTICE_CHECKED_HELP"
+msgstr "Two checks check the same spoken word. Say each word once."
+
+msgid "I18N_MENU_VOICE_PRACTICE"
+msgstr "Voice practice"
+
+msgid "I18N_PRACTICE_UNKNOWN"
+msgstr "Not recognized as a command."

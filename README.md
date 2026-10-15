@@ -98,7 +98,7 @@ Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter �
 |---|---|
 | Links korrigieren | left |
 | Rechts korrigieren | right |
-| Tempo erhöhen | faster, gas, accelerate, throttle |
+| Tempo erhöhen | faster, fast, gas, accelerate, throttle |
 | Tempo senken | slower, brake, brakes |
 | Fahrt pausieren | pause |
 | Fahrt fortsetzen | continue, resume |
@@ -108,7 +108,7 @@ Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter �
 
 Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche erscheint auf Englisch.
 
-Du kannst „left left left left left“ direkt hintereinander sagen. Die Erkennung prüft jedes Wort mit zwei Verfahren. Ein Verfahren kennt die Befehle. Das andere Verfahren kennt einen freien Wortschatz. Während des Sprechens müssen beide Verfahren den Befehl bestätigen. Die Erkennung gibt bestätigte Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
+Du kannst „left left left left left“ direkt hintereinander sagen. Ein gesprochenes Wort genügt für einen Befehl. Der neue Standard nutzt einen Erkenner ohne zusätzliche Bestätigung. Die Einstellung „Two checks“ nutzt zwei Erkenner für dieselbe Äußerung. Sie verlangt kein zweites gesprochenes Wort. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
 Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Lautstärke bestimmt die Stärke der Korrektur. Die Tasten nutzen weiter die normale Stärke.
 
@@ -126,7 +126,7 @@ Zum Beispiel erhöht ein normal gesprochenes „faster, faster“ das Zieltempo 
 
 Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
 
-Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht an. Für eine bewusste Pause sage „Pause“.
+Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht an. Für eine bewusste Pause drücke Escape. Im Modus „Two checks“ kannst du auch „pause“ sagen.
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
@@ -139,6 +139,20 @@ Die Balken und die Steuerung nutzen dieselben drei Pegelstufen. Das Spiel nutzt 
 Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
 Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprache und Tasten bleiben gleichzeitig verfügbar.
+
+## Die Sprachübung
+
+Öffne „Settings → Voice practice“. Wähle „Start exercise“. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „faster“ und „slower“ jeweils dreimal ab. Für jeden Versuch bleiben vier Sekunden. Nach drei Versuchen wechselt das Wort.
+
+Das Pfeilkreuz bestätigt den erkannten Fahrbefehl. Die Seite zeigt das erkannte Wort und die Anzahl der richtigen Antworten. Sie zählt falsche Befehle und nicht erkannte Antworten getrennt. Eine fehlende Antwort zählt nach vier Sekunden als nicht erkannt. Der Prozentwert gilt für diese Übungsrunde.
+
+Die Taste „Mode“ wechselt zwischen einem Erkenner und zwei Erkennern. Die Seite behält das letzte Ergebnis beider Modi bis zum Spielende. Eine neue Runde ersetzt das Ergebnis ihres Modus. Die Moduswahl gilt auch für die Fahrt. Das Spiel speichert diese Wahl.
+
+Die Übung prüft deine Stimme. Sie verändert das Sprachmodell nicht. Sie speichert keine Tonaufnahme. Die Übung greift auch mit der Tastensteuerung auf das Mikrofon zu. Beim Verlassen beendet sie diesen zusätzlichen Zugriff. Escape führt zurück zu den Einstellungen.
+
+![Die Sprachübung in der Spielszene, mit künstlichem Testbefehl](docs/voice-practice.png)
+
+Der Zeitvergleich steht in `docs/voice-direct-comparison.txt`. Er nutzt künstliche Tonproben. Er ersetzt keine Messung mit deinem Mikrofon. Der einzelne Erkenner erkennt in diesen Proben „brake“ und „pause“ nicht zuverlässig. Nutze „slower“ und Escape. Für den Vergleich bleibt „Two checks“ verfügbar.
 
 ## Mikrofon und Einrichtung
 
@@ -192,6 +206,8 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_compass_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_strength_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_selection_tests.gd

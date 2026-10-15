@@ -19,9 +19,11 @@ def speech_at_level(target):
 
 
 class VoiceFeedback(unittest.TestCase):
+    mode = 'checked'
+
     @classmethod
     def setUpClass(cls):
-        cls.engine = EnglishRecognizer()
+        cls.engine = EnglishRecognizer(mode=cls.mode)
 
     def run_audio(self, pcm, stream=None):
         stream = stream or StreamingRecognizer(self.engine)
@@ -63,3 +65,7 @@ class VoiceFeedback(unittest.TestCase):
         self.assertEqual(len(events), 1)
         self.assertIn('strength', events[0])
         self.assertLess(events[0]['strength'], .34)
+
+
+class DirectVoiceFeedback(VoiceFeedback):
+    mode = 'direct'

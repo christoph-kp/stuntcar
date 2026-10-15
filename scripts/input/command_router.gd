@@ -1,6 +1,7 @@
 extends RefCounted
 
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+const VoicePractice = preload("res://scripts/input/voice_practice.gd")
 
 signal action_requested(action: String)
 var model
@@ -18,6 +19,8 @@ var engine_volume := 0.75
 var environment_volume := 0.5
 var hint_volume := 1.0
 var voice_enabled := false
+var voice_mode := "direct"
+var practice = VoicePractice.new()
 var paused_from := "RUNNING"
 var control_return := "MENU"
 var control_mode := "keys"
@@ -56,7 +59,8 @@ func entries() -> Array[String]:
 		"MENU": return [tr("I18N_MENU_START"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_SETTINGS"), tr("I18N_MENU_QUIT")]
 		"PAUSED": return [tr("I18N_MENU_CONTINUE"), tr("I18N_MENU_RESTART"), tr("I18N_MENU_SETTINGS"), voice_entry, tr("I18N_MENU_QUIT")]
 		"FINISHED": return [tr("I18N_MENU_AGAIN"), tr("I18N_MENU_MAIN"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_QUIT")]
-		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_BACK")]
+		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_VOICE_PRACTICE"), tr("I18N_MENU_BACK")]
+		"PRACTICE": return [tr("I18N_PRACTICE_START"), tr("I18N_PRACTICE_MODE_ONE") if voice_mode == "direct" else tr("I18N_PRACTICE_MODE_TWO"), tr("I18N_PRACTICE_BACK")]
 		"AUDIO": return [tr("I18N_VOLUME_ENGINE") % roundi(engine_volume * 100), tr("I18N_VOLUME_ENVIRONMENT") % roundi(environment_volume * 100), tr("I18N_VOLUME_HINTS") % roundi(hint_volume * 100), tr("I18N_MENU_BACK")]
 		"CONTROL": return [tr("I18N_CONTROL_KEYS"), tr("I18N_CONTROL_VOICE")]
 		"TRACKS":
@@ -116,9 +120,19 @@ func activate(index: int) -> void:
 			elif index == 4:
 				state = "AUDIO"
 				menu_index = 0
+			elif index == 5:
+				state = "PRACTICE"
+				menu_index = 0
+				practice.prepare(voice_mode)
+				action_requested.emit("practice_open")
 			else:
 				state = previous_state
 				menu_index = 0
+
+		"PRACTICE":
+			if index == 0: action_requested.emit("practice_start")
+			elif index == 1: action_requested.emit("practice_mode")
+			else: close_practice()
 
 		"AUDIO":
 			if index < 3:
@@ -145,6 +159,12 @@ func activate(index: int) -> void:
 					state = "CONTROL"
 			elif index == routes.size(): open_settings()
 			else: action_requested.emit("quit")
+
+func close_practice() -> void:
+	practice.prepare(voice_mode)
+	state = "SETTINGS"
+	menu_index = 5
+	action_requested.emit("practice_closed")
 
 func open_controls() -> void:
 	control_return = state

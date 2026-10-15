@@ -6,7 +6,7 @@ class Commands(unittest.TestCase):
     def test_aliases(self):
         groups = {
             'left': ['links', 'left'], 'right': ['rechts', 'right'],
-            'faster': ['schneller', 'gas', 'gas geben', 'faster', 'accelerate', 'throttle'],
+            'faster': ['schneller', 'gas', 'gas geben', 'fast', 'faster', 'accelerate', 'throttle'],
             'slower': ['langsamer', 'bremsen', 'bremse', 'slower', 'brake', 'brakes'],
             'pause': ['pause'], 'resume': ['weiter', 'continue', 'resume'],
             'next': ['nächstes', 'next'], 'select': ['wählen', 'select'], 'start': ['start', 'starten'],

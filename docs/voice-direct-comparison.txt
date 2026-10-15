@@ -1,0 +1,26 @@
+Vergleich der englischen Spracherkennung
+Durchläufe je Modus: 2. Fälle je Durchlauf: 23.
+Beide Modi erhalten dieselben Tondateien in Echtzeit mit Blöcken von 50 ms.
+Die Wortenden stammen aus einer gesonderten Vosk-Messung. Sie sind Schätzwerte.
+Die Zeitmessung enthält die Verarbeitung der Tonblöcke.
+Die Zeitmessung enthält keine Mikrofon-, Verbindungs- oder Bildschirmlaufzeit.
+Die Modellladezeit liegt außerhalb der Zeitmessung.
+Die Tondateien enthalten nur künstliche Sprache. Die Messung gibt keine allgemeine Zusage für echte Stimmen.
+Ein negativer Zeitwert bedeutet: Der Befehl erschien vor dem geschätzten Wortende.
+Der Median liegt an der mittleren Position aller sortierten Zeitwerte.
+Andere Programme können diese Werte verändern.
+
+Einzelprüfung: 42/46 Fälle korrekt.
+Zusätzliche falsche Fahrbefehle: 0. Fehlende Befehle: 4.
+Zeit ab geschätztem Wortende: Median 32.3 ms; Bereich -202.5 bis 261.7 ms.
+Fälle mit Fehlern: 17.wav, english/pause.wav.
+
+Gegenprüfung: 46/46 Fälle korrekt.
+Zusätzliche falsche Fahrbefehle: 0. Fehlende Befehle: 0.
+Zeit ab geschätztem Wortende: Median 125.3 ms; Bereich -52.0 bis 876.0 ms.
+Fälle mit Fehlern: keine.
+
+Neue Fehler der Einzelprüfung gegenüber der Gegenprüfung: 17.wav, english/pause.wav.
+Der freie Erkenner hört „break“ statt „brake“ und „cause“ statt „pause“. Diese Wörter erzeugen keinen Befehl.
+Die Einzelprüfung hat keine zusätzliche Wartezeit von 50 ms. Die Gegenprüfung behält diese Wartezeit.
+Die Messung erlaubt keine Zusage für eine allgemeine Verbesserung.

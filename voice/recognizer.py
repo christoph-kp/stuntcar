@@ -25,7 +25,7 @@ MODEL_ROOT = Path(__file__).resolve().parents[1] / '.tools' / 'voice-models'
 GRAMMARS = {
     'de': ['links', 'rechts', 'schneller', 'langsamer', 'gas', 'gas geben', 'bremsen', 'bremse',
            'pause', 'weiter', 'nächstes', 'wählen', 'start', 'starten', '[unk]'],
-    'en-us': ['left', 'right', 'faster', 'slower', 'gas', 'brake', 'brakes', 'accelerate', 'throttle',
+    'en-us': ['left', 'right', 'fast', 'faster', 'slower', 'gas', 'brake', 'brakes', 'accelerate', 'throttle',
               'pause', 'continue', 'resume', 'next', 'select', 'start', '[unk]'],
 }
 
@@ -35,7 +35,10 @@ class VoiceError(RuntimeError):
 
 
 class BilingualRecognizer:
-    def __init__(self, languages=('de', 'en-us'), frames_per_chunk=None):
+    def __init__(self, languages=('de', 'en-us'), frames_per_chunk=None, mode='checked'):
+        if mode not in ('direct', 'checked'):
+            raise ValueError('Unknown recognition mode: ' + str(mode))
+        self.mode = mode
         import vosk
         vosk.SetLogLevel(-1)
         self.recognizers = []
@@ -55,12 +58,14 @@ class BilingualRecognizer:
                     with (configured / 'conf/model.conf').open('a') as config:
                         config.write(f'\n--frames-per-chunk={frames_per_chunk}\n')
                     model = vosk.Model(str(configured))
-            recognizer = vosk.KaldiRecognizer(model, SAMPLE_RATE, json.dumps(GRAMMARS[language], ensure_ascii=False))
+            recognizer = (vosk.KaldiRecognizer(model, SAMPLE_RATE) if mode == 'direct' else
+                          vosk.KaldiRecognizer(model, SAMPLE_RATE, json.dumps(GRAMMARS[language], ensure_ascii=False)))
             recognizer.SetWords(True)
             self.recognizers.append(recognizer)
-            fallback = vosk.KaldiRecognizer(model, SAMPLE_RATE)
-            fallback.SetWords(True)
-            self.fallback_recognizers.append(fallback)
+            if mode == 'checked':
+                fallback = vosk.KaldiRecognizer(model, SAMPLE_RATE)
+                fallback.SetWords(True)
+                self.fallback_recognizers.append(fallback)
 
     def recognize(self, pcm):
         # Real microphone input has pre-roll. Padding also protects a clipped onset.
@@ -92,9 +97,9 @@ class BilingualRecognizer:
 
 
 class EnglishRecognizer(BilingualRecognizer):
-    """Two English decoders, with 60 ms model chunks instead of 240 ms."""
-    def __init__(self):
-        super().__init__(languages=('en-us',), frames_per_chunk=6)
+    """One free English decoder or two checked decoders, with 60 ms chunks."""
+    def __init__(self, mode='checked'):
+        super().__init__(languages=('en-us',), frames_per_chunk=6, mode=mode)
 
 
 class Segmenter:
@@ -164,10 +169,10 @@ class Connection:
         return self.epoch != before
 
 
-def run_microphone(connection, device=None):
+def run_microphone(connection, device=None, mode='checked'):
     import sounddevice as sd
     connection.send('loading')
-    engine = EnglishRecognizer()
+    engine = EnglishRecognizer(mode=mode)
     device_info = sd.query_devices(device, 'input')
     audio_queue = queue.Queue(maxsize=20)
     problems = queue.Queue(maxsize=1)
@@ -184,7 +189,7 @@ def run_microphone(connection, device=None):
 
     with sd.RawInputStream(samplerate=SAMPLE_RATE, blocksize=BLOCK, device=device,
                            dtype='int16', channels=1, callback=callback):
-        connection.send('ready', device=str(device_info['name'])[:60])
+        connection.send('ready', device=str(device_info['name'])[:60], mode=mode)
         stream = StreamingRecognizer(engine)
         last_feedback = 0.0
         last_heartbeat = 0.0
@@ -231,20 +236,21 @@ def main():
     parser.add_argument('--token')
     parser.add_argument('--device', type=int)
     parser.add_argument('--wav', type=Path)
+    parser.add_argument('--mode', choices=('direct', 'checked'), default='checked')
     args = parser.parse_args()
     if args.wav:
         with wave.open(str(args.wav), 'rb') as source:
             if (source.getframerate(), source.getnchannels(), source.getsampwidth()) != (16000, 1, 2):
                 raise ValueError('Die Testdatei braucht 16 kHz, einen Kanal und 16 Bit.')
             pcm = source.readframes(source.getnframes())
-        chosen, results = EnglishRecognizer().recognize(pcm)
+        chosen, results = EnglishRecognizer(mode=args.mode).recognize(pcm)
         print(json.dumps({'chosen': chosen, 'results': results}, ensure_ascii=False))
         return
     if not args.port or not args.token:
         parser.error('Das Spiel muss Anschluss und Kennung übergeben.')
     connection = Connection(args.port, args.token)
     try:
-        run_microphone(connection, args.device)
+        run_microphone(connection, args.device, mode=args.mode)
     except (BrokenPipeError, ConnectionError):
         pass
     except Exception as error:

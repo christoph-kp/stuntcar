@@ -68,7 +68,7 @@ func _ready() -> void:
 	session.open_tracks()
 	if control_mode == "voice":
 		session.voice_enabled = true
-		voice.start()
+		voice.start(session.voice_mode)
 	sync_voice_context()
 
 func _input(event: InputEvent) -> void:
@@ -87,7 +87,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if code == KEY_ESCAPE:
 		pending.clear()
-		session.pause()
+		if session.state == "PRACTICE": session.close_practice()
+		else: session.pause()
 	elif code == key_left:
 		pending.append(-1)
 	elif code == key_right:
@@ -102,10 +103,23 @@ func _physics_process(delta: float) -> void:
 	sync_voice_context()
 	if voice != null:
 		voice.poll()
-		for packet in voice.take_commands():
+		var events: Array[Dictionary] = voice.take_commands()
+		var feedback_events: Array[Dictionary] = voice.take_feedback_events()
+		if session.state == "PRACTICE":
+			events.append_array(feedback_events)
+			events.sort_custom(func(a, b): return a.seq < b.seq)
+		for packet in events:
 			if packet.epoch != voice.epoch or binding_stage > 0: continue
-			var word := str(packet.get("text", packet.command)).left(40)
+			var word := str(packet.get("text", packet.get("command", ""))).left(40)
 			var strength := VoiceStrength.normalize(packet.get("strength", VoiceStrength.NORMAL))
+			if session.state == "PRACTICE":
+				if packet.get("type", "") == "feedback":
+					session.practice.unrecognized(str(packet.heard))
+					sync_voice_context()
+				elif session.practice.receive(packet.command):
+					sync_voice_context()
+					ui.practice_panel.compass.confirm(packet.command, strength)
+				continue
 			if session.submit_voice(packet.command, strength):
 				voice_applied_count += 1
 				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
@@ -116,6 +130,11 @@ func _physics_process(delta: float) -> void:
 				sync_voice_context()
 			else:
 				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word
+	if session.state == "PRACTICE":
+		if session.practice.phase == "waiting" and voice.is_ready:
+			session.practice.start(session.voice_mode)
+			sync_voice_context()
+		session.practice.step(delta, voice.is_ready)
 	var both := (held.has(key_left) and held.has(key_right)) or (pending.has(-1) and pending.has(1))
 	if not both and not pending.is_empty():
 		session.press(pending[0])
@@ -142,15 +161,17 @@ func _physics_process(delta: float) -> void:
 
 func sync_voice_context() -> void:
 	if voice == null: return
-	var context := "%s:%d" % [session.state, binding_stage]
+	var context := "%s:%d:%d" % [session.state, binding_stage, session.practice.generation if session.state == "PRACTICE" else 0]
 	if context != voice_context:
 		voice_context = context
 		pending.clear()
 		voice.invalidate()
 		ui.voice_compass.clear()
+		ui.practice_panel.compass.clear()
 
 func on_voice_unavailable(_message: String) -> void:
 	session.voice_enabled = false
+	if session.state == "PRACTICE": session.practice.prepare(session.voice_mode)
 	session.pause()
 	pending.clear()
 
@@ -158,7 +179,7 @@ func _process(delta: float) -> void:
 	if session == null:
 		return
 	if is_instance_valid(builder.landscape): builder.landscape.follow(car.global_position)
-	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS"], model.pitch, model.speed_mps)
+	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps)
 	var message := ""
 	if binding_stage == 1:
 		message = tr("I18N_KEY_BIND_LEFT")
@@ -167,12 +188,17 @@ func _process(delta: float) -> void:
 	if binding_stage > 0:
 		message += tr("I18N_KEY_BIND_TIMEOUT") % ceili(bind_timeout)
 	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
+	ui.voice_ready = voice.is_ready
 	ui.voice_visible = session.voice_enabled
 	ui.voice_compass.set_input(voice.input_direction, voice.input_level)
+	ui.practice_panel.compass.set_input(voice.input_direction, voice.input_level)
 	ui.render(session, message)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and session != null:
+		if session.state == "PRACTICE":
+			session.practice.prepare(session.voice_mode)
+			sync_voice_context()
 		session.pause()
 		held.clear()
 		pending.clear()
@@ -182,6 +208,26 @@ func on_action(action: String) -> void:
 		select_track(action.trim_prefix("track:"))
 		return
 	match action:
+		"practice_open":
+			session.voice_enabled = true
+			if not voice.enabled or voice.recognition_mode != session.voice_mode:
+				voice.start(session.voice_mode)
+		"practice_start":
+			session.voice_enabled = true
+			if voice.is_ready:
+				session.practice.start(session.voice_mode)
+			else:
+				session.practice.wait_for_microphone(session.voice_mode)
+				if not voice.enabled: voice.start(session.voice_mode)
+		"practice_mode":
+			session.voice_mode = "checked" if session.voice_mode == "direct" else "direct"
+			session.practice.prepare(session.voice_mode)
+			session.voice_enabled = true
+			voice.start(session.voice_mode)
+			save_settings()
+		"practice_closed":
+			session.voice_enabled = control_mode == "voice"
+			if not session.voice_enabled: voice.stop()
 		"control_keys", "control_voice":
 			control_mode = "voice" if action == "control_voice" else "keys"
 			session.control_mode = control_mode
@@ -189,7 +235,7 @@ func on_action(action: String) -> void:
 			pending.clear()
 			voice_applied_count = 0
 			voice_action_text = tr("I18N_VOICE_NO_ACTION")
-			if session.voice_enabled: voice.start()
+			if session.voice_enabled: voice.start(session.voice_mode)
 			else: voice.stop()
 			save_settings()
 		"quit": get_tree().quit()
@@ -250,6 +296,7 @@ func update_key_names() -> void:
 func save_settings() -> void:
 	var config := ConfigFile.new()
 	config.set_value("input", "mode", control_mode)
+	config.set_value("input", "voice_mode", session.voice_mode)
 	config.set_value("game", "track", track.source_path)
 	config.set_value("input", "left", key_left)
 	config.set_value("input", "right", key_right)
@@ -265,6 +312,8 @@ func load_settings() -> void:
 	var config := ConfigFile.new()
 	if config.load(settings_path) != OK:
 		return
+	var voice_mode = config.get_value("input", "voice_mode", "direct")
+	if voice_mode in ["direct", "checked"]: session.voice_mode = voice_mode
 	var mode = config.get_value("input", "mode", "")
 	if mode in ["keys", "voice"]:
 		control_mode = mode

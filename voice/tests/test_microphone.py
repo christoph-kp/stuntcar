@@ -9,8 +9,8 @@ from voice.recognizer import BLOCK, run_microphone
 
 class MicrophoneContext(unittest.TestCase):
     def test_context_change_during_decode_discards_old_audio(self):
-        for fresh_audio in (False, True):
-            with self.subTest(fresh_audio=fresh_audio):
+        for mode, fresh_audio in ((mode, fresh) for mode in ('direct', 'checked') for fresh in (False, True)):
+            with self.subTest(mode=mode, fresh_audio=fresh_audio):
                 clock = [100.0]
                 sent = []
                 decoded = []
@@ -35,6 +35,8 @@ class MicrophoneContext(unittest.TestCase):
 
                 class Stream:
                     def __init__(self, engine):
+                        if engine.mode != mode:
+                            raise AssertionError('Wrong recognition mode')
                         self.reset()
 
                     def reset(self):
@@ -72,11 +74,13 @@ class MicrophoneContext(unittest.TestCase):
                 audio = SimpleNamespace(RawInputStream=InputStream,
                                         query_devices=lambda *args: {'name': 'Test'})
                 with patch.dict('sys.modules', {'sounddevice': audio}), \
-                        patch('voice.recognizer.EnglishRecognizer', lambda: None), \
+                        patch('voice.recognizer.EnglishRecognizer', lambda mode: SimpleNamespace(mode=mode)), \
                         patch('voice.recognizer.StreamingRecognizer', Stream), \
                         patch('voice.recognizer.time.monotonic', lambda: clock[0]):
                     with self.assertRaises(StopIteration):
-                        run_microphone(Connection())
+                        run_microphone(Connection(), mode=mode)
+                ready = [packet for packet in sent if packet['type'] == 'ready']
+                self.assertEqual(ready, [dict(type='ready', epoch=0, device='Test', mode=mode)])
                 commands = [packet for packet in sent if packet['type'] == 'command']
                 self.assertEqual(len(decoded), 2 if fresh_audio else 1)
                 self.assertEqual(commands, [dict(type='command', epoch=1, command='resume', text='weiter')]

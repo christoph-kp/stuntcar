@@ -5,7 +5,7 @@ import unicodedata
 ALIASES = {
     'links': 'left', 'left': 'left', 'rechts': 'right', 'right': 'right',
     'schneller': 'faster', 'gas': 'faster', 'gas geben': 'faster',
-    'faster': 'faster', 'accelerate': 'faster', 'throttle': 'faster',
+    'fast': 'faster', 'faster': 'faster', 'accelerate': 'faster', 'throttle': 'faster',
     'langsamer': 'slower', 'bremsen': 'slower', 'bremse': 'slower',
     'slower': 'slower', 'brake': 'slower', 'brakes': 'slower',
     'pause': 'pause', 'weiter': 'resume', 'continue': 'resume', 'resume': 'resume',

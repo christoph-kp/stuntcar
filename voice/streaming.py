@@ -39,10 +39,11 @@ def codes(words):
 class StreamingRecognizer:
     def __init__(self, engine):
         self.engine = engine
+        self.mode = getattr(engine, 'mode', 'checked')
         self.reset()
 
     def reset(self):
-        self.restricted_count = len(self.engine.recognizers)
+        self.restricted_count = len(self.engine.recognizers) if self.mode == 'checked' else 0
         self.decoders = self.engine.recognizers + self.engine.fallback_recognizers
         for decoder in self.decoders:
             decoder.Reset()
@@ -62,6 +63,9 @@ class StreamingRecognizer:
         self.recent_levels = deque()
 
     def confirmed(self, results):
+        if self.mode == 'direct':
+            # Check every word of the free transcript, including unknown prefixes.
+            return command_words(results[0].get('partial', results[0].get('text', ''))) if results else []
         options = []
         restricted = [result.get('_words', command_words(result.get('partial', result.get('text', ''))))
                       for result in results[:self.restricted_count]]
@@ -89,7 +93,8 @@ class StreamingRecognizer:
         self.candidates, self.since = commands, times
         events = []
         for index in range(len(self.emitted), len(words)):
-            if not final and (commands[index] not in DRIVING or self.elapsed - times[index] < .049):
+            if not final and (commands[index] not in DRIVING or
+                              self.mode == 'checked' and self.elapsed - times[index] < .049):
                 break
             event = dict(words[index])
             # Keep the voice peak through the decoder's short confirmation delay.
