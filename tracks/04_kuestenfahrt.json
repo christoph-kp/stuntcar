@@ -1,8 +1,8 @@
 {
   "format_version": 1,
   "scenario": "coast",
-  "name": "Küstenfahrt",
-  "description": "Drei Kurven über dem Meer. Regen, Felsen und ein Leuchtturm.",
+  "name": "I18N_TRACK_COAST_NAME",
+  "description": "I18N_TRACK_COAST_DESCRIPTION",
   "length_m": 600,
   "curves": [
     {

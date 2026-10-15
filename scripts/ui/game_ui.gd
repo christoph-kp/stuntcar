@@ -20,7 +20,7 @@ var hint_detail: Label
 var keys_label: Label
 var status_label: Label
 var voice_label: Label
-var voice_text := "Sprache aus"
+var voice_text := tr("I18N_VOICE_OFF")
 var voice_visible := false
 var voice_level := 0.0
 var voice_device := ""
@@ -61,9 +61,9 @@ func _ready() -> void:
 	var top_row := HBoxContainer.new()
 	top_row.add_theme_constant_override("separation", 30)
 	top.add_child(top_row)
-	var brand := label("STUNTCAR", 23, PAPER)
+	var brand := label(tr("I18N_APP_BRAND"), 23, PAPER)
 	top_row.add_child(brand)
-	route_label = label("Erste Fahrt  /  600 m", 19, MINT)
+	route_label = label(tr("I18N_HUD_INITIAL_ROUTE"), 19, MINT)
 	route_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top_row.add_child(route_label)
 	time_label = label("00:00", 24, PAPER)
@@ -112,7 +112,7 @@ func _ready() -> void:
 	status_label = label("", 16, MINT)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	bottom_row.add_child(status_label)
-	voice_label = label("Sprache aus", 16, MINT)
+	voice_label = label(tr("I18N_VOICE_OFF"), 16, MINT)
 	voice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	voice_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	bottom_row.add_child(voice_label)
@@ -126,7 +126,7 @@ func _ready() -> void:
 	var speech_rows := VBoxContainer.new()
 	speech_rows.add_theme_constant_override("separation", 8)
 	speech_panel.add_child(speech_rows)
-	speech_rows.add_child(label("DEINE SPRACHE", 17, MINT))
+	speech_rows.add_child(label(tr("I18N_VOICE_PANEL"), 17, MINT))
 	speech_device = label("", 14, PAPER)
 	speech_device.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	speech_rows.add_child(speech_device)
@@ -152,8 +152,8 @@ func _ready() -> void:
 	var content := VBoxContainer.new()
 	content.add_theme_constant_override("separation", 12)
 	menu_panel.add_child(content)
-	content.add_child(label("STUNTCAR", 16, MINT))
-	menu_title = label("Deine Richtung.\nDeine Fahrt.", 34, PAPER)
+	content.add_child(label(tr("I18N_APP_BRAND"), 16, MINT))
+	menu_title = label(tr("I18N_MENU_TITLE"), 34, PAPER)
 	content.add_child(menu_title)
 	menu_subtitle = label("", 19, Color("d0dedb"))
 	menu_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -201,13 +201,13 @@ func render(session, rebind_message: String = "") -> void:
 		return
 	voice_label.text = voice_text
 	speech_panel.visible = voice_visible
-	speech_device.text = voice_device if not voice_device.is_empty() else "Das Mikrofon startet …"
+	speech_device.text = voice_device if not voice_device.is_empty() else tr("I18N_VOICE_MIC_STARTING")
 	speech_level.value = voice_level * 100.0
-	speech_heard.text = "Ich höre: %s" % voice_heard if not voice_heard.is_empty() else "Sprich: links, links, links …"
+	speech_heard.text = tr("I18N_VOICE_HEARD") % voice_heard if not voice_heard.is_empty() else tr("I18N_VOICE_EXAMPLE")
 	if voice_feedback_state == "checking" and not voice_heard.is_empty():
-		speech_heard.text = "Prüfe: %s" % voice_heard
+		speech_heard.text = tr("I18N_VOICE_CHECKING") % voice_heard
 	elif voice_feedback_state == "unknown":
-		speech_heard.text = "Unklar: %s" % voice_heard if not voice_heard.is_empty() else "Kein Befehl erkannt."
+		speech_heard.text = tr("I18N_VOICE_UNKNOWN") % voice_heard if not voice_heard.is_empty() else tr("I18N_VOICE_NO_COMMAND")
 	speech_action.text = voice_action
 	var model = session.model
 	var state: String = session.state
@@ -216,77 +216,84 @@ func render(session, rebind_message: String = "") -> void:
 	hint_label.visible = driving
 	hint_detail.visible = driving
 	progress.value = model.distance_m / model.track.length_m * 100.0
-	var speed_text := "%d km/h" % (roundi(model.speed_mps * 3.6) if driving else 0)
+	var speed_text := tr("I18N_HUD_SPEED") % (roundi(model.speed_mps * 3.6) if driving else 0)
 	if driving and absf(model.target_speed_mps - model.speed_mps) > 0.3:
-		speed_text = "%d → %d km/h" % [roundi(model.speed_mps * 3.6), roundi(model.target_speed_mps * 3.6)]
-	time_label.text = "%s · %02d:%02d" % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
-	route_label.text = "%s  /  %d von %d m" % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
+		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(model.target_speed_mps * 3.6)]
+	time_label.text = tr("I18N_HUD_TIME") % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
+	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
 	var curve: Dictionary = model.track.next_curve(model.distance_m)
 	var near_curve: bool = not curve.is_empty() and curve.start_m - model.distance_m <= model.input_window_m()
-	keys_label.text = "[ %s ]   Links                 Rechts   [ %s ]" % [left_name, right_name]
-	status_label.text = "Kurz drücken: lenken  ·  Erneut drücken: nachkorrigieren  ·  Esc: Pause"
+	keys_label.text = tr("I18N_DRIVE_KEYS") % [left_name, right_name]
+	status_label.text = tr("I18N_DRIVE_HELP")
 	if session.voice_enabled:
-		status_label.text = "Sagen: links · rechts · schneller / Gas · langsamer / Bremsen · Pause"
+		status_label.text = tr("I18N_DRIVE_VOICE")
 	if state == "FALLING":
-		hint_label.text = "Die Strecke verlassen"
-		hint_detail.text = "Du fährst gleich vor der Kurve weiter."
+		hint_label.text = tr("I18N_FALL_TITLE")
+		hint_detail.text = tr("I18N_FALL_HELP")
 	elif model.active_curve_id >= 0:
-		hint_label.text = "←  Links gewählt" if model.track.curves[model.active_curve_id].turn_sign < 0 else "Rechts gewählt  →"
+		hint_label.text = tr("I18N_TURN_LEFT_SELECTED") if model.track.curves[model.active_curve_id].turn_sign < 0 else tr("I18N_TURN_RIGHT_SELECTED")
 		if model.correction_remaining > 0.0:
-			hint_detail.text = "Deine Korrektur zieht das Auto nach innen."
+			hint_detail.text = tr("I18N_TURN_CORRECTION")
 		elif absf(model.lateral) > 1.6:
-			hint_detail.text = "Knapp am Rand! Kurz nachkorrigieren."
+			hint_detail.text = tr("I18N_TURN_EDGE")
 		else:
-			hint_detail.text = "Die Kurve kommt. Deine Richtung ist gewählt."
+			hint_detail.text = tr("I18N_TURN_SELECTED_HELP")
 	elif near_curve:
-		hint_label.text = "←  Linkskurve" if curve.turn_sign < 0 else "Rechtskurve  →"
-		hint_detail.text = "Gib jetzt die Richtung vor."
+		hint_label.text = tr("I18N_TURN_LEFT") if curve.turn_sign < 0 else tr("I18N_TURN_RIGHT")
+		hint_detail.text = tr("I18N_TURN_PROMPT")
 	else:
-		hint_label.text = "Geradeaus"
-		hint_detail.text = "Hier brauchst du nicht zu lenken."
+		hint_label.text = tr("I18N_STRAIGHT_TITLE")
+		hint_detail.text = tr("I18N_STRAIGHT_HELP")
 	var jump: Dictionary = model.track.jump_for_correction(model.distance_m)
 	if state == "RUNNING" and not jump.is_empty():
-		hint_label.text = "In der Luft!" if model.airborne else ("Gelandet!" if model.distance_m >= jump.end_m else "Sprung voraus")
+		hint_label.text = tr("I18N_JUMP_AIR") if model.airborne else (tr("I18N_JUMP_LANDED") if model.distance_m >= jump.end_m else tr("I18N_JUMP_AHEAD"))
 		if model.lateral > 0.7:
-			hint_detail.text = "Kurz links korrigieren für die Landung."
+			hint_detail.text = tr("I18N_JUMP_LEFT")
 		elif model.lateral < -0.7:
-			hint_detail.text = "Kurz rechts korrigieren für die Landung."
+			hint_detail.text = tr("I18N_JUMP_RIGHT")
 		else:
-			hint_detail.text = "Du bist ausgerichtet. Das Tempo reicht."
+			hint_detail.text = tr("I18N_JUMP_READY")
 	if driving and model.speed_feedback_seconds > 0.0:
 		status_label.text = model.speed_feedback
 	elif driving and model.speed_mps > 30.0:
-		status_label.text = "Hohes Tempo: In Kurven nachkorrigieren oder langsamer fahren."
+		status_label.text = tr("I18N_HIGH_SPEED")
 	if driving:
 		current_menu = ""
 		return
-	keys_label.text = "[ %s ]   Nächster Eintrag             Auswählen   [ %s ]" % [left_name, right_name]
-	status_label.text = "Alle Menüs funktionieren mit diesen zwei Tasten."
+	keys_label.text = tr("I18N_MENU_KEYS") % [left_name, right_name]
+	status_label.text = tr("I18N_MENU_HELP")
 	if session.voice_enabled:
-		status_label.text = "Sagen: Start · nächstes · wählen · weiter"
+		status_label.text = tr("I18N_MENU_VOICE")
 	match state:
 		"MENU":
-			menu_title.text = "Deine Richtung.\nDeine Fahrt."
+			menu_title.text = tr("I18N_MENU_TITLE")
 			menu_subtitle.text = model.track.track_name + "\n" + model.track.description
 		"PAUSED":
-			menu_title.text = "Eine kurze Pause."
-			menu_subtitle.text = "Die Fahrt wartet auf dich."
+			menu_title.text = tr("I18N_PAUSE_TITLE")
+			menu_subtitle.text = tr("I18N_PAUSE_HELP")
 		"FINISHED":
-			menu_title.text = "Du hast es geschafft."
-			menu_subtitle.text = "%d Meter · %d Kurven\n%d erneute Versuche" % [int(model.track.length_m), model.track.curves.size(), session.retry_count]
+			menu_title.text = tr("I18N_FINISH_TITLE")
+			menu_subtitle.text = tr("I18N_FINISH_FACTS") % [int(model.track.length_m), model.track.curves.size(), session.retry_count]
 		"CONTROL":
-			menu_title.text = "Deine Steuerung."
-			menu_subtitle.text = "Wähle deine Steuerung. Du kannst sie später in den Einstellungen ändern."
+			menu_title.text = tr("I18N_CONTROL_TITLE")
+			menu_subtitle.text = tr("I18N_CONTROL_HELP")
 		"TRACKS":
-			menu_title.text = "Deine Strecke."
+			menu_title.text = tr("I18N_TRACK_TITLE")
 			var routes: Array = session.routes
-			menu_subtitle.text = routes[session.menu_index].description if session.menu_index < routes.size() else "Zurück zur aktuellen Strecke."
+			menu_subtitle.text = routes[session.menu_index].description if session.menu_index < routes.size() else tr("I18N_TRACK_RETURN")
+		"AUDIO":
+			menu_title.text = tr("I18N_AUDIO_TITLE")
+			menu_subtitle.text = tr("I18N_AUDIO_HELP")
 		"SETTINGS":
-			menu_title.text = "Deine Einstellungen."
-			menu_subtitle.text = rebind_message if not rebind_message.is_empty() else "Wähle genug Zeit für deine Eingabe."
-	menu_footer.text = "Ohne Eingabe fährt das Auto geradeaus.\nVor jeder Kurve zählt deine Richtung."
+			menu_title.text = tr("I18N_SETTINGS_TITLE")
+			menu_subtitle.text = rebind_message if not rebind_message.is_empty() else tr("I18N_SETTINGS_HELP")
+	menu_subtitle.custom_minimum_size.y = 40 if state == "SETTINGS" else 64
+	menu_footer.visible = state != "SETTINGS"
+	menu_footer.text = tr("I18N_MENU_FOOTER")
+	if state == "AUDIO":
+		menu_footer.text = tr("I18N_AUDIO_FOOTER")
 	if state == "CONTROL":
-		menu_footer.text = "%s: Auswahl wechseln · %s: Bestätigen\nDu kannst auch einen Eintrag anklicken.\nSprache nutzt dein Mikrofon. Die Erkennung läuft auf diesem Rechner." % [left_name, right_name]
+		menu_footer.text = tr("I18N_CONTROL_FOOTER") % [left_name, right_name]
 	var entries: Array[String] = session.entries()
 	if current_menu != state or entries != current_entries:
 		for button in buttons:

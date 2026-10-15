@@ -23,16 +23,18 @@ func run() -> void:
 	scene.session.sound_enabled = false
 	scene.session.press(1)
 	var fell := false
-	var minimum_height := 12.0
+	var minimum_height := INF
+	var fall_start_height := 0.0
 	for i in range(1300):
 		await physics_frame
 		if scene.session.state == "FALLING":
+			if not fell: fall_start_height = scene.car.global_position.y
 			fell = true
 			minimum_height = minf(minimum_height, scene.car.global_position.y)
 		if fell and scene.session.state == "RUNNING":
 			break
 	require(fell and scene.session.state == "RUNNING", "Ohne Eingabe fällt das Auto und startet ohne Menü erneut")
-	require(minimum_height < 11.0, "Der Fall verändert tatsächlich die Fahrzeughöhe")
+	require(fall_start_height - minimum_height > 1.0, "Der Fall senkt das sichtbare Auto um mehr als einen Meter")
 	scene.session.restart()
 	var sent := {}
 	for i in range(5000):

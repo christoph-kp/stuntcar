@@ -27,7 +27,7 @@ func run() -> void:
 	scene.session.open_tracks()
 	scene.session.submit_voice("next")
 	scene.session.submit_voice("select")
-	check(scene.track.track_name == "Höhenfahrt" and scene.model.track == scene.track, "Sprachmenü wechselt Strecke und Fahrmodell gemeinsam")
+	check(scene.track.track_name == "High Drive" and scene.model.track == scene.track, "Sprachmenü wechselt Strecke und Fahrmodell gemeinsam")
 	scene.session.restart()
 	check(scene.model.distance_m == 5 and not scene.model.airborne, "Streckenstart verwirft alte Flugbewegung")
 	scene.session.pause()
@@ -47,7 +47,7 @@ func run() -> void:
 	root.add_child(restored)
 	restored.set_physics_process(false)
 	check(restored.session.state == "TRACKS" and restored.control_mode == "keys", "Der zweite Start übernimmt die Steuerungswahl")
-	check(restored.track.track_name == "Höhenfahrt", "Der zweite Start übernimmt die Strecke")
+	check(restored.track.track_name == "High Drive", "Der zweite Start übernimmt die Strecke")
 	var missing_route := {"path": "/tmp/stuntcar-entfernt.json", "name": "Entfernt"}
 	restored.session.routes.append(missing_route)
 	restored.session.activate(restored.session.routes.size() - 1)
@@ -55,10 +55,10 @@ func run() -> void:
 	check(not restored.session.catalog_errors.is_empty(), "Eine inzwischen entfernte Datei braucht eine Meldung")
 	restored.session.control_mode = "voice"
 	restored.session.voice_enabled = false
-	restored.ui.voice_text = "Das Mikrofon fehlt."
+	restored.ui.voice_text = tr("I18N_VOICE_UNAVAILABLE")
 	restored.ui.render(restored.session)
 	var feedback = restored.ui.track_selection.get("voice_status")
-	check(feedback != null and feedback.visible and "Mikrofon" in feedback.text, "Die Streckenauswahl zeigt einen Mikrofonfehler auch nach dem Abschalten der Sprache")
+	check(feedback != null and feedback.visible and "microphone" in feedback.text, "Die Streckenauswahl zeigt einen Mikrofonfehler auch nach dem Abschalten der Sprache")
 	restored.queue_free()
 	await process_frame
 	DirAccess.remove_absolute(path)

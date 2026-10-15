@@ -1,0 +1,11 @@
+{
+  "source": "qubodup / Car Engine Loop 96kHz, 4s",
+  "replaced_source": "PritzProductions / Ferrari 360 Spider",
+  "reason": "Stefan hört Stimmen im bisherigen Ausschnitt.",
+  "preview": "docs/motor-ersatz.wav",
+  "duration_s": 11.85,
+  "peak_dbfs": -5.91,
+  "clipped_samples": 0,
+  "listening_review": "pending",
+  "speech_recognition_note": "Vosk erkannte auch im beanstandeten Ausschnitt keine Wörter. Das Ergebnis belegt keine Stimmenfreiheit."
+}

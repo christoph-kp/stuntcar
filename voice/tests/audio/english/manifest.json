@@ -1,0 +1,37 @@
+[
+  {
+    "file": "not-left.wav",
+    "text": "not left",
+    "expected": null
+  },
+  {
+    "file": "not-right.wav",
+    "text": "not right",
+    "expected": null
+  },
+  {
+    "file": "good-morning.wav",
+    "text": "good morning",
+    "expected": null
+  },
+  {
+    "file": "weather.wav",
+    "text": "the weather is nice today",
+    "expected": null
+  },
+  {
+    "file": "pause.wav",
+    "text": "pause",
+    "expected": "pause"
+  },
+  {
+    "file": "start.wav",
+    "text": "start",
+    "expected": "start"
+  },
+  {
+    "file": "resume.wav",
+    "text": "resume",
+    "expected": "resume"
+  }
+]

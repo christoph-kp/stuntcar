@@ -5,6 +5,8 @@ func _initialize() -> void:
 
 func run() -> void:
 	root.size = Vector2i(1280, 800)
+	root.always_on_top = true
+	root.grab_focus()
 	var scene = load("res://scenes/main.tscn").instantiate()
 	scene.settings_path = "/tmp/stuntcar-forest-capture-%d.cfg" % OS.get_process_id()
 	root.add_child(scene)

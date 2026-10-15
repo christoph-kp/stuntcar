@@ -152,4 +152,7 @@ func make_environment() -> void:
 	sun.light_angular_distance = 0.8
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 180
+	if data.scenario == "forest":
+		sun.directional_shadow_max_distance = 75
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	add_child(sun)

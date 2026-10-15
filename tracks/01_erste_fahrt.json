@@ -1,57 +1,92 @@
 {
   "format_version": 1,
   "scenario": "forest",
-  "name": "Erste Fahrt",
-  "description": "Drei Kurven und eine kleine Kuppe. Zum Kennenlernen.",
-  "length_m": 600,
+  "name": "I18N_TRACK_FOREST_NAME",
+  "description": "I18N_TRACK_FOREST_DESCRIPTION",
+  "length_m": 940,
   "curves": [
     {
-      "start_m": 100,
+      "start_m": 90,
       "end_m": 170,
       "turn_sign": 1,
-      "radius": 35,
+      "radius": 40,
       "checkpoint_m": 5,
-      "bank_degrees": 12
+      "bank_degrees": 38
     },
     {
-      "start_m": 270,
-      "end_m": 330,
+      "start_m": 410,
+      "end_m": 490,
       "turn_sign": -1,
-      "radius": 20,
-      "checkpoint_m": 175,
-      "bank_degrees": 18
+      "radius": 30,
+      "checkpoint_m": 340,
+      "bank_degrees": 45
     },
     {
-      "start_m": 430,
-      "end_m": 500,
+      "start_m": 760,
+      "end_m": 840,
       "turn_sign": 1,
-      "radius": 35,
-      "checkpoint_m": 335,
-      "bank_degrees": 12
+      "radius": 40,
+      "checkpoint_m": 690,
+      "bank_degrees": 42
     }
   ],
   "heights": [
     {
       "at_m": 0,
+      "height_m": 24
+    },
+    {
+      "at_m": 70,
+      "height_m": 32
+    },
+    {
+      "at_m": 180,
+      "height_m": 32
+    },
+    {
+      "at_m": 280,
+      "height_m": 66
+    },
+    {
+      "at_m": 340,
+      "height_m": 30
+    },
+    {
+      "at_m": 500,
+      "height_m": 30
+    },
+    {
+      "at_m": 530,
+      "height_m": 28
+    },
+    {
+      "at_m": 630,
+      "height_m": 60
+    },
+    {
+      "at_m": 690,
+      "height_m": 24
+    },
+    {
+      "at_m": 850,
+      "height_m": 32
+    },
+    {
+      "at_m": 940,
+      "height_m": 24
+    }
+  ],
+  "jumps": [
+    {
+      "start_m": 250,
+      "end_m": 300,
       "height_m": 12
     },
     {
-      "at_m": 190,
-      "height_m": 12
-    },
-    {
-      "at_m": 220,
-      "height_m": 14
-    },
-    {
-      "at_m": 250,
-      "height_m": 12
-    },
-    {
-      "at_m": 600,
+      "start_m": 600,
+      "end_m": 650,
       "height_m": 12
     }
   ],
-  "jumps": [],
   "preview": "previews/forest.png"
 }

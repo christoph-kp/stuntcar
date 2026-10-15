@@ -1,7 +1,10 @@
 config_version=5
 
 [application]
-config/name="Stuntcar · Erste Fahrt"
+config/name="Stuntcar"
+; Keep the data folder used before the English interface.
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Godot/app_userdata/Stuntcar · Erste Fahrt"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
@@ -23,3 +26,8 @@ lights_and_shadows/directional_shadow/size=4096
 
 [physics]
 common/physics_ticks_per_second=60
+
+[internationalization]
+locale/translations=PackedStringArray("res://locales/en.po")
+locale/fallback="en"
+locale/test="en"

@@ -23,8 +23,8 @@ with wave.open(args.fixture, 'rb') as source:
 # These word ends are estimates from the final transcript, not human annotations.
 import vosk
 vosk.SetLogLevel(-1)
-model = vosk.Model(str(Path(__file__).resolve().parents[2] / '.tools/voice-models/vosk-model-small-de-0.15'))
-aligner = vosk.KaldiRecognizer(model, 16000, json.dumps(['links', 'rechts', '[unk]']))
+model = vosk.Model(str(Path(__file__).resolve().parents[2] / '.tools/voice-models/vosk-model-small-en-us-0.15'))
+aligner = vosk.KaldiRecognizer(model, 16000, json.dumps(['left', 'right', 'faster', 'slower', '[unk]']))
 aligner.SetWords(True)
 aligner.AcceptWaveform(pcm)
 words = json.loads(aligner.FinalResult()).get('result', [])

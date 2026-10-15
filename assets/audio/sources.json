@@ -1,0 +1,68 @@
+[
+  {
+    "file": "source/ferrari_360.mp3",
+    "author": "PritzProductions",
+    "page_url": "https://freesound.org/people/PritzProductions/sounds/241083/",
+    "download_url": "https://cdn.freesound.org/previews/241/241083_3450345-hq.mp3",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "5a8142816b8781fd2fe690bd3d3848d88c41817f57ce4a6d88bcc0e9c59ff017",
+    "status": "rejected",
+    "reason": "Stefan hört Stimmen im verwendeten Ausschnitt. Nicht mehr im Spiel."
+  },
+  {
+    "file": "source/forest_birds.mp3",
+    "author": "ktokrzysiek",
+    "page_url": "https://freesound.org/people/ktokrzysiek/sounds/392603/",
+    "download_url": "https://cdn.freesound.org/previews/392/392603_4924078-hq.mp3",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "717477d07e606f8a38796bd58456c6f8fd50ed2fece8cf00a036ad3de3033ffb"
+  },
+  {
+    "file": "source/wind.ogg",
+    "author": "SketchMan3 / JaggedStone",
+    "page_url": "https://opengameart.org/content/wind-whoosh-loop",
+    "download_url": "https://opengameart.org/sites/default/files/wind%20woosh%20loop.ogg",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "0cfdbd3f21ed449689a9024264edf267d0037a6495813a7010827672ec191dac"
+  },
+  {
+    "file": "source/impact_soft.ogg",
+    "author": "Kenney",
+    "page_url": "https://kenney.nl/assets/impact-sounds",
+    "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "49e7ca88743fca974bb8676ea138b751cfd8f9033b5e7af8736c2a215d6edbc1"
+  },
+  {
+    "file": "source/impact_metal.ogg",
+    "author": "Kenney",
+    "page_url": "https://kenney.nl/assets/impact-sounds",
+    "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "e07045693e4a2b3d165c424e3dab4c781d9ff8880a386880ac89a51315d7f831"
+  },
+  {
+    "file": "source/car_engine_qubodup.wav",
+    "author": "qubodup",
+    "title": "Car Engine Loop 96kHz, 4s",
+    "page_url": "https://opengameart.org/content/car-engine-loop-96khz-4s",
+    "download_url": "https://opengameart.org/sites/default/files/engine-loop.7z",
+    "archive_member": "engine-loop/engine-loop-1-normalized.wav",
+    "license": "CC-BY-3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "checked_on": "2026-10-15",
+    "sha256": "cf504ec899929570d68c1f3a77aad2da60c6d28bf60be535504598692ea46089",
+    "changes": "Mono, Hochpass 60 Hz, Tiefpass 6000 Hz, Überblendung 50 ms, Spitzenpegel 0.7, Ogg Vorbis.",
+    "listening_review": "pending"
+  }
+]

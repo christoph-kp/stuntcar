@@ -8,14 +8,6 @@
     ]
   },
   {
-    "test": "run_forest_tests.gd",
-    "exit_code": 0,
-    "output": [
-      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
-      "WALD: 40 Prüfungen, 0 Fehler"
-    ]
-  },
-  {
     "test": "run_input_tests.gd",
     "exit_code": 0,
     "output": [
@@ -29,22 +21,6 @@
     "output": [
       "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
       "SPRÜNGE IM SPIEL: 56 Prüfungen, 0 Fehler"
-    ]
-  },
-  {
-    "test": "run_landscape_tests.gd",
-    "exit_code": 0,
-    "output": [
-      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
-      "LANDSCHAFTEN: 36 Prüfungen, 0 Fehler"
-    ]
-  },
-  {
-    "test": "run_scene_test.gd",
-    "exit_code": 0,
-    "output": [
-      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
-      "SPIELPRÜFUNG: FINISHED bei 599.762925634469 m; Zeit: 27.4333333333331 s; Fehler: 0"
     ]
   },
   {
@@ -109,6 +85,38 @@
     "output": [
       "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
       "SPRACHSTEUERUNG: 10 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_forest_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "WALD: 46 Prüfungen, 0 Fehler",
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\""
+    ]
+  },
+  {
+    "test": "run_forest_fall_test.gd",
+    "exit_code": 0,
+    "output": [
+      "WALDFALL: Fall=true, Neustart=true, Boden durchquert=false",
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\""
+    ]
+  },
+  {
+    "test": "run_landscape_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "LANDSCHAFTEN: 36 Prüfungen, 0 Fehler",
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\""
+    ]
+  },
+  {
+    "test": "run_scene_test.gd",
+    "exit_code": 0,
+    "output": [
+      "SPIELPRÜFUNG: FINISHED bei 599.762925634469 m; Zeit: 27.4333333333331 s; Fehler: 0",
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\""
     ]
   }
 ]

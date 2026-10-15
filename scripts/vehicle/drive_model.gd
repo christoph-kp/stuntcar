@@ -71,6 +71,10 @@ func request_turn(direction: int) -> void:
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
 		jump_assist_until = maxf(jump.end_m + 24.0, distance_m + 24.0)
 		manual_remaining = 0.0
+		# A turn cue can arrive during landing. Keep that authorization while
+		# the same command centers the car for the last part of the jump.
+		if not curve.is_empty() and curve.turn_sign == direction and distance_m >= curve.start_m - input_window_m():
+			active_curve_id = curve.id
 		return
 	jump_assist_until = -1.0
 	var window := input_window_m()
@@ -95,9 +99,9 @@ func change_speed(direction: int) -> void:
 	target_speed_mps = clampf(target_speed_mps + direction * SPEED_STEP, MIN_SPEED, MAX_SPEED)
 	speed_feedback_seconds = 2.0
 	if is_equal_approx(before, target_speed_mps):
-		speed_feedback = "Höchsttempo erreicht" if direction > 0 else "Niedrigstes Tempo erreicht"
+		speed_feedback = tr("I18N_SPEED_MAX") if direction > 0 else tr("I18N_SPEED_MIN")
 	else:
-		speed_feedback = ("Gas" if direction > 0 else "Bremsen") + ": Ziel %d km/h" % roundi(target_speed_mps * 3.6)
+		speed_feedback = (tr("I18N_SPEED_FASTER") if direction > 0 else tr("I18N_SPEED_SLOWER")) % roundi(target_speed_mps * 3.6)
 
 func step(delta: float) -> void:
 	if off_road or finished:

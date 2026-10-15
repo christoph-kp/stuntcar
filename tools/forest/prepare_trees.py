@@ -2,6 +2,7 @@
 import bpy
 import bmesh
 import json
+import hashlib
 import re
 import numpy as np
 from pathlib import Path
@@ -51,6 +52,8 @@ for species in ['pine_tree_01', 'fir_tree_01']:
                 # Detached dead branches collapse into large cones at game detail.
                 if 'dead_branches' in source_mat.name:
                     continue
+                if detail == 'far' and 'bark' in source_mat.name:
+                    continue
                 mesh = original.data.copy()
                 bm = bmesh.new()
                 bm.from_mesh(mesh)
@@ -76,7 +79,8 @@ for species in ['pine_tree_01', 'fir_tree_01']:
                 target = 28000 if 'twig' in source_mat.name else 1800
                 if detail == 'far':
                     target = 10000 if 'twig' in source_mat.name else 450
-                if triangles > target:
+                # Preserve thin branch tubes. Collapse turns them into broad cones.
+                if triangles > target and 'bark' not in source_mat.name:
                     mod = obj.modifiers.new('Game detail', 'DECIMATE')
                     mod.ratio = target / triangles
                     bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -98,7 +102,9 @@ for species in ['pine_tree_01', 'fir_tree_01']:
                                       export_lights=False, export_image_format='AUTO')
             triangles = sum(len(p.vertices)-2 for p in obj.data.polygons)
             records.append({'path': str(output.relative_to(ROOT)), 'source': species,
-                            'source_detail': 'LOD2', 'detail': detail, 'triangles': triangles})
+                            'source_detail': 'LOD2', 'detail': detail, 'triangles': triangles,
+                            'bytes': output.stat().st_size,
+                            'sha256': hashlib.sha256(output.read_bytes()).hexdigest()})
             print('EXPORTED', obj.name, triangles, flush=True)
             bpy.data.objects.remove(obj, do_unlink=True)
 

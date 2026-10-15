@@ -1,0 +1,49 @@
+{
+  "duration_s": 20.248,
+  "peak_dbfs": -10.0,
+  "rms_dbfs": -26.98,
+  "clipped_samples": 0,
+  "sections": [
+    {
+      "from_s": 0,
+      "to_s": 2,
+      "rms_dbfs": -28.24
+    },
+    {
+      "from_s": 2,
+      "to_s": 6,
+      "rms_dbfs": -24.63
+    },
+    {
+      "from_s": 6,
+      "to_s": 8,
+      "rms_dbfs": -27.79
+    },
+    {
+      "from_s": 8,
+      "to_s": 11,
+      "rms_dbfs": -28.87
+    },
+    {
+      "from_s": 12,
+      "to_s": 14,
+      "rms_dbfs": -25.52
+    },
+    {
+      "from_s": 14,
+      "to_s": 16,
+      "rms_dbfs": -28.29
+    },
+    {
+      "from_s": 16,
+      "to_s": 18,
+      "rms_dbfs": -28.46
+    },
+    {
+      "from_s": 18,
+      "to_s": 20,
+      "rms_dbfs": -28.57
+    }
+  ],
+  "listening_review": "pending"
+}

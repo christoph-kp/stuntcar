@@ -1,0 +1,114 @@
+[
+  {
+    "test": "run_catalog_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "KATALOG: 7 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_forest_fall_test.gd",
+    "exit_code": 0,
+    "summary": [
+      "WALDFALL: Fall=true, Neustart=true, Boden durchquert=false"
+    ]
+  },
+  {
+    "test": "run_forest_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "WALD: 46 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_input_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "EINGABEPRÜFUNGEN: 12, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_jump_scene_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPRÜNGE IM SPIEL: 60 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_landscape_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "LANDSCHAFTEN: 36 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_scene_test.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPIELPRÜFUNG: FINISHED bei 939.575029176397 m; Zeit: 42.9333333333322 s; Fehler: 0"
+    ]
+  },
+  {
+    "test": "run_selection_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "AUSWAHL: 13 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_speed_bank_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "TEMPO UND STEILKURVEN: 77 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_stunt_track_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "STUNTSTRECKE: 21 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_tension_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPANNUNGSPRÜFUNGEN: 13, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "PRÜFUNGEN: 27, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_track_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "STRECKEN: 94 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_bridge_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPRACHVERBINDUNG: 12 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_scene_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPRACHE IM SPIEL: 10 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_tests.gd",
+    "exit_code": 0,
+    "summary": [
+      "SPRACHSTEUERUNG: 10 Prüfungen, 0 Fehler"
+    ]
+  }
+]

@@ -72,7 +72,7 @@ class MicrophoneContext(unittest.TestCase):
                 audio = SimpleNamespace(RawInputStream=InputStream,
                                         query_devices=lambda *args: {'name': 'Test'})
                 with patch.dict('sys.modules', {'sounddevice': audio}), \
-                        patch('voice.recognizer.BilingualRecognizer', lambda: None), \
+                        patch('voice.recognizer.EnglishRecognizer', lambda: None), \
                         patch('voice.recognizer.StreamingRecognizer', Stream), \
                         patch('voice.recognizer.time.monotonic', lambda: clock[0]):
                     with self.assertRaises(StopIteration):

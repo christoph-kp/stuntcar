@@ -1,0 +1,11 @@
+{
+  "duration_s": 17.183,
+  "peak_dbfs": -12.04,
+  "rms_dbfs": -27.01,
+  "clipped_samples": 0,
+  "source_hashes_verified": true,
+  "listening_review": "pending",
+  "live_microphone_check": "pending",
+  "engine_source": "qubodup / Car Engine Loop 96kHz, 4s",
+  "engine_model": "Fünf akustische Gänge und erzeugte Zündimpulse"
+}

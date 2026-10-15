@@ -4,83 +4,107 @@
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 36048
+    "triangles": 53510,
+    "bytes": 17402216,
+    "sha256": "91303ea17b6845fe5f13b43a4838558cecb883cc0420bf30132d89400c349fd2"
   },
   {
     "path": "assets/forest/trees/pine_tree_01_a_far.glb",
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 16697
+    "triangles": 10449,
+    "bytes": 8920940,
+    "sha256": "95a59fedc11c52e825b7df7b936b39e9933c9e659f7be62c0a579f154aa4a141"
   },
   {
     "path": "assets/forest/trees/pine_tree_01_b_near.glb",
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 33499
+    "triangles": 43845,
+    "bytes": 16555076,
+    "sha256": "5cfe373cbdbb1de6556fde292554413add2d3e2e23ccfd2b032f18676c4b4052"
   },
   {
     "path": "assets/forest/trees/pine_tree_01_b_far.glb",
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 14149
+    "triangles": 10449,
+    "bytes": 8590368,
+    "sha256": "a49e20d9b876f4942065ee2176f7467b7dd181f9479d485db588290f803f200f"
   },
   {
     "path": "assets/forest/trees/pine_tree_01_c_near.glb",
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 35333
+    "triangles": 50237,
+    "bytes": 17374824,
+    "sha256": "dc1da9085f0f2984435fa97465e764b7c8e887fb51935b738820616aa1eca67a"
   },
   {
     "path": "assets/forest/trees/pine_tree_01_c_far.glb",
     "source": "pine_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 15983
+    "triangles": 10449,
+    "bytes": 9073172,
+    "sha256": "c62a7cf00efa6211049de0d93757c1a9881885ef12c531bff31f408caaf8924f"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_a_near.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 39334
+    "triangles": 47672,
+    "bytes": 17076704,
+    "sha256": "bd9fa545766a89fec6338741c2e3098653fa5f6c668d94c51c243de2cb8b6d3a"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_a_far.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 19983
+    "triangles": 10449,
+    "bytes": 8445492,
+    "sha256": "2794ebdb01cdd2a7825d57d2e987adb15a3a3244287818829438404e3bcf6a6c"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_b_near.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 24012
+    "triangles": 27808,
+    "bytes": 15764320,
+    "sha256": "0e780dad0b09c7a9e144435406d14d2627054fa707a7184c930b2c905b0578b0"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_b_far.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 14742
+    "triangles": 10450,
+    "bytes": 8256512,
+    "sha256": "cdd8e94947b37c71f2dfd69c8f62e47d242c00bd8859c2eba7aa445f1163c011"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_c_near.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "near",
-    "triangles": 11095
+    "triangles": 14865,
+    "bytes": 15160792,
+    "sha256": "09bf27d90147c9009a1bb9107ce261c8ef3ca5f5a8c5ee292da7fc4bb64aa01f"
   },
   {
     "path": "assets/forest/trees/fir_tree_01_c_far.glb",
     "source": "fir_tree_01",
     "source_detail": "LOD2",
     "detail": "far",
-    "triangles": 9746
+    "triangles": 5466,
+    "bytes": 8211068,
+    "sha256": "7fe3c7f4a66d56128dac5b7d826490a16642876341a50af367118342095b6060"
   }
 ]

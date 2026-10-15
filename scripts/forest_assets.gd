@@ -39,6 +39,13 @@ static func tree_mesh(species: String, variant: int, detail: String) -> Mesh:
 		var item = source.find_children("*", "MeshInstance3D", true, false)[0]
 		var mesh: Mesh = item.mesh
 		prepare_materials(mesh)
+		if detail == "far":
+			for surface in range(mesh.get_surface_count()):
+				var material: StandardMaterial3D = mesh.surface_get_material(surface)
+				material.shading_mode = BaseMaterial3D.SHADING_MODE_PER_VERTEX
+				material.roughness_texture = null
+				material.normal_enabled = false
+				material.set_flag(BaseMaterial3D.FLAG_DONT_RECEIVE_SHADOWS, true)
 		tree_meshes[key] = mesh
 		source.free()
 	return tree_meshes[key]
@@ -63,15 +70,18 @@ static func create_tree(species: String, variant: int) -> Node3D:
 	var far_mesh := tree_mesh(species, variant, "far")
 	node.set_meta("source_radius", maxf(radius(near_mesh), radius(far_mesh)))
 	var near := centered(near_mesh)
-	near.visibility_range_end = 100.0
-	near.visibility_range_end_margin = 8.0
+	# Use the two prepared tree meshes; automatic mesh LOD distorts thin branches.
+	near.lod_bias = 1000.0
+	near.visibility_range_end = 45.0
+	near.visibility_range_end_margin = 5.0
 	node.add_child(near)
 	var far := centered(far_mesh)
+	far.lod_bias = 1000.0
 	# Keep both levels aligned even when decimation changes the bounds.
 	far.position = near.position
-	far.visibility_range_begin = 100.0
-	far.visibility_range_begin_margin = 8.0
-	far.visibility_range_end = 420.0
+	far.visibility_range_begin = 45.0
+	far.visibility_range_begin_margin = 5.0
+	far.visibility_range_end = 280.0
 	far.visibility_range_end_margin = 20.0
 	far.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	node.add_child(far)

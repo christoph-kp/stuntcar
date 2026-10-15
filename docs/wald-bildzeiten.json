@@ -1,0 +1,14 @@
+{
+	"adapter": "Apple M4 Pro (Apple9)",
+	"distance_m": 939.575029176397,
+	"fps": 47.433598348309,
+	"frames": 2576,
+	"mean_ms": 21.0821028726708,
+	"note": "Die gesamte Waldstrecke. 120 Bilder Vorlauf. Keine Bildaufnahme während der Messung. Vertikale Synchronisation aktiv.",
+	"p95_ms": 25.845,
+	"peak_draw_calls": 1131,
+	"peak_primitives": 7836297,
+	"renderer": "forward_plus",
+	"resolution": "1280x800",
+	"state": "FINISHED"
+}

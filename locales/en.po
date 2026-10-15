@@ -1,0 +1,495 @@
+# English game text. Keep message keys and format placeholders unchanged.
+msgid ""
+msgstr "Project-Id-Version: Stuntcar\nLanguage: en\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "I18N_APP_BRAND"
+msgstr "STUNTCAR"
+
+msgid "I18N_AUDIO_FOOTER"
+msgstr "Engine: also tyres and contact with the track.\nEnvironment: wind and forest."
+
+msgid "I18N_AUDIO_HELP"
+msgstr "Set the volume. Each press adds 25 %.\nAfter 100 %, the next press sets 0 %."
+
+msgid "I18N_AUDIO_TITLE"
+msgstr "Your sound."
+
+msgid "I18N_CONTROL_FOOTER"
+msgstr "%s: next item · %s: select\nYou can also click an item.\nVoice control uses your microphone. It works on this computer."
+
+msgid "I18N_CONTROL_HELP"
+msgstr "Select your controls. You can change them in Settings."
+
+msgid "I18N_CONTROL_KEYS"
+msgstr "Two keys"
+
+msgid "I18N_CONTROL_KEYS_ENTRY"
+msgstr "Controls: two keys"
+
+msgid "I18N_CONTROL_TITLE"
+msgstr "Your controls."
+
+msgid "I18N_CONTROL_VOICE"
+msgstr "Voice + keys"
+
+msgid "I18N_CONTROL_VOICE_ENTRY"
+msgstr "Controls: voice + keys"
+
+msgid "I18N_DRIVE_HELP"
+msgstr "Press once: turn  ·  Press again: correct  ·  Esc: pause"
+
+msgid "I18N_DRIVE_KEYS"
+msgstr "[ %s ]   Left                 Right   [ %s ]"
+
+msgid "I18N_DRIVE_VOICE"
+msgstr "Say: left · right · faster · slower · pause"
+
+msgid "I18N_FALL_HELP"
+msgstr "You will start again before the turn."
+
+msgid "I18N_FALL_TITLE"
+msgstr "Off the track"
+
+msgid "I18N_FILE_MISSING"
+msgstr "The file is missing."
+
+msgid "I18N_FILE_UNREADABLE"
+msgstr "The file cannot be read."
+
+msgid "I18N_FINISH_FACTS"
+msgstr "Distance: %d m · Turns: %d\nRestarts: %d"
+
+msgid "I18N_FINISH_TITLE"
+msgstr "You reached the finish."
+
+msgid "I18N_HIGH_SPEED"
+msgstr "High speed: correct in turns or decrease the speed."
+
+msgid "I18N_HINT_SECONDS"
+msgstr "Hint: %d seconds"
+
+msgid "I18N_HUD_INITIAL_ROUTE"
+msgstr "First Drive  /  600 m"
+
+msgid "I18N_HUD_ROUTE"
+msgstr "%s  /  %d of %d m"
+
+msgid "I18N_HUD_SPEED"
+msgstr "%d km/h"
+
+msgid "I18N_HUD_SPEED_TARGET"
+msgstr "%d → %d km/h"
+
+msgid "I18N_HUD_TIME"
+msgstr "%s · %02d:%02d"
+
+msgid "I18N_JUMP_AHEAD"
+msgstr "Jump ahead"
+
+msgid "I18N_JUMP_AIR"
+msgstr "In the air!"
+
+msgid "I18N_JUMP_LANDED"
+msgstr "On the track!"
+
+msgid "I18N_JUMP_LEFT"
+msgstr "Press left once to correct before you land."
+
+msgid "I18N_JUMP_READY"
+msgstr "Your direction and speed are correct."
+
+msgid "I18N_JUMP_RIGHT"
+msgstr "Press right once to correct before you land."
+
+msgid "I18N_KEYS_CHANGE"
+msgstr "Change keys"
+
+msgid "I18N_KEY_BIND_LEFT"
+msgstr "Press the new left key."
+
+msgid "I18N_KEY_BIND_RIGHT"
+msgstr "Press a different key for right."
+
+msgid "I18N_KEY_BIND_TIMEOUT"
+msgstr "\nCancel in %d seconds.\nWithout input, the old keys stay.\nPress Esc to cancel now."
+
+msgid "I18N_MENU_AGAIN"
+msgstr "Drive again"
+
+msgid "I18N_MENU_BACK"
+msgstr "Back"
+
+msgid "I18N_MENU_CONTINUE"
+msgstr "Continue"
+
+msgid "I18N_MENU_FOOTER"
+msgstr "The car goes straight without input.\nSelect a direction before each turn."
+
+msgid "I18N_MENU_HELP"
+msgstr "Use these two keys for all menus."
+
+msgid "I18N_MENU_KEYS"
+msgstr "[ %s ]   Next item             Select   [ %s ]"
+
+msgid "I18N_MENU_MAIN"
+msgstr "Main menu"
+
+msgid "I18N_MENU_QUIT"
+msgstr "Quit"
+
+msgid "I18N_MENU_RESTART"
+msgstr "Restart"
+
+msgid "I18N_MENU_SETTINGS"
+msgstr "Settings"
+
+msgid "I18N_MENU_START"
+msgstr "Start drive"
+
+msgid "I18N_MENU_TITLE"
+msgstr "Your direction.\nYour drive."
+
+msgid "I18N_MENU_TRACKS"
+msgstr "Select track"
+
+msgid "I18N_MENU_VOICE"
+msgstr "Say: start · next · select · resume"
+
+msgid "I18N_MENU_VOLUME"
+msgstr "Volume"
+
+msgid "I18N_PAUSE_HELP"
+msgstr "Continue when you are ready."
+
+msgid "I18N_PAUSE_TITLE"
+msgstr "A short pause."
+
+msgid "I18N_PREVIEW_LANDSCAPE"
+msgstr "Landscape view"
+
+msgid "I18N_PREVIEW_TRACK"
+msgstr "Track view"
+
+msgid "I18N_QUIT_HELP"
+msgstr "Close the game."
+
+msgid "I18N_SCENARIO_ALPINE"
+msgstr "Alpine Pass"
+
+msgid "I18N_SCENARIO_CANYON"
+msgstr "Rock Canyon"
+
+msgid "I18N_SCENARIO_COAST"
+msgstr "Rainy Coast"
+
+msgid "I18N_SCENARIO_FOREST"
+msgstr "Misty Forest"
+
+msgid "I18N_SETTINGS_HELP"
+msgstr "Select enough time for your input."
+
+msgid "I18N_SETTINGS_SAVE_FAILED"
+msgstr "The settings apply to this session. The game could not save them."
+
+msgid "I18N_SETTINGS_TITLE"
+msgstr "Your settings."
+
+msgid "I18N_SOUND_OFF"
+msgstr "Sound: off"
+
+msgid "I18N_SOUND_ON"
+msgstr "Sound: on"
+
+msgid "I18N_SPEED_FASTER"
+msgstr "Faster: target %d km/h"
+
+msgid "I18N_SPEED_MAX"
+msgstr "Maximum speed reached"
+
+msgid "I18N_SPEED_MIN"
+msgstr "Minimum speed reached"
+
+msgid "I18N_SPEED_SLOWER"
+msgstr "Slower: target %d km/h"
+
+msgid "I18N_STRAIGHT_HELP"
+msgstr "You do not need to turn here."
+
+msgid "I18N_STRAIGHT_TITLE"
+msgstr "Straight ahead"
+
+msgid "I18N_TRACK_ADD_HELP"
+msgstr "Add a valid JSON file to the tracks folder. Then start the game again."
+
+msgid "I18N_TRACK_ALPINE_DESCRIPTION"
+msgstr "Go up high, down a steep slope and across a gap."
+
+msgid "I18N_TRACK_ALPINE_NAME"
+msgstr "High Drive"
+
+msgid "I18N_TRACK_BANK_ERROR"
+msgstr "The track bank angle must be from 0 to 45 degrees."
+
+msgid "I18N_TRACK_CANYON_DESCRIPTION"
+msgstr "Two jumps, high turns and a long slope down."
+
+msgid "I18N_TRACK_CANYON_NAME"
+msgstr "Jump Track"
+
+msgid "I18N_TRACK_COAST_DESCRIPTION"
+msgstr "Three turns above the sea. Rain, rocks and a lighthouse."
+
+msgid "I18N_TRACK_COAST_NAME"
+msgstr "Coast Drive"
+
+msgid "I18N_TRACK_CURVE_ERROR"
+msgstr "Invalid turn."
+
+msgid "I18N_TRACK_CURVE_NUMBER_ERROR"
+msgstr "A turn has an invalid number."
+
+msgid "I18N_TRACK_CURVE_SPACE_ERROR"
+msgstr "Turns need space, a radius of at least 20 m and a start point before them."
+
+msgid "I18N_TRACK_ERRORS"
+msgstr "Check these files:\n"
+
+msgid "I18N_TRACK_FACTS"
+msgstr "%d m   ·   Turns: %d   ·   Jumps: %d"
+
+msgid "I18N_TRACK_FIELD_ERROR"
+msgstr "Unknown field: %s"
+
+msgid "I18N_TRACK_FOREST_DESCRIPTION"
+msgstr "Two large jumps above the forest, high ramps and three steep turns."
+
+msgid "I18N_TRACK_FOREST_NAME"
+msgstr "First Drive"
+
+msgid "I18N_TRACK_HEIGHT_COUNT_ERROR"
+msgstr "The track needs at least two height points."
+
+msgid "I18N_TRACK_HEIGHT_END_ERROR"
+msgstr "Height points must include the start and finish."
+
+msgid "I18N_TRACK_HEIGHT_ERROR"
+msgstr "Invalid height point."
+
+msgid "I18N_TRACK_HEIGHT_RANGE_ERROR"
+msgstr "Height points must follow track order. Their heights must be from 5 to 100 m."
+
+msgid "I18N_TRACK_JSON_ERROR"
+msgstr "JSON error on line %d: %s"
+
+msgid "I18N_TRACK_JUMP_ERROR"
+msgstr "Invalid jump."
+
+msgid "I18N_TRACK_JUMP_NUMBER_ERROR"
+msgstr "Invalid jump value."
+
+msgid "I18N_TRACK_JUMP_SPACE_ERROR"
+msgstr "A jump must be 15 to 50 m long, with space before and after it."
+
+msgid "I18N_TRACK_JUMP_TURN_ERROR"
+msgstr "Jumps need a straight track section and space from turns."
+
+msgid "I18N_TRACK_LENGTH_ERROR"
+msgstr "The length must be a whole number from 200 to 10000 metres."
+
+msgid "I18N_TRACK_NAME_ERROR"
+msgstr "A track name or description is missing."
+
+msgid "I18N_TRACK_NONE_SELECTED"
+msgstr "No track selected"
+
+msgid "I18N_TRACK_NONE_VALID"
+msgstr "No valid track"
+
+msgid "I18N_TRACK_OBJECT_ERROR"
+msgstr "The track needs a JSON object."
+
+msgid "I18N_TRACK_PARTS_ERROR"
+msgstr "The track needs curves, heights and jumps."
+
+msgid "I18N_TRACK_PREVIEW_MISSING"
+msgstr "%s: The preview %s is missing. The landscape view will appear instead."
+
+msgid "I18N_TRACK_PREVIEW_NAME_ERROR"
+msgstr "The preview needs a file name."
+
+msgid "I18N_TRACK_PREVIEW_PATH_ERROR"
+msgstr "The preview must be an image file in the tracks folder."
+
+msgid "I18N_TRACK_RETURN"
+msgstr "Return to the current track."
+
+msgid "I18N_TRACK_SCENARIO_ERROR"
+msgstr "Unknown landscape. Use forest, alpine, canyon or coast."
+
+msgid "I18N_TRACK_SELECT_KEYS"
+msgstr "[ %s ] Next item     [ %s ] Select     ·     You can also click."
+
+msgid "I18N_TRACK_SELECT_TITLE"
+msgstr "Where will you drive?"
+
+msgid "I18N_TRACK_SELECT_VALID"
+msgstr "Select a valid track."
+
+msgid "I18N_TRACK_SELECT_VOICE"
+msgstr "\nSay: next · select"
+
+msgid "I18N_TRACK_SETTINGS_HELP"
+msgstr "Change the controls, keys and hints."
+
+msgid "I18N_TRACK_TITLE"
+msgstr "Your track."
+
+msgid "I18N_TRACK_VERSION_ERROR"
+msgstr "This format version is not supported. Use format_version: 1."
+
+msgid "I18N_TURN_CORRECTION"
+msgstr "Your correction moves the car towards the inside."
+
+msgid "I18N_TURN_EDGE"
+msgstr "Near the edge! Press again to correct."
+
+msgid "I18N_TURN_LEFT"
+msgstr "←  Left turn"
+
+msgid "I18N_TURN_LEFT_SELECTED"
+msgstr "←  Left selected"
+
+msgid "I18N_TURN_PROMPT"
+msgstr "Select the direction now."
+
+msgid "I18N_TURN_RIGHT"
+msgstr "Right turn  →"
+
+msgid "I18N_TURN_RIGHT_SELECTED"
+msgstr "Right selected  →"
+
+msgid "I18N_TURN_SELECTED_HELP"
+msgstr "The turn is ahead. You selected a direction."
+
+msgid "I18N_VOICE_ACTION"
+msgstr "Used: %s · No. %d"
+
+msgid "I18N_VOICE_AUDIO_LATE"
+msgstr "The microphone does not supply audio in time."
+
+msgid "I18N_VOICE_AUTH_FAILED"
+msgstr "The voice connection could not connect."
+
+msgid "I18N_VOICE_BAD_PACKET"
+msgstr "The voice program sent an invalid message."
+
+msgid "I18N_VOICE_CHECKING"
+msgstr "Check: %s"
+
+msgid "I18N_VOICE_CONNECTION_ENDED"
+msgstr "The microphone connection ended. The drive is paused."
+
+msgid "I18N_VOICE_CONNECTION_LOST"
+msgstr "The microphone connection failed. The drive is paused."
+
+msgid "I18N_VOICE_CONNECT_FAILED"
+msgstr "The local voice connection could not start."
+
+msgid "I18N_VOICE_DEFAULT_DEVICE"
+msgstr "Default microphone"
+
+msgid "I18N_VOICE_DELAY"
+msgstr "Voice input has too much delay."
+
+msgid "I18N_VOICE_ECHO"
+msgstr " · Heard: “%s”"
+
+msgid "I18N_VOICE_ERROR"
+msgstr "Microphone error"
+
+msgid "I18N_VOICE_EXAMPLE"
+msgstr "Say: left, left, left …"
+
+msgid "I18N_VOICE_HEARD"
+msgstr "I hear: %s"
+
+msgid "I18N_VOICE_MIC_STARTING"
+msgstr "The microphone starts …"
+
+msgid "I18N_VOICE_MODEL_MISSING"
+msgstr "The speech model is missing. Run the voice setup."
+
+msgid "I18N_VOICE_NOT_READY"
+msgstr "The microphone is not ready. Check its access permission."
+
+msgid "I18N_VOICE_NO_ACTION"
+msgstr "No command used yet."
+
+msgid "I18N_VOICE_NO_AUDIO"
+msgstr "The microphone no longer supplies audio."
+
+msgid "I18N_VOICE_NO_COMMAND"
+msgstr "No command found."
+
+msgid "I18N_VOICE_NO_EFFECT"
+msgstr "Heard: %s · No effect here."
+
+msgid "I18N_VOICE_OFF"
+msgstr "Voice off"
+
+msgid "I18N_VOICE_PANEL"
+msgstr "YOUR VOICE"
+
+msgid "I18N_VOICE_PROCESS_ENDED"
+msgstr "The voice program stopped. The drive is paused."
+
+msgid "I18N_VOICE_READY"
+msgstr "Microphone active · English"
+
+msgid "I18N_VOICE_SETTINGS_HELP"
+msgstr " Check the controls in Settings."
+
+msgid "I18N_VOICE_SETUP_MISSING"
+msgstr "Voice control is not installed. Open Set up voice.command."
+
+msgid "I18N_VOICE_STARTING"
+msgstr "Voice control starts. You may need to permit microphone access."
+
+msgid "I18N_VOICE_START_FAILED"
+msgstr "The voice program could not start."
+
+msgid "I18N_VOICE_TOO_MANY"
+msgstr "Too many voice commands. Switch voice control off and on again."
+
+msgid "I18N_VOICE_UNAVAILABLE"
+msgstr "The microphone is not available. Check its permission and input device."
+
+msgid "I18N_VOICE_UNKNOWN"
+msgstr "Not clear: %s"
+
+msgid "I18N_VOLUME_ENGINE"
+msgstr "Engine: %d %%"
+
+msgid "I18N_VOLUME_ENVIRONMENT"
+msgstr "Environment: %d %%"
+
+msgid "I18N_VOLUME_HINTS"
+msgstr "Hints: %d %%"
+
+msgid "I18N_SIGN_RIGHT"
+msgstr "RIGHT  →"
+
+msgid "I18N_SIGN_LEFT"
+msgstr "←  LEFT"
+
+msgid "I18N_SIGN_FINISH"
+msgstr "FINISH"
+
+msgid "I18N_SIGN_JUMP"
+msgstr "JUMP"
+
+msgid "I18N_SIGN_LAND"
+msgstr "LAND HERE"
+
+msgid "I18N_TRACK_TEMPLATE_NAME"
+msgstr "My Track"

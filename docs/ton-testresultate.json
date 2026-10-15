@@ -1,0 +1,113 @@
+[
+  {
+    "test": "run_audio_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "TON: 29 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_catalog_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "KATALOG: 7 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_forest_fall_test.gd",
+    "exit_code": 0,
+    "result": []
+  },
+  {
+    "test": "run_forest_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "WALD: 46 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_input_tests.gd",
+    "exit_code": 0,
+    "result": []
+  },
+  {
+    "test": "run_jump_scene_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "SPRÜNGE IM SPIEL: 60 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_landscape_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "LANDSCHAFTEN: 36 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_scene_test.gd",
+    "exit_code": 0,
+    "result": [
+      "SPIELPRÜFUNG: FINISHED bei 939.575029176397 m; Zeit: 42.9333333333322 s; Fehler: 0"
+    ]
+  },
+  {
+    "test": "run_selection_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "AUSWAHL: 13 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_speed_bank_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "TEMPO UND STEILKURVEN: 77 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_stunt_track_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "STUNTSTRECKE: 21 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_tension_tests.gd",
+    "exit_code": 0,
+    "result": []
+  },
+  {
+    "test": "run_tests.gd",
+    "exit_code": 0,
+    "result": []
+  },
+  {
+    "test": "run_track_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "STRECKEN: 94 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_bridge_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "SPRACHVERBINDUNG: 12 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_scene_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "SPRACHE IM SPIEL: 10 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_tests.gd",
+    "exit_code": 0,
+    "result": [
+      "SPRACHSTEUERUNG: 10 Prüfungen, 0 Fehler"
+    ]
+  }
+]

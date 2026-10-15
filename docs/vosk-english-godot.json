@@ -1,0 +1,15 @@
+{
+  "action": "Ausgeführt: left · Nr. 5",
+  "applied": 5,
+  "delay_after_estimated_word_end_ms": [
+    277.0,
+    319.0,
+    87.0,
+    125.0,
+    -46.0
+  ],
+  "expected_words": 5,
+  "fixture": "res://voice/tests/audio/continuous/left-five.wav",
+  "state": "RUNNING",
+  "voice_status": "Mikrofon aktiv · Englisch"
+}

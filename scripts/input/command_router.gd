@@ -12,6 +12,9 @@ var retry_count := 0
 var checkpoint_m := 0.0
 var total_time := 0.0
 var sound_enabled := true
+var engine_volume := 0.75
+var environment_volume := 0.5
+var hint_volume := 1.0
 var voice_enabled := false
 var paused_from := "RUNNING"
 var control_return := "MENU"
@@ -37,7 +40,7 @@ func submit_voice(command: String) -> bool:
 			if state not in ["MENU", "FINISHED"]: return false
 			restart()
 		"next", "select":
-			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS"]: return false
+			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS", "AUDIO"]: return false
 			press(-1 if command == "next" else 1)
 		_: return false
 	return true
@@ -46,18 +49,19 @@ func _init(drive_model) -> void:
 	model = drive_model
 
 func entries() -> Array[String]:
-	var voice_entry := "Steuerung: Sprache + Tasten" if control_mode == "voice" else "Steuerung: Zwei Tasten"
+	var voice_entry := tr("I18N_CONTROL_VOICE_ENTRY") if control_mode == "voice" else tr("I18N_CONTROL_KEYS_ENTRY")
 	match state:
-		"MENU": return ["Fahrt starten", "Strecke wählen", "Einstellungen", "Beenden"]
-		"PAUSED": return ["Weiterfahren", "Neu starten", "Einstellungen", voice_entry, "Beenden"]
-		"FINISHED": return ["Noch einmal fahren", "Zur Übersicht", "Strecke wählen", "Beenden"]
-		"SETTINGS": return ["Hinweis: %d Sekunden" % int(model.hint_seconds), "Ton: " + ("Ein" if sound_enabled else "Aus"), "Tasten ändern", voice_entry, "Zurück"]
-		"CONTROL": return ["Zwei Tasten", "Sprache + Tasten"]
+		"MENU": return [tr("I18N_MENU_START"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_SETTINGS"), tr("I18N_MENU_QUIT")]
+		"PAUSED": return [tr("I18N_MENU_CONTINUE"), tr("I18N_MENU_RESTART"), tr("I18N_MENU_SETTINGS"), voice_entry, tr("I18N_MENU_QUIT")]
+		"FINISHED": return [tr("I18N_MENU_AGAIN"), tr("I18N_MENU_MAIN"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_QUIT")]
+		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_BACK")]
+		"AUDIO": return [tr("I18N_VOLUME_ENGINE") % roundi(engine_volume * 100), tr("I18N_VOLUME_ENVIRONMENT") % roundi(environment_volume * 100), tr("I18N_VOLUME_HINTS") % roundi(hint_volume * 100), tr("I18N_MENU_BACK")]
+		"CONTROL": return [tr("I18N_CONTROL_KEYS"), tr("I18N_CONTROL_VOICE")]
 		"TRACKS":
 			var result: Array[String] = []
 			for route in routes: result.append(route.name)
-			result.append("Einstellungen")
-			result.append("Beenden")
+			result.append(tr("I18N_MENU_SETTINGS"))
+			result.append(tr("I18N_MENU_QUIT"))
 			return result
 	return []
 
@@ -107,9 +111,21 @@ func activate(index: int) -> void:
 				action_requested.emit("save_settings")
 			elif index == 2: action_requested.emit("rebind")
 			elif index == 3: open_controls()
+			elif index == 4:
+				state = "AUDIO"
+				menu_index = 0
 			else:
 				state = previous_state
 				menu_index = 0
+
+		"AUDIO":
+			if index < 3:
+				var key: String = ["engine_volume", "environment_volume", "hint_volume"][index]
+				set(key, fmod(float(get(key)) + 0.25, 1.25))
+				action_requested.emit("save_settings")
+			else:
+				state = "SETTINGS"
+				menu_index = 4
 
 		"CONTROL":
 			control_mode = "keys" if index == 0 else "voice"
