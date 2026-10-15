@@ -17,6 +17,8 @@ var status_text := tr("I18N_VOICE_OFF")
 var buffer := PackedByteArray()
 var commands: Array[Dictionary] = []
 var input_level := 0.0
+var input_direction := ""
+var level_ms := 0
 var heard_text := ""
 var feedback_state := "listening"
 var device_name := ""
@@ -56,6 +58,7 @@ func stop() -> void:
 	epoch += 1
 	status_text = tr("I18N_VOICE_OFF")
 	input_level = 0.0
+	input_direction = ""
 	heard_text = ""
 	device_name = ""
 
@@ -68,6 +71,8 @@ func invalidate() -> void:
 	epoch += 1
 	heard_text = ""
 	feedback_state = "listening"
+	input_level = 0.0
+	input_direction = ""
 	commands.clear()
 	if peer != null and authenticated:
 		peer.put_data((JSON.stringify({"type":"context", "epoch":epoch}) + "\n").to_utf8_buffer())
@@ -75,6 +80,9 @@ func invalidate() -> void:
 func poll() -> void:
 	if not enabled: return
 	var now := Time.get_ticks_msec()
+	if now - level_ms > 300:
+		input_level = 0.0
+		input_direction = ""
 	if is_ready and now - last_message_ms > 3000:
 		fail(tr("I18N_VOICE_CONNECTION_LOST"))
 		return
@@ -132,8 +140,11 @@ func accept_packet(packet: Dictionary) -> void:
 		"feedback":
 			if not is_ready or packet.get("epoch", -1) != epoch: return
 			var level = packet.get("level", 0.0)
-			if typeof(level) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(level)):
-				input_level = clampf(float(level), 0.0, 1.0)
+			var valid_level := typeof(level) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(level))
+			input_level = clampf(float(level), 0.0, 1.0) if valid_level else 0.0
+			level_ms = Time.get_ticks_msec()
+			var direction := str(packet.get("direction", ""))
+			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""
 			var heard := str(packet.get("heard", "")).left(70)
 			var state := str(packet.get("state", "listening"))
 			if not heard.is_empty() or Time.get_ticks_msec() - feedback_ms > 2000:
@@ -150,6 +161,8 @@ func accept_packet(packet: Dictionary) -> void:
 			if commands.size() >= 16:
 				fail(tr("I18N_VOICE_TOO_MANY"))
 				return
+			var strength = packet.get("strength", 1.0 / 3.0)
+			packet["strength"] = clampf(float(strength), 0.0, 1.0) if typeof(strength) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(strength)) else 1.0 / 3.0
 			commands.append(packet)
 
 func take_commands() -> Array[Dictionary]:

@@ -40,7 +40,7 @@ func run() -> void:
 		scene._physics_process(1.0/60.0)
 	check(scene.get("voice_applied_count") == 5, "Jede Wiederholung erreicht das Auto und den sichtbaren Zähler genau einmal")
 	scene._process(0.016)
-	check(scene.ui.get("voice_action") != null and "5" in str(scene.ui.get("voice_action")), "Die Anzeige bestätigt den fünften ausgeführten Befehl")
+	check(scene.ui.voice_compass.tip_lit("right"), "Die Pfeilspitze bestätigt die ausgeführten Lenkbefehle")
 	send(voice, "slower", 6, voice.epoch)
 	scene._physics_process(1.0/60.0)
 	check(scene.model.speed_mps < 22.0, "Der Sprachbefehl bremst das echte Auto")

@@ -59,6 +59,7 @@ class StreamingRecognizer:
         self.candidates = []
         self.since = []
         self.heard = ''
+        self.recent_levels = deque()
 
     def confirmed(self, results):
         options = []
@@ -90,7 +91,11 @@ class StreamingRecognizer:
         for index in range(len(self.emitted), len(words)):
             if not final and (commands[index] not in DRIVING or self.elapsed - times[index] < .049):
                 break
-            events.append(dict(words[index]))
+            event = dict(words[index])
+            # Keep the voice peak through the decoder's short confirmation delay.
+            # This is a signal level, not calibrated sound pressure.
+            event['strength'] = min(1.0, max((level for _, level in self.recent_levels), default=0.0) / 3000)
+            events.append(event)
             self.emitted.append(commands[index])
         return events
 
@@ -98,6 +103,9 @@ class StreamingRecognizer:
         samples = array('h', pcm)
         rms = (sum(value * value for value in samples) / max(1, len(samples))) ** .5
         self.elapsed += len(pcm) / 32000
+        self.recent_levels.append((self.elapsed, rms))
+        while self.recent_levels and self.recent_levels[0][0] < self.elapsed - .45:
+            self.recent_levels.popleft()
         self.pre_roll.append(pcm)
         if rms >= 180:
             if not self.active:
@@ -131,6 +139,8 @@ class StreamingRecognizer:
             (text for text in texts[self.restricted_count:] if text), next((text for text in texts if text), ''))
         events = self.new_commands(confirmed) if self.active else []
         status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening'}
+        status['direction'] = (confirmed[-1]['command'] if confirmed and rms >= 180
+                               and confirmed[-1]['command'] in {'left', 'right', 'faster', 'slower'} else '')
         if self.active:
             status['state'] = 'checking'
         if self.active and (self.silent_blocks >= 6 or all(self.decoder_ended)):
@@ -148,4 +158,6 @@ class StreamingRecognizer:
             events += self.new_commands(words, final=True)
             status['state'] = 'recognized' if self.emitted else 'unknown'
             self.reset()
+        if events and events[-1]['command'] in {'left', 'right', 'faster', 'slower'}:
+            status['direction'] = events[-1]['command']
         return events, status

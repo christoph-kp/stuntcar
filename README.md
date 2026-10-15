@@ -122,9 +122,11 @@ Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht a
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
-Die Anzeige „Your voice“ zeigt das Mikrofon und seinen Pegel. „Check“ zeigt vermutete Wörter. Diese Wörter lösen noch nicht unbedingt einen Befehl aus. „Used“ bestätigt einen Befehl. Die Nummer steigt bei jeder ausgeführten Wiederholung. „Not clear“ zeigt eine Äußerung ohne erkannten Befehl.
+Die Sprachfahrt zeigt ein Pfeilkreuz rechts neben der Strecke. Links und rechts zeigen die Lenkrichtung. Der obere Pfeil steht für Beschleunigen. Der untere Pfeil steht für Bremsen. Er steht nicht für eine Rückwärtsfahrt.
 
-Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „left“ im Startmenü nicht.
+Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
+
+Die Balken zeigen zunächst nur den Mikrofonpegel. Die Lautstärke verändert die Lenkung und die Geschwindigkeit noch nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Eine persönliche Abstimmung der drei Stufen fehlt noch. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
 
 Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
@@ -180,6 +182,7 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_bridge_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_scene_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_compass_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_selection_tests.gd

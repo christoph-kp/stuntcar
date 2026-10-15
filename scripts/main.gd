@@ -32,8 +32,6 @@ var hinted_ids: Dictionary = {}
 var previous_state := "MENU"
 var voice
 var voice_context := ""
-var last_voice_text := ""
-var voice_echo_seconds := 0.0
 var voice_applied_count := 0
 var voice_action_text := tr("I18N_VOICE_NO_ACTION")
 
@@ -111,8 +109,8 @@ func _physics_process(delta: float) -> void:
 				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
 				if packet.command in ["faster", "slower"]:
 					voice_action_text += "\n" + model.speed_feedback
-				last_voice_text = str(packet.get("text", packet.command)).left(40)
-				voice_echo_seconds = 2.0
+				if session.state == "RUNNING":
+					ui.voice_compass.confirm(packet.command, float(packet.get("strength", 1.0 / 3.0)))
 				sync_voice_context()
 			else:
 				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word
@@ -147,6 +145,7 @@ func sync_voice_context() -> void:
 		voice_context = context
 		pending.clear()
 		voice.invalidate()
+		ui.voice_compass.clear()
 
 func on_voice_unavailable(_message: String) -> void:
 	session.voice_enabled = false
@@ -165,16 +164,9 @@ func _process(delta: float) -> void:
 		message = tr("I18N_KEY_BIND_RIGHT")
 	if binding_stage > 0:
 		message += tr("I18N_KEY_BIND_TIMEOUT") % ceili(bind_timeout)
-	voice_echo_seconds = maxf(0.0, voice_echo_seconds - delta)
 	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
-	if voice_echo_seconds > 0:
-		ui.voice_text += tr("I18N_VOICE_ECHO") % last_voice_text
 	ui.voice_visible = session.voice_enabled
-	ui.voice_level = voice.input_level
-	ui.voice_device = voice.device_name
-	ui.voice_heard = voice.heard_text
-	ui.voice_feedback_state = voice.feedback_state
-	ui.voice_action = voice_action_text
+	ui.voice_compass.set_input(voice.input_direction, voice.input_level)
 	ui.render(session, message)
 
 func _notification(what: int) -> void:

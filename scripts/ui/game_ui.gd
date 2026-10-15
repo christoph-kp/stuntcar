@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal menu_selected(index: int)
 const TrackSelection = preload("res://scripts/ui/track_selection.gd")
+const VoiceCompass = preload("res://scripts/ui/voice_compass.gd")
 var track_selection: PanelContainer
 const INK := Color("142f3e")
 const PAPER := Color("f4f5e9")
@@ -22,16 +23,7 @@ var status_label: Label
 var voice_label: Label
 var voice_text := tr("I18N_VOICE_OFF")
 var voice_visible := false
-var voice_level := 0.0
-var voice_device := ""
-var voice_heard := ""
-var voice_feedback_state := "listening"
-var voice_action := ""
-var speech_panel: PanelContainer
-var speech_device: Label
-var speech_level: ProgressBar
-var speech_heard: Label
-var speech_action: Label
+var voice_compass: Control
 var progress: ProgressBar
 var minimap: Control
 var current_menu := ""
@@ -116,33 +108,14 @@ func _ready() -> void:
 	voice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	voice_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	bottom_row.add_child(voice_label)
-	speech_panel = panel(hud, Color("142f3ef5"))
-	speech_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-	speech_panel.offset_left = -418
-	speech_panel.offset_right = -28
-	speech_panel.offset_top = -76
-	speech_panel.offset_bottom = 160
-	speech_panel.visible = false
-	var speech_rows := VBoxContainer.new()
-	speech_rows.add_theme_constant_override("separation", 8)
-	speech_panel.add_child(speech_rows)
-	speech_rows.add_child(label(tr("I18N_VOICE_PANEL"), 17, MINT))
-	speech_device = label("", 14, PAPER)
-	speech_device.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	speech_rows.add_child(speech_device)
-	speech_level = ProgressBar.new()
-	speech_level.show_percentage = false
-	speech_level.custom_minimum_size.y = 8
-	speech_level.add_theme_stylebox_override("background", style(Color("294553"), 0, 0))
-	speech_level.add_theme_stylebox_override("fill", style(MINT, 0, 0))
-	speech_rows.add_child(speech_level)
-	speech_heard = label("", 20, PAPER)
-	speech_heard.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	speech_heard.custom_minimum_size = Vector2(340, 50)
-	speech_rows.add_child(speech_heard)
-	speech_action = label("", 18, MINT)
-	speech_action.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	speech_rows.add_child(speech_action)
+	voice_compass = VoiceCompass.new()
+	voice_compass.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+	voice_compass.offset_left = -264
+	voice_compass.offset_right = -40
+	voice_compass.offset_top = -32
+	voice_compass.offset_bottom = 192
+	voice_compass.visible = false
+	hud.add_child(voice_compass)
 	menu_panel = panel(root, Color("142f3ef5"))
 	menu_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
 	menu_panel.offset_left = 48
@@ -200,18 +173,10 @@ func render(session, rebind_message: String = "") -> void:
 		track_selection.render(session, left_name, right_name, voice_text)
 		return
 	voice_label.text = voice_text
-	speech_panel.visible = voice_visible
-	speech_device.text = voice_device if not voice_device.is_empty() else tr("I18N_VOICE_MIC_STARTING")
-	speech_level.value = voice_level * 100.0
-	speech_heard.text = tr("I18N_VOICE_HEARD") % voice_heard if not voice_heard.is_empty() else tr("I18N_VOICE_EXAMPLE")
-	if voice_feedback_state == "checking" and not voice_heard.is_empty():
-		speech_heard.text = tr("I18N_VOICE_CHECKING") % voice_heard
-	elif voice_feedback_state == "unknown":
-		speech_heard.text = tr("I18N_VOICE_UNKNOWN") % voice_heard if not voice_heard.is_empty() else tr("I18N_VOICE_NO_COMMAND")
-	speech_action.text = voice_action
 	var model = session.model
 	var state: String = session.state
 	var driving := state in ["RUNNING", "FALLING"]
+	voice_compass.visible = voice_visible and state == "RUNNING"
 	menu_panel.visible = not driving
 	hint_label.visible = driving
 	hint_detail.visible = driving
