@@ -203,7 +203,7 @@ func render(session, rebind_message: String = "") -> void:
 	speech_panel.visible = voice_visible
 	speech_device.text = voice_device if not voice_device.is_empty() else "Das Mikrofon startet …"
 	speech_level.value = voice_level * 100.0
-	speech_heard.text = "Ich höre: %s" % voice_heard if not voice_heard.is_empty() else "Sprich: links, links, links …"
+	speech_heard.text = "Ich höre: %s" % voice_heard if not voice_heard.is_empty() else "Sprich: left, left, left …"
 	if voice_feedback_state == "checking" and not voice_heard.is_empty():
 		speech_heard.text = "Prüfe: %s" % voice_heard
 	elif voice_feedback_state == "unknown":
@@ -226,7 +226,7 @@ func render(session, rebind_message: String = "") -> void:
 	keys_label.text = "[ %s ]   Links                 Rechts   [ %s ]" % [left_name, right_name]
 	status_label.text = "Kurz drücken: lenken  ·  Erneut drücken: nachkorrigieren  ·  Esc: Pause"
 	if session.voice_enabled:
-		status_label.text = "Sagen: links · rechts · schneller / Gas · langsamer / Bremsen · Pause"
+		status_label.text = "Sagen: left · right · faster · slower · pause"
 	if state == "FALLING":
 		hint_label.text = "Die Strecke verlassen"
 		hint_detail.text = "Du fährst gleich vor der Kurve weiter."
@@ -263,7 +263,7 @@ func render(session, rebind_message: String = "") -> void:
 	keys_label.text = "[ %s ]   Nächster Eintrag             Auswählen   [ %s ]" % [left_name, right_name]
 	status_label.text = "Alle Menüs funktionieren mit diesen zwei Tasten."
 	if session.voice_enabled:
-		status_label.text = "Sagen: Start · nächstes · wählen · weiter"
+		status_label.text = "Sagen: start · next · select · resume"
 	match state:
 		"MENU":
 			menu_title.text = "Deine Richtung.\nDeine Fahrt."

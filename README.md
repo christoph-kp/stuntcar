@@ -87,39 +87,41 @@ Du kannst die Sprache unter „Einstellungen → Steuerung“ einschalten. Wähl
 
 Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter „Systemeinstellungen → Ton → Eingabe“ ein anderes Mikrofon.
 
-| Wirkung | Deutsch | Englisch |
-|---|---|---|
-| Links korrigieren | links | left |
-| Rechts korrigieren | rechts | right |
-| Tempo erhöhen | schneller, Gas, Gas geben | faster, gas, accelerate, throttle |
-| Tempo senken | langsamer, Bremsen, Bremse | slower, brake, brakes |
-| Fahrt pausieren | Pause | pause |
-| Fahrt fortsetzen | weiter | continue, resume |
-| Fahrt starten | Start, starten | start |
-| Nächsten Menüeintrag wählen | nächstes | next |
-| Menüeintrag öffnen | wählen | select |
+| Wirkung | Englischer Befehl |
+|---|---|
+| Links korrigieren | left |
+| Rechts korrigieren | right |
+| Tempo erhöhen | faster, gas, accelerate, throttle |
+| Tempo senken | slower, brake, brakes |
+| Fahrt pausieren | pause |
+| Fahrt fortsetzen | continue, resume |
+| Fahrt starten | start |
+| Nächsten Menüeintrag wählen | next |
+| Menüeintrag öffnen | select |
 
-Beide Sprachen funktionieren ohne Umschalten. Du kannst „links links links links links“ direkt hintereinander sagen. Die Erkennung verarbeitet bestätigte Wörter bereits während des Sprechens. Menüs warten weiterhin auf das Ende einer Äußerung.
+Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche bleibt auf Deutsch.
 
-Ein erneut gesprochenes „links“ oder „rechts“ korrigiert erneut. Es pausiert die Fahrt nicht. Die Richtung wirkt genauso wie die entsprechende Taste.
+Du kannst „left left left left left“ direkt hintereinander sagen. Die Erkennung prüft jedes Wort mit zwei Verfahren. Ein Verfahren kennt die Befehle. Das andere Verfahren kennt einen freien Wortschatz. Während des Sprechens müssen beide Verfahren den Befehl bestätigen. Die Erkennung gibt bestätigte Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
-Jedes „schneller“ oder „Gas“ erhöht das gewünschte Tempo um rund 18 km/h. Jedes „langsamer“ oder „Bremsen“ senkt es entsprechend. Das Auto beschleunigt oder bremst deutlich und ohne Sprung im Tempo. Wiederholte Befehle zählen einzeln.
+Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Richtung wirkt genauso wie die entsprechende Taste.
 
-Zum Beispiel erhöht „schneller, schneller“ das Zieltempo von 79 auf 115 km/h. „Langsamer, langsamer“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo. An der Grenze zeigt das Spiel „Höchsttempo erreicht“ oder „Niedrigstes Tempo erreicht“.
+Jedes „faster“ erhöht das gewünschte Tempo um rund 18 km/h. Jedes „slower“ senkt es entsprechend. Wiederholte Befehle zählen einzeln.
+
+Zum Beispiel erhöht „faster, faster“ das Zieltempo von 79 auf 115 km/h. „Slower, slower“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo.
 
 Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
 
-Der Bereich reicht von etwa 50 bis 166 km/h. „Bremsen“ hält das Auto nicht an. Für eine bewusste Pause sage „Pause“.
+Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht an. Für eine bewusste Pause sage „Pause“.
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
 Die Anzeige „Deine Sprache“ zeigt das Mikrofon und seinen Pegel. „Prüfe“ zeigt vermutete Wörter. Diese Wörter lösen noch nicht unbedingt einen Befehl aus. „Ausgeführt“ bestätigt einen Befehl. Die Nummer steigt bei jeder ausgeführten Wiederholung. „Unklar“ zeigt eine Äußerung ohne erkannten Befehl.
 
-Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „links“ im Startmenü nicht.
+Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „left“ im Startmenü nicht.
 
-Die Erkennung reagiert nicht innerhalb von zehn Millisekunden. Die Messreihe ergab etwa 75 bis 764 Millisekunden nach dem geschätzten Wortende. Der mittlere Wert lag bei etwa 351 Millisekunden. Diese Messung nutzt künstliche Sprache. Sie enthält die Erkennung, die lokale Verbindung und die Befehlsverarbeitung im Spiel. Sie enthält nicht die Verzögerung des echten Mikrofons. Weitere Messungen stehen in `docs/prototype-test.md`.
+Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
-Fahrbefehle verändern kein Menü. Nutze dort „nächstes“ und „wählen“. Sprache und Tasten bleiben gleichzeitig verfügbar.
+Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprache und Tasten bleiben gleichzeitig verfügbar.
 
 ## Mikrofon und Einrichtung
 
@@ -129,11 +131,13 @@ Die Erkennung läuft lokal mit Vosk. Sie sendet keine Tonaufnahmen ins Internet.
 
 Auf diesem Mac sind die Bibliotheken und Sprachmodelle bereits eingerichtet. Ein anderer Mac braucht einmalig Python 3.11 oder neuer. Öffne dort `Sprache einrichten.command`. Diese Einrichtung braucht eine Internetverbindung. Danach funktioniert die Sprachsteuerung ohne Internet.
 
+Die Einrichtung lädt nur das englische Modell. Alte zweisprachige Vergleichstests brauchen zusätzlich das deutsche Modell. `python3 voice/setup.py --with-german` richtet auch dieses Modell ein.
+
 Die Sprachmodelle liegen unter `.tools/voice-models`. Die Hilfsprogramme liegen unter `.tools/voice-env`. Diese lokalen Dateien gehören nicht zum Spielcode.
 
 Falls das Mikrofon fehlt, prüfe „Systemeinstellungen → Datenschutz & Sicherheit → Mikrofon“. Erlaube dort den Zugriff für die angezeigte Anwendung. Starte das Spiel danach erneut.
 
-Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Steuerung“ erneut „Sprache + Tasten“. Setze die Fahrt danach bewusst mit „weiter“ oder D fort.
+Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Steuerung“ erneut „Sprache + Tasten“. Setze die Fahrt danach bewusst mit „resume“ oder D fort.
 
 Die künstlichen Sprachproben prüfen die Erkennung technisch. Die neue Erkennung braucht noch einen Test mit deiner Stimme. Hintergrundgeräusche und die Aussprache können das Ergebnis verändern.
 

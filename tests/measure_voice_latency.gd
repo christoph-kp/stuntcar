@@ -7,7 +7,7 @@ var seen := 0
 var source_report := "/private/tmp/stuntcar-replay-source.json"
 var output_report := "/private/tmp/stuntcar-replay-result.json"
 var captured := false
-var fixture := "res://voice/tests/audio/continuous/links-five.wav"
+var fixture := "res://voice/tests/audio/continuous/left-five.wav"
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -16,6 +16,7 @@ func run() -> void:
 	var args := OS.get_cmdline_user_args()
 	if not args.is_empty(): fixture = args[0]
 	scene = load("res://scenes/main.tscn").instantiate()
+	scene.settings_path = "/tmp/stuntcar-voice-measure-unused.cfg"
 	root.add_child(scene)
 	scene.set_physics_process(false)
 	scene.session.restart()

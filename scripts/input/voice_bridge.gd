@@ -128,7 +128,7 @@ func accept_packet(packet: Dictionary) -> void:
 		"ready":
 			is_ready = true
 			device_name = str(packet.get("device", "Standardmikrofon")).left(60)
-			status_text = "Mikrofon aktiv · Deutsch und Englisch"
+			status_text = "Mikrofon aktiv · Englisch"
 		"feedback":
 			if not is_ready or packet.get("epoch", -1) != epoch: return
 			var level = packet.get("level", 0.0)

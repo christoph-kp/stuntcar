@@ -1,0 +1,122 @@
+Englische Vosk-Erkennung: Vergleich vom 15. Oktober 2026
+
+Ergebnis
+
+Die Spielsteuerung erkennt jetzt Englisch.
+Die zusätzliche Bestätigung mit freiem Wortschatz bleibt erhalten.
+Beide englischen Verfahren nutzen intern Abschnitte von 60 statt 240 Millisekunden.
+Die Prüfung auf ein stabiles Wort bleibt bei rund 50 Millisekunden.
+Die Eingabe vom Mikrofon bleibt bei Abschnitten von 50 Millisekunden.
+Die Erkennung wartet am Ende weiterhin auf 300 Millisekunden Stille.
+Die Änderung verringert vor allem die Wartezeit während einer Wortfolge.
+
+Vergleich auf demselben Rechner mit denselben englischen Dateien
+
+Variante                         Median       Höchstwert     Richtige Befehle
+Bisher: Deutsch und Englisch     180,8 ms      510,0 ms       48 von 48
+Nur Englisch, bisherige Abschnitte 178,2 ms    506,1 ms       48 von 48
+Nur Englisch, kurze Abschnitte    84,2 ms       324,2 ms       48 von 48
+
+Der Median ist der mittlere Wert der sortierten Messwerte.
+Er sinkt um 96,6 Millisekunden oder rund 53 Prozent.
+Der Höchstwert sinkt um rund 186 Millisekunden.
+Die Einschränkung auf Englisch allein bringt kaum einen Zeitgewinn.
+Die kürzeren Abschnitte bringen den wesentlichen Zeitgewinn.
+
+Die Messung umfasst zwei Durchläufe pro Variante.
+Jeder Durchlauf enthält vier Einzelwörter und vier Folgen mit je fünf Wiederholungen.
+Die Wörter lauten left, right, faster und slower.
+Jeder erwartete Befehl kommt genau einmal an.
+Der zweite Durchlauf prüft die Varianten in umgekehrter Reihenfolge.
+
+Mittlere Verzögerung je Sprachprobe, bisher und neu
+
+left einzeln:       226 / 197 ms
+right einzeln:      279 / 242 ms
+faster einzeln:      86 /  88 ms
+slower einzeln:     324 / 109 ms
+left fünfmal:       164 /  80 ms
+right fünfmal:      269 / 122 ms
+faster fünfmal:      94 / -14 ms
+slower fünfmal:     158 /  55 ms
+
+Der Gewinn hängt vom Wort und seiner Position ab.
+Einzelne Wörter kommen weiterhin deutlich später an als andere Wörter.
+Die Änderung macht nicht jeden einzelnen Befehl schneller.
+
+Rechenaufwand
+
+Die gemessene Zeit in der Erkennung steigt insgesamt von 5,04 auf 5,85 Sekunden.
+Das entspricht rund 16 Prozent mehr als bei der bisherigen zweisprachigen Erkennung.
+Nur Englisch mit den bisherigen Abschnitten braucht 3,16 Sekunden.
+Kleinere Abschnitte brauchen häufigere Berechnungen.
+Die höchste Dauer eines einzelnen Aufrufs beträgt bisher 203 und neu 212 Millisekunden.
+Diese Messwerte enthalten auch die anfänglichen Berechnungen beim ersten Sprachsignal.
+Die Zeit für das Laden des Modells gehört nicht zu den Verzögerungswerten.
+
+Messverfahren und Grenzen
+
+Die Dateien enthalten künstliche Sprache der macOS-Stimme Samantha.
+Das Prüfprogramm liefert die Abschnitte im Zeitmaß eines echten Mikrofons.
+Es misst bis zur Ausgabe des bestätigten Befehls.
+Die Werte enthalten die Rechenzeit der Erkennung.
+Sie enthalten weder das echte Mikrofon noch die Verbindung und Verarbeitung in Godot.
+Vosk schätzt die Wortenden aus den fertigen Dateien.
+Diese Zeiten stammen nicht aus einer menschlichen Auswertung.
+Negative Werte bedeuten: Die Erkennung bestätigt das Wort vor seinem geschätzten Ende.
+
+Die frühere Messung mit 351 Millisekunden nutzte deutsche Sprachproben und Godot.
+Diese frühere Messung eignet sich nicht für den direkten Vergleich mit den neuen Zahlen.
+
+Die kurzen Abschnitte entstanden aus Versuchen mit diesen Sprachproben.
+Die Messung ist deshalb kein unabhängiger Nachweis für beliebige Stimmen.
+Ein Test mit Stefans Stimme und den Geräuschen des Spiels steht noch aus.
+
+Zusätzliche Prüfungen
+
+Alle 21 Python-Sprachtests bestehen.
+Die neuen Prüfungen umfassen Wiederholungen, Menübefehle, Stille und einen gleichmäßigen Hintergrundton.
+Die Verneinungen not left und not right lösen keinen Befehl aus.
+Die Sätze hello there, good morning und the weather is nice today lösen keinen Befehl aus.
+Ein Wechsel des Spielzustands verwirft weiterhin alte Audiodaten.
+Die gespeicherte Modellkonfiguration bleibt unverändert.
+Die neue Erkennung braucht kein deutsches Modell.
+
+Prüfung im Spiel
+
+Alle 32 Prüfungen für Sprachbefehle, Verbindung und Spielszene bestehen.
+Ein zusätzlicher Test spielt fünfmal left durch die vollständige Sprachverbindung ab.
+Godot führt alle fünf Befehle genau einmal aus.
+Dieser Test ersetzt nur das Mikrofon durch die gespeicherte Sprachprobe.
+Das Ergebnis steht in docs/vosk-english-godot.json.
+Es dient als Funktionsprüfung und gehört nicht zum direkten Zeitvergleich oben.
+
+Bekannte Grenze bei Hintergrundgeräuschen
+
+Ein zusätzlicher Versuch kombiniert hello there, einen Hintergrundton und danach left.
+Dabei fehlt der Befehl left in der alten und in der neuen Erkennung.
+Die Verfahren trennen die fremde Äußerung unter diesem Hintergrundton nicht zuverlässig vom nächsten Befehl.
+Die Optimierung behebt diese bestehende Grenze nicht.
+Der Versuch erzeugt keinen falschen Befehl.
+
+Wiederholung
+
+Aufruf aus dem Projektordner:
+.tools/voice-env/bin/python tools/voice/compare_vosk_english.py --rounds 2
+
+Für den Vergleich braucht das Prüfprogramm beide bisherigen Sprachmodelle.
+python3 voice/setup.py --with-german richtet diese ein.
+Das Spiel selbst braucht nur das englische Modell.
+Der feste Vergleichsstand ist der Git-Stand b20d7bb.
+Das Prüfprogramm liest dessen Sprachcode in ein getrenntes temporäres Verzeichnis.
+Es verändert weder den Vergleichsstand noch die heruntergeladenen Modelle.
+Die vollständigen Werte stehen in docs/vosk-english-latency.json.
+Der Versuch lief mit Python 3.13 auf einem Mac mit Apple M4 Pro.
+
+Technische Quellen
+
+Vosk liest die Modelloptionen aus conf/model.conf:
+https://github.com/alphacep/vosk-api/blob/master/src/model.cc
+
+Kaldi nutzt standardmäßig frames-per-chunk=24 und erlaubt eine kleinere Vorgabe:
+https://github.com/kaldi-asr/kaldi/blob/master/src/nnet3/decodable-simple-looped.h

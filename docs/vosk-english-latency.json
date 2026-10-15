@@ -1,0 +1,1889 @@
+{
+  "baseline_commit": "b20d7bb",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.2",
+  "method": "50 ms real-time PCM blocks, 500 ms leading silence, 1000 ms trailing silence; includes elapsed time in recognition; excludes microphone, TCP and Godot; model-estimated word ends; synthetic Samantha voice",
+  "rounds": 2,
+  "summary": {
+    "bilingual_before": {
+      "all_correct": true,
+      "expected_words": 48,
+      "emitted_words": 48,
+      "latency": {
+        "min_ms": -133.9,
+        "median_ms": 180.8,
+        "max_ms": 510.0
+      },
+      "feed_total_ms": 5035.3,
+      "feed_max_ms": 203.2
+    },
+    "english_default_chunks": {
+      "all_correct": true,
+      "expected_words": 48,
+      "emitted_words": 48,
+      "latency": {
+        "min_ms": -136.4,
+        "median_ms": 178.2,
+        "max_ms": 506.1
+      },
+      "feed_total_ms": 3159.9,
+      "feed_max_ms": 130.3
+    },
+    "english_short_chunks": {
+      "all_correct": true,
+      "expected_words": 48,
+      "emitted_words": 48,
+      "latency": {
+        "min_ms": -136.6,
+        "median_ms": 84.2,
+        "max_ms": 324.2
+      },
+      "feed_total_ms": 5847.2,
+      "feed_max_ms": 211.9
+    }
+  },
+  "runs": {
+    "bilingual_before": [
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1247.3025420040358,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            257.3025420040358
+          ],
+          "feed_total_ms": 491.8912478897255,
+          "feed_max_ms": 203.18708301056176
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1232.2614589938894,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            302.2614589938894
+          ],
+          "feed_total_ms": 258.3310900372453,
+          "feed_max_ms": 78.9602920121979
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1255.5270830052905,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            85.52708300529048
+          ],
+          "feed_total_ms": 301.13054093089886,
+          "feed_max_ms": 63.883166993036866
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1372.2451660141815,
+              "audio_ms": 1350.0
+            }
+          ],
+          "delay_ms": [
+            322.24516601418145
+          ],
+          "feed_total_ms": 196.44700104254298,
+          "feed_max_ms": 48.99679200025275
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1149.2775410006288,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1351.6277910093777,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1351.6277910093777,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1601.5017080062535,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1804.6170829911716,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            399.27754100062884,
+            361.6277910093777,
+            121.62779100937769,
+            161.50170800625347,
+            -55.38291700882837
+          ],
+          "feed_total_ms": 432.21733390237205,
+          "feed_max_ms": 95.05174998776056
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1260.0188749784138,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1260.0188749784138,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1507.5090419850312,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1706.0557919903658,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1955.5084169842303,
+              "audio_ms": 1950.0
+            }
+          ],
+          "delay_ms": [
+            510.0188749784138,
+            270.0188749784138,
+            307.5090419850312,
+            266.05579199036583,
+            185.50841698423028
+          ],
+          "feed_total_ms": 361.2060438899789,
+          "feed_max_ms": 54.079458001069725
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1300.832500011893,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1300.832500011893,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1805.8546250103973,
+              "audio_ms": 1800.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2306.084167008521,
+              "audio_ms": 2300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2506.1062920140103,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            370.832500011893,
+            -19.16749998810701,
+            95.85462501039729,
+            176.08416700852104,
+            -133.89370798598975
+          ],
+          "feed_total_ms": 400.74070199625567,
+          "feed_max_ms": 38.87170797679573
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1104.2364579916466,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1369.2085829970893,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1602.396458009025,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2055.95904198708,
+              "audio_ms": 2050.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2305.837291991338,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            234.2364579916466,
+            169.20858299708925,
+            42.39645800902508,
+            165.95904198708013,
+            -4.162708008661866
+          ],
+          "feed_total_ms": 442.69941392121837,
+          "feed_max_ms": 67.05845799297094
+        }
+      ],
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1185.6938329874538,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            195.6938329874538
+          ],
+          "feed_total_ms": 197.76812091004103,
+          "feed_max_ms": 47.9457080073189
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1185.5986250157002,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            255.59862501570024
+          ],
+          "feed_total_ms": 185.8992500056047,
+          "feed_max_ms": 33.515708026243374
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1256.4925829938147,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            86.49258299381472
+          ],
+          "feed_total_ms": 216.34537709178403,
+          "feed_max_ms": 38.67325000464916
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1376.168292015791,
+              "audio_ms": 1350.0
+            }
+          ],
+          "delay_ms": [
+            326.16829201579094
+          ],
+          "feed_total_ms": 216.28412301652133,
+          "feed_max_ms": 25.736792013049126
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1105.5309590010438,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1355.15149999992,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1355.15149999992,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1605.7926249923185,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1805.6969589961227,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            355.5309590010438,
+            365.1514999999199,
+            125.1514999999199,
+            165.79262499231845,
+            -54.3030410038773
+          ],
+          "feed_total_ms": 308.082454954274,
+          "feed_max_ms": 29.558458976680413
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1258.1629159976728,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1258.1629159976728,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1503.336958005093,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1706.5970409894362,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1959.3255829822738,
+              "audio_ms": 1950.0
+            }
+          ],
+          "delay_ms": [
+            508.1629159976728,
+            268.1629159976728,
+            303.33695800509304,
+            266.5970409894362,
+            189.32558298227377
+          ],
+          "feed_total_ms": 293.66883175680414,
+          "feed_max_ms": 28.417249995982274
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1304.2100000020582,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1304.2100000020582,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1801.2967910035513,
+              "audio_ms": 1800.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2306.0892499925103,
+              "audio_ms": 2300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2506.2213749915827,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            374.2100000020582,
+            -15.789999997941777,
+            91.29679100355133,
+            176.0892499925103,
+            -133.7786250084173
+          ],
+          "feed_total_ms": 363.8277921418194,
+          "feed_max_ms": 31.882583018159494
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1102.6737079955637,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1351.672332995804,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1603.5120000015013,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2054.8108750081155,
+              "audio_ms": 2050.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2306.2223750166595,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            232.67370799556375,
+            151.67233299580403,
+            43.51200000150129,
+            164.81087500811554,
+            -3.777624983340502
+          ],
+          "feed_total_ms": 368.771545792697,
+          "feed_max_ms": 31.964708992745727
+        }
+      ]
+    ],
+    "english_default_chunks": [
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1208.6667499970645,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            218.66674999706447
+          ],
+          "feed_total_ms": 337.85587394959293,
+          "feed_max_ms": 130.25737498537637
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1211.4949589886237,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            281.4949589886237
+          ],
+          "feed_total_ms": 195.11971101746894,
+          "feed_max_ms": 58.64375000237487
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1250.3821669961326,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            80.38216699613258
+          ],
+          "feed_total_ms": 198.8514989207033,
+          "feed_max_ms": 41.34766600327566
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1366.1080840101931,
+              "audio_ms": 1350.0
+            }
+          ],
+          "delay_ms": [
+            316.1080840101931
+          ],
+          "feed_total_ms": 171.08558598556556,
+          "feed_max_ms": 30.393541004741564
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1104.7627500083763,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1356.754708016524,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1356.754708016524,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1604.5483330090065,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1804.733542026952,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            354.7627500083763,
+            366.7547080165241,
+            126.75470801652409,
+            164.54833300900646,
+            -55.26645797304809
+          ],
+          "feed_total_ms": 248.88920097146183,
+          "feed_max_ms": 50.6727080210112
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1253.310166997835,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1253.310166997835,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1505.1125840109307,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1703.1185420055408,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1951.6481670143548,
+              "audio_ms": 1950.0
+            }
+          ],
+          "delay_ms": [
+            503.31016699783504,
+            263.31016699783504,
+            305.11258401093073,
+            263.1185420055408,
+            181.64816701435484
+          ],
+          "feed_total_ms": 165.41625393438153,
+          "feed_max_ms": 17.170417006127536
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1301.7770000151359,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1301.7770000151359,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1805.9718330041505,
+              "audio_ms": 1800.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2306.004208017839,
+              "audio_ms": 2300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2503.565916995285,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            371.77700001513585,
+            -18.222999984864146,
+            95.97183300415054,
+            176.00420801783912,
+            -136.43408300471492
+          ],
+          "feed_total_ms": 283.58200192451477,
+          "feed_max_ms": 24.931499996455386
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1105.4990839911625,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1354.3002090009395,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1602.3030419892166,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2056.156792008551,
+              "audio_ms": 2050.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2306.8882090155967,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            235.49908399116248,
+            154.3002090009395,
+            42.30304198921658,
+            166.15679200855084,
+            -3.111790984403342
+          ],
+          "feed_total_ms": 218.54450201499276,
+          "feed_max_ms": 32.447375007905066
+        }
+      ],
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1170.3184999933,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            180.31849999330007
+          ],
+          "feed_total_ms": 128.15979000879452,
+          "feed_max_ms": 15.820166008779779
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1180.049417016562,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            250.04941701656207
+          ],
+          "feed_total_ms": 128.56849509989843,
+          "feed_max_ms": 27.762832993175834
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1256.2003750063013,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            86.20037500630133
+          ],
+          "feed_total_ms": 137.7887069247663,
+          "feed_max_ms": 20.81962500233203
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1370.2364999917336,
+              "audio_ms": 1350.0
+            }
+          ],
+          "delay_ms": [
+            320.2364999917336
+          ],
+          "feed_total_ms": 142.57453801110387,
+          "feed_max_ms": 15.142832999117672
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1106.3632079749368,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1356.4447079843376,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1356.4447079843376,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1601.5467079996597,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1803.5084579896647,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            356.3632079749368,
+            366.4447079843376,
+            126.44470798433758,
+            161.5467079996597,
+            -56.49154201033525
+          ],
+          "feed_total_ms": 200.34341912833042,
+          "feed_max_ms": 22.32945800642483
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1256.1468329804484,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1256.1468329804484,
+              "audio_ms": 1250.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1504.4677080004476,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1706.7975419922732,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1956.8279169907328,
+              "audio_ms": 1950.0
+            }
+          ],
+          "delay_ms": [
+            506.1468329804484,
+            266.1468329804484,
+            304.4677080004476,
+            266.7975419922732,
+            186.82791699073277
+          ],
+          "feed_total_ms": 167.39658001461066,
+          "feed_max_ms": 12.904999981401488
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1304.671290999977,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1304.671290999977,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1805.9889159922022,
+              "audio_ms": 1800.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2305.7471249776427,
+              "audio_ms": 2300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2505.824541003676,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            374.6712909999769,
+            -15.328709000023082,
+            95.98891599220224,
+            175.74712497764267,
+            -134.17545899632387
+          ],
+          "feed_total_ms": 247.76667007245123,
+          "feed_max_ms": 20.537166012218222
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1105.7430419896264,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1356.1504999815952,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1606.3777499948628,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2056.080291979015,
+              "audio_ms": 2050.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2309.037583996542,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            235.74304198962636,
+            156.1504999815952,
+            46.377749994862825,
+            166.08029197901487,
+            -0.9624160034582019
+          ],
+          "feed_total_ms": 188.00207899766974,
+          "feed_max_ms": 19.476791989291087
+        }
+      ]
+    ],
+    "english_short_chunks": [
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1214.0134169894736,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            224.01341698947363
+          ],
+          "feed_total_ms": 443.09612398501486,
+          "feed_max_ms": 119.60766700212844
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1172.309999994468,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            242.30999999446794
+          ],
+          "feed_total_ms": 328.79058504477143,
+          "feed_max_ms": 37.663625000277534
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1257.8006669937167,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            87.80066699371673
+          ],
+          "feed_total_ms": 322.24604007205926,
+          "feed_max_ms": 40.535459003876895
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1157.2009999945294,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            107.20099999452941
+          ],
+          "feed_total_ms": 293.1704159709625,
+          "feed_max_ms": 23.232625011587515
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1033.442207990447,
+              "audio_ms": 1000.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1170.6277079938445,
+              "audio_ms": 1150.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1310.597208008403,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1505.4741670028307,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1758.697832992766,
+              "audio_ms": 1750.0
+            }
+          ],
+          "delay_ms": [
+            283.44220799044706,
+            180.62770799384452,
+            80.59720800840296,
+            65.47416700283065,
+            -101.30216700723395
+          ],
+          "feed_total_ms": 423.0054598301649,
+          "feed_max_ms": 29.722790990490466
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1074.1571249964181,
+              "audio_ms": 1050.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1104.9126670113765,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1353.8000830158126,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1561.1352499981876,
+              "audio_ms": 1550.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1811.375749995932,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            324.15712499641813,
+            114.91266701137647,
+            153.80008301581256,
+            121.13524999818765,
+            41.37574999593198
+          ],
+          "feed_total_ms": 728.3440379833337,
+          "feed_max_ms": 211.8773750262335
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1161.562708002748,
+              "audio_ms": 1150.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1304.1370830032974,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1711.8899580091238,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2116.310124984011,
+              "audio_ms": 2100.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2503.3569170045666,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            231.56270800274797,
+            -15.862916996702552,
+            1.8899580091238022,
+            -13.689875015988946,
+            -136.64308299543336
+          ],
+          "feed_total_ms": 500.19283598521724,
+          "feed_max_ms": 20.733791985549033
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1118.6893340200186,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1206.5215420152526,
+              "audio_ms": 1200.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1615.5536670121364,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1963.881167001091,
+              "audio_ms": 1950.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2309.374125004979,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            248.68933402001858,
+            6.521542015252635,
+            55.55366701213643,
+            73.88116700109094,
+            -0.6258749950211495
+          ],
+          "feed_total_ms": 496.2663789629005,
+          "feed_max_ms": 28.161374997580424
+        }
+      ],
+      [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            990.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1160.8362910046708,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            170.83629100467078
+          ],
+          "feed_total_ms": 65.26370989740826,
+          "feed_max_ms": 10.071083001093939
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1171.6412499954458,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            241.64124999544583
+          ],
+          "feed_total_ms": 227.8466220595874,
+          "feed_max_ms": 20.12229198589921
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1170.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1257.8265000192914,
+              "audio_ms": 1250.0
+            }
+          ],
+          "delay_ms": [
+            87.82650001929142
+          ],
+          "feed_total_ms": 240.3095011250116,
+          "feed_max_ms": 13.240833999589086
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            1050.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1161.6262079915032,
+              "audio_ms": 1150.0
+            }
+          ],
+          "delay_ms": [
+            111.62620799150318
+          ],
+          "feed_total_ms": 257.8407540277112,
+          "feed_max_ms": 20.472667005378753
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1230.0,
+            1440.0,
+            1860.0
+          ],
+          "events": [
+            {
+              "command": "left",
+              "wall_ms": 1010.3637910215184,
+              "audio_ms": 1000.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1159.8484580172226,
+              "audio_ms": 1150.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1308.6250000051223,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1505.4035000212025,
+              "audio_ms": 1500.0
+            },
+            {
+              "command": "left",
+              "wall_ms": 1758.754875016166,
+              "audio_ms": 1750.0
+            }
+          ],
+          "delay_ms": [
+            260.3637910215184,
+            169.84845801722258,
+            78.62500000512227,
+            65.40350002120249,
+            -101.2451249838341
+          ],
+          "feed_total_ms": 337.5206738419365,
+          "feed_max_ms": 20.401124987984076
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            750.0,
+            990.0,
+            1200.0,
+            1440.0,
+            1770.0
+          ],
+          "events": [
+            {
+              "command": "right",
+              "wall_ms": 1059.2766669869889,
+              "audio_ms": 1050.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1105.1650829904247,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1357.295374997193,
+              "audio_ms": 1350.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1562.9037499893457,
+              "audio_ms": 1550.0
+            },
+            {
+              "command": "right",
+              "wall_ms": 1804.4757079915144,
+              "audio_ms": 1800.0
+            }
+          ],
+          "delay_ms": [
+            309.27666698698886,
+            115.16508299042471,
+            157.295374997193,
+            122.90374998934567,
+            34.475707991514355
+          ],
+          "feed_total_ms": 340.0199559982866,
+          "feed_max_ms": 24.20741698006168
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            930.0,
+            1320.0,
+            1710.0,
+            2130.0,
+            2640.0
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "wall_ms": 1160.4558750113938,
+              "audio_ms": 1150.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1306.1582500231452,
+              "audio_ms": 1300.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 1714.0830419957638,
+              "audio_ms": 1700.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2107.5519169971813,
+              "audio_ms": 2100.0
+            },
+            {
+              "command": "faster",
+              "wall_ms": 2505.043708020821,
+              "audio_ms": 2500.0
+            }
+          ],
+          "delay_ms": [
+            230.4558750113938,
+            -13.841749976854771,
+            4.083041995763779,
+            -22.44808300281875,
+            -134.9562919791788
+          ],
+          "feed_total_ms": 474.1363260836806,
+          "feed_max_ms": 21.551165991695598
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "correct": true,
+          "estimated_word_ends_ms": [
+            870.0,
+            1200.0,
+            1560.0,
+            1890.0,
+            2310.0
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "wall_ms": 1107.6665410073474,
+              "audio_ms": 1100.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1206.1947080073878,
+              "audio_ms": 1200.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1614.4477080088109,
+              "audio_ms": 1600.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 1957.5063750089612,
+              "audio_ms": 1950.0
+            },
+            {
+              "command": "slower",
+              "wall_ms": 2313.4185830131173,
+              "audio_ms": 2300.0
+            }
+          ],
+          "delay_ms": [
+            237.6665410073474,
+            6.194708007387817,
+            54.44770800881088,
+            67.50637500896119,
+            3.4185830131173134
+          ],
+          "feed_total_ms": 369.104459969094,
+          "feed_max_ms": 21.63020899752155
+        }
+      ]
+    ]
+  }
+}

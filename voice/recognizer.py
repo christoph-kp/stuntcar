@@ -1,4 +1,4 @@
-"""Local bilingual speech input. Audio remains in memory and is never saved."""
+"""Local English speech input. Audio remains in memory and is never saved."""
 import argparse
 from array import array
 from collections import deque
@@ -7,6 +7,8 @@ from pathlib import Path
 import queue
 import select
 import socket
+import shutil
+import tempfile
 import time
 import wave
 
@@ -29,16 +31,26 @@ GRAMMARS = {
 
 
 class BilingualRecognizer:
-    def __init__(self):
+    def __init__(self, languages=('de', 'en-us'), frames_per_chunk=None):
         import vosk
         vosk.SetLogLevel(-1)
         self.recognizers = []
         self.fallback_recognizers = []
-        for language in ['de', 'en-us']:
+        for language in languages:
             path = MODEL_ROOT / f'vosk-model-small-{language}-0.15'
             if not path.is_dir():
                 raise RuntimeError('Sprachmodell fehlt. Bitte Sprache einrichten.')
-            model = vosk.Model(str(path))
+            if frames_per_chunk is None:
+                model = vosk.Model(str(path))
+            else:
+                # Keep downloaded weights/configuration intact, including other
+                # processes and historical benchmarks. Vosk loads files eagerly.
+                with tempfile.TemporaryDirectory(prefix='stuntcar-vosk-') as folder:
+                    configured = Path(folder) / 'model'
+                    shutil.copytree(path, configured)
+                    with (configured / 'conf/model.conf').open('a') as config:
+                        config.write(f'\n--frames-per-chunk={frames_per_chunk}\n')
+                    model = vosk.Model(str(configured))
             recognizer = vosk.KaldiRecognizer(model, SAMPLE_RATE, json.dumps(GRAMMARS[language], ensure_ascii=False))
             recognizer.SetWords(True)
             self.recognizers.append(recognizer)
@@ -73,6 +85,12 @@ class BilingualRecognizer:
             else:
                 results.append(json.loads(recognizer.FinalResult()))
         return results
+
+
+class EnglishRecognizer(BilingualRecognizer):
+    """Two English decoders, with 60 ms model chunks instead of 240 ms."""
+    def __init__(self):
+        super().__init__(languages=('en-us',), frames_per_chunk=6)
 
 
 class Segmenter:
@@ -145,7 +163,7 @@ class Connection:
 def run_microphone(connection, device=None):
     import sounddevice as sd
     connection.send('loading')
-    engine = BilingualRecognizer()
+    engine = EnglishRecognizer()
     device_info = sd.query_devices(device, 'input')
     audio_queue = queue.Queue(maxsize=20)
     problems = queue.Queue(maxsize=1)
@@ -215,7 +233,7 @@ def main():
             if (source.getframerate(), source.getnchannels(), source.getsampwidth()) != (16000, 1, 2):
                 raise ValueError('Die Testdatei braucht 16 kHz, einen Kanal und 16 Bit.')
             pcm = source.readframes(source.getnframes())
-        chosen, results = BilingualRecognizer().recognize(pcm)
+        chosen, results = EnglishRecognizer().recognize(pcm)
         print(json.dumps({'chosen': chosen, 'results': results}, ensure_ascii=False))
         return
     if not args.port or not args.token:

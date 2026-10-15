@@ -42,13 +42,14 @@ class StreamingRecognizer:
         self.reset()
 
     def reset(self):
+        self.restricted_count = len(self.engine.recognizers)
         self.decoders = self.engine.recognizers + self.engine.fallback_recognizers
         for decoder in self.decoders:
             decoder.Reset()
             decoder.AcceptWaveform(bytes(6400))
-        self.completed_text = [''] * 4
-        self.completed_words = [[] for _ in range(4)]
-        self.decoder_ended = [False] * 4
+        self.completed_text = [''] * len(self.decoders)
+        self.completed_words = [[] for _ in range(len(self.decoders))]
+        self.decoder_ended = [False] * len(self.decoders)
         self.pre_roll = deque(maxlen=3)
         self.parts = []
         self.active = False
@@ -62,8 +63,8 @@ class StreamingRecognizer:
     def confirmed(self, results):
         options = []
         restricted = [result.get('_words', command_words(result.get('partial', result.get('text', ''))))
-                      for result in results[:2]]
-        for result in results[2:]:
+                      for result in results[:self.restricted_count]]
+        for result in results[self.restricted_count:]:
             free = result.get('_words', command_words(result.get('partial', result.get('text', ''))))
             if free and any(codes(words[:len(free)]) == codes(free)
                             or codes(words[-len(free):]) == codes(free) for words in restricted):
@@ -113,7 +114,7 @@ class StreamingRecognizer:
             result = json.loads(decoder.Result() if final else decoder.PartialResult())
             text = result.get('text', result.get('partial', ''))
             joined = (self.completed_text[index] + ' ' + text).strip()
-            words = self.completed_words[index] + command_words(text, confirmation=index >= 2)
+            words = self.completed_words[index] + command_words(text, confirmation=index >= self.restricted_count)
             results.append({'partial': joined, '_words': words})
             if final:
                 # Vosk starts another result even when ambient sound keeps RMS high.
@@ -127,7 +128,7 @@ class StreamingRecognizer:
         # Free text explains rejected speech. Restricted guesses remain provisional.
         texts = [result.get('partial', result.get('text', '')) for result in results]
         self.heard = ' '.join(word['text'] for word in confirmed) if confirmed else next(
-            (text for text in texts[2:] if text), next((text for text in texts if text), ''))
+            (text for text in texts[self.restricted_count:] if text), next((text for text in texts if text), ''))
         events = self.new_commands(confirmed) if self.active else []
         status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening'}
         if self.active:
@@ -136,7 +137,7 @@ class StreamingRecognizer:
             finals = []
             for index, decoder in enumerate(self.decoders):
                 result = json.loads(decoder.FinalResult())
-                result['_words'] = self.completed_words[index] + command_words(result.get('text', ''), confirmation=index >= 2)
+                result['_words'] = self.completed_words[index] + command_words(result.get('text', ''), confirmation=index >= self.restricted_count)
                 result['text'] = (self.completed_text[index] + ' ' + result.get('text', '')).strip()
                 finals.append(result)
             words = self.confirmed(finals)
