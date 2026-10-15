@@ -1,5 +1,7 @@
 extends Control
 
+const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+
 const DIRECTIONS := {"left": -PI / 2.0, "right": PI / 2.0, "faster": 0.0, "slower": PI}
 const OPPOSITE := {"left": "right", "right": "left", "faster": "slower", "slower": "faster"}
 const MINT := Color("a9e2c8")
@@ -20,7 +22,7 @@ func set_input(direction: String, level: float) -> void:
 func confirm(direction: String, strength: float) -> void:
 	if not DIRECTIONS.has(direction): return
 	pulses.erase(OPPOSITE[direction])
-	pulses[direction] = {"strength": clampf(strength, 0.06, 1.0) if is_finite(strength) else 1.0 / 3.0, "remaining": 0.6}
+	pulses[direction] = {"strength": maxf(VoiceStrength.MIN_SIGNAL, VoiceStrength.normalize(strength)), "remaining": 0.6}
 	queue_redraw()
 
 func clear() -> void:
@@ -40,10 +42,8 @@ func _process(delta: float) -> void:
 
 func lit_bars(direction: String) -> int:
 	var strength := input_level if input_direction == direction else 0.0
-	if pulses.has(direction): strength = maxf(strength, pulses[direction].strength)
-	if strength < 0.06: return 0
-	if strength < 0.34: return 1
-	return 2 if strength < 0.67 else 3
+	if pulses.has(direction): strength = pulses[direction].strength
+	return VoiceStrength.bars(strength)
 
 func tip_lit(direction: String) -> bool:
 	return pulses.has(direction)

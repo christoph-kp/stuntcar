@@ -9,6 +9,7 @@ const FollowCamera = preload("res://scripts/camera/follow_camera.gd")
 const GameUI = preload("res://scripts/ui/game_ui.gd")
 const RaceAudio = preload("res://scripts/audio/race_audio.gd")
 const VoiceBridge = preload("res://scripts/input/voice_bridge.gd")
+const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 
 var track
 var builder: Node3D
@@ -104,13 +105,14 @@ func _physics_process(delta: float) -> void:
 		for packet in voice.take_commands():
 			if packet.epoch != voice.epoch or binding_stage > 0: continue
 			var word := str(packet.get("text", packet.command)).left(40)
-			if session.submit_voice(packet.command):
+			var strength := VoiceStrength.normalize(packet.get("strength", VoiceStrength.NORMAL))
+			if session.submit_voice(packet.command, strength):
 				voice_applied_count += 1
 				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
 				if packet.command in ["faster", "slower"]:
 					voice_action_text += "\n" + model.speed_feedback
 				if session.state == "RUNNING":
-					ui.voice_compass.confirm(packet.command, float(packet.get("strength", 1.0 / 3.0)))
+					ui.voice_compass.confirm(packet.command, strength)
 				sync_voice_context()
 			else:
 				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word

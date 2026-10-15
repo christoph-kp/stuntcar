@@ -1,10 +1,14 @@
 extends RefCounted
 
+const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+
 const CRUISE_SPEED := 22.0
 const MIN_SPEED := 14.0
 const MAX_SPEED := 46.0
 const SPEED_STEP := 5.0
 var target_speed_mps := CRUISE_SPEED
+var speed_strength := 1.0
+var turn_strength := 1.0
 var track
 var position := Vector3.ZERO
 var heading := 0.0
@@ -41,6 +45,8 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	heading = frame.heading
 	speed_mps = CRUISE_SPEED
 	target_speed_mps = CRUISE_SPEED
+	speed_strength = 1.0
+	turn_strength = 1.0
 	distance_m = checkpoint_m
 	elapsed_s = 0.0
 	active_curve_id = -1
@@ -62,10 +68,11 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	jump_assist_until = -1.0
 	landing_pulse = 0.0
 
-func request_turn(direction: int) -> void:
+func request_turn(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if off_road or finished or direction not in [-1, 1]:
 		return
 	last_command = direction
+	turn_strength = VoiceStrength.multiplier(strength)
 	var curve: Dictionary = track.next_curve(distance_m)
 	var jump: Dictionary = track.jump_for_correction(distance_m)
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
@@ -93,10 +100,11 @@ func request_turn(direction: int) -> void:
 func input_window_m() -> float:
 	return maxf(speed_mps, target_speed_mps) * hint_seconds
 
-func change_speed(direction: int) -> void:
+func change_speed(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if direction not in [-1, 1] or off_road or finished: return
 	var before := target_speed_mps
-	target_speed_mps = clampf(target_speed_mps + direction * SPEED_STEP, MIN_SPEED, MAX_SPEED)
+	speed_strength = VoiceStrength.multiplier(strength)
+	target_speed_mps = clampf(target_speed_mps + direction * SPEED_STEP * speed_strength, MIN_SPEED, MAX_SPEED)
 	speed_feedback_seconds = 2.0
 	if is_equal_approx(before, target_speed_mps):
 		speed_feedback = tr("I18N_SPEED_MAX") if direction > 0 else tr("I18N_SPEED_MIN")
@@ -108,7 +116,7 @@ func step(delta: float) -> void:
 		return
 	elapsed_s += delta
 	speed_feedback_seconds = maxf(0.0, speed_feedback_seconds - delta)
-	speed_mps = move_toward(speed_mps, target_speed_mps, (18.0 if target_speed_mps < speed_mps else 10.0) * delta)
+	speed_mps = move_toward(speed_mps, target_speed_mps, (18.0 if target_speed_mps < speed_mps else 10.0) * speed_strength * delta)
 	correction_remaining = maxf(0.0, correction_remaining - delta)
 	landing_pulse = maxf(0.0, landing_pulse - delta * 3.0)
 	if jump_assist_until > distance_m:
@@ -117,7 +125,9 @@ func step(delta: float) -> void:
 		var desired := atan2(offset.x, -offset.z)
 		var exit_blend := clampf((distance_m - jump_assist_until + 8.0) / 8.0, 0.0, 1.0)
 		desired = lerp_angle(desired, target.heading, exit_blend)
-		heading = rotate_toward(heading, desired, deg_to_rad(65.0) * delta)
+		# Scale the lateral correction around the road direction.
+		desired = lerp_angle(target.heading, desired, turn_strength)
+		heading = rotate_toward(heading, desired, deg_to_rad(65.0) * turn_strength * delta)
 	elif active_curve_id >= 0:
 		var curve: Dictionary = track.curves[active_curve_id]
 		# A command authorizes only this curve, never the rest of the road.
@@ -136,16 +146,22 @@ func step(delta: float) -> void:
 			var entry := smoothstep(curve.start_m + 3.0, curve.start_m + 19.0, target_s)
 			var exit := 1.0 - smoothstep(curve.end_m - 23.0, curve.end_m - 7.0, target_s)
 			var speed_risk := clampf((speed_mps - 28.0) / 18.0, 0.0, 1.0)
-			var edge := 2.35 + speed_risk * 1.1 * clampf(35.0 / curve.radius, 0.8, 1.3) if correction_remaining <= 0.0 else 0.2
+			var edge := 2.35 + speed_risk * 1.1 * clampf(35.0 / curve.radius, 0.8, 1.3)
+			if correction_remaining > 0.0:
+				# A quiet input pulls partway toward the centre; a loud input
+				# can pull a little beyond it, within the road width.
+				edge = clampf(lerpf(edge, 0.2, turn_strength), -1.4, 4.2)
+			else:
+				edge += (1.0 - turn_strength) * 0.6
 			var requested_offset: float = -float(curve.turn_sign) * edge * entry * exit
-			guide_offset = move_toward(guide_offset, requested_offset, 3.5 * delta)
+			guide_offset = move_toward(guide_offset, requested_offset, 3.5 * turn_strength * delta)
 			var offset: Vector3 = target.position + track.right(target.heading) * guide_offset - position
 			var desired := atan2(offset.x, -offset.z)
 			var exit_blend := clampf((distance_m - float(curve.end_m) + 8.0) / 8.0, 0.0, 1.0)
 			desired = lerp_angle(desired, track.sample(curve.end_m).heading, exit_blend)
-			heading = rotate_toward(heading, desired, deg_to_rad(170.0) * delta)
+			heading = rotate_toward(heading, desired, deg_to_rad(170.0) * turn_strength * delta)
 	elif manual_remaining > 0.0:
-		heading += float(manual_direction) * deg_to_rad(25.0) * minf(delta, manual_remaining)
+		heading += float(manual_direction) * deg_to_rad(25.0) * turn_strength * minf(delta, manual_remaining)
 		manual_remaining = maxf(0.0, manual_remaining - delta)
 	position += track.forward(heading) * speed_mps * delta
 	var projection: Dictionary = track.project(position, distance_m)

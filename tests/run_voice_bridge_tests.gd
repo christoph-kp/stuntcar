@@ -57,7 +57,7 @@ func _initialize() -> void:
 	packet(meter, {"type":"feedback", "seq":4, "epoch":meter.epoch, "level":"invalid", "direction":"right"})
 	check(meter.input_level == 0.0 and meter.input_direction == "", "Ein ungültiger Pegel übernimmt keinen alten hohen Wert.")
 	packet(meter, {"type":"command", "seq":5, "epoch":meter.epoch, "command":"left", "strength":"invalid"})
-	check(is_equal_approx(meter.take_commands()[0].strength, 1.0 / 3.0), "Eine ungültige Stärke nutzt den kleinen Standardwert.")
+	check(is_equal_approx(meter.take_commands()[0].strength, 0.5), "Eine ungültige Stärke nutzt die bisherige normale Wirkung.")
 	packet(meter, {"type":"command", "seq":6, "epoch":meter.epoch, "command":"right", "strength":10.0})
 	check(meter.take_commands()[0].strength == 1.0, "Die Stärke überschreitet den höchsten Anzeigewert nicht.")
 	packet(meter, {"type":"feedback", "seq":7, "epoch":meter.epoch, "level":1.0, "direction":"faster"})

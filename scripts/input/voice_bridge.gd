@@ -1,5 +1,7 @@
 extends Node
 
+const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+
 signal unavailable(message: String)
 const COMMANDS := ["left", "right", "faster", "slower", "pause", "resume", "next", "select", "start"]
 var server := TCPServer.new()
@@ -161,8 +163,8 @@ func accept_packet(packet: Dictionary) -> void:
 			if commands.size() >= 16:
 				fail(tr("I18N_VOICE_TOO_MANY"))
 				return
-			var strength = packet.get("strength", 1.0 / 3.0)
-			packet["strength"] = clampf(float(strength), 0.0, 1.0) if typeof(strength) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(strength)) else 1.0 / 3.0
+			var strength = packet.get("strength", VoiceStrength.NORMAL)
+			packet["strength"] = VoiceStrength.normalize(strength)
 			commands.append(packet)
 
 func take_commands() -> Array[Dictionary]:

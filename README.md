@@ -110,11 +110,19 @@ Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorer
 
 Du kannst „left left left left left“ direkt hintereinander sagen. Die Erkennung prüft jedes Wort mit zwei Verfahren. Ein Verfahren kennt die Befehle. Das andere Verfahren kennt einen freien Wortschatz. Während des Sprechens müssen beide Verfahren den Befehl bestätigen. Die Erkennung gibt bestätigte Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
-Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Richtung wirkt genauso wie die entsprechende Taste.
+Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Lautstärke bestimmt die Stärke der Korrektur. Die Tasten nutzen weiter die normale Stärke.
 
-Jedes „faster“ erhöht das gewünschte Tempo um rund 18 km/h. Jedes „slower“ senkt es entsprechend. Wiederholte Befehle zählen einzeln.
+Die drei Balken bestimmen die Wirkung eines bestätigten Fahrbefehls:
 
-Zum Beispiel erhöht „faster, faster“ das Zieltempo von 79 auf 115 km/h. „Slower, slower“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo.
+| Balken | Wirkung | Änderung des Zieltempos |
+| --- | --- | --- |
+| 1 | Kleine Lenkkorrektur, schwache Beschleunigung oder Bremse | rund 7 km/h |
+| 2 | Normale Lenkkorrektur, Beschleunigung oder Bremse | 18 km/h |
+| 3 | Große Lenkkorrektur, starke Beschleunigung oder Bremse | rund 29 km/h |
+
+„Faster“ erhöht das Zieltempo. „Slower“ senkt das Zieltempo. Wiederholte Befehle zählen einzeln. Die tatsächliche Geschwindigkeit folgt dem Zieltempo. Ein lauter Befehl verändert sie schneller. Eine Lenkbewegung auf der Geraden dauert jeweils 0,3 Sekunden. Leise Befehle ändern dabei die Richtung um etwa 3 Grad. Normale Befehle ändern sie um 7,5 Grad. Laute Befehle ändern sie um 12 Grad. In Kurven und vor Sprüngen skaliert die Korrekturhilfe ihre Wirkung entsprechend.
+
+Zum Beispiel erhöht ein normal gesprochenes „faster, faster“ das Zieltempo von 79 auf 115 km/h. „Slower, slower“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo.
 
 Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
 
@@ -124,9 +132,9 @@ Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
 Die Sprachfahrt zeigt ein Pfeilkreuz rechts neben der Strecke. Links und rechts zeigen die Lenkrichtung. Der obere Pfeil steht für Beschleunigen. Der untere Pfeil steht für Bremsen. Er steht nicht für eine Rückwärtsfahrt.
 
-Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
+Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Solange die Spitze leuchtet, zeigen die Balken die übernommene Stärke. Ein neuer Livepegel verändert diese Bestätigung nicht. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
 
-Die Balken zeigen zunächst nur den Mikrofonpegel. Die Lautstärke verändert die Lenkung und die Geschwindigkeit noch nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Eine persönliche Abstimmung der drei Stufen fehlt noch. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
+Die Balken und die Steuerung nutzen dieselben drei Pegelstufen. Das Spiel nutzt die Stärke des bestätigten Befehls. Die laufende Pegelanzeige allein steuert das Auto nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Eine persönliche Abstimmung der drei Stufen fehlt noch. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
 
 Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
@@ -183,6 +191,7 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_bridge_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_compass_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_strength_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_selection_tests.gd

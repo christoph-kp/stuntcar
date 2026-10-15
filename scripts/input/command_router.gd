@@ -1,5 +1,7 @@
 extends RefCounted
 
+const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+
 signal action_requested(action: String)
 var model
 var state := "MENU"
@@ -22,14 +24,14 @@ var control_mode := "keys"
 var routes: Array[Dictionary] = []
 var catalog_errors: Array[String] = []
 
-func submit_voice(command: String) -> bool:
+func submit_voice(command: String, strength: float = VoiceStrength.NORMAL) -> bool:
 	match command:
 		"left", "right":
 			if state != "RUNNING": return false
-			press(-1 if command == "left" else 1)
+			press(-1 if command == "left" else 1, strength)
 		"faster", "slower":
 			if state != "RUNNING": return false
-			model.change_speed(1 if command == "faster" else -1)
+			model.change_speed(1 if command == "faster" else -1, strength)
 		"pause":
 			if state != "RUNNING": return false
 			pause()
@@ -65,10 +67,10 @@ func entries() -> Array[String]:
 			return result
 	return []
 
-func press(direction: int) -> void:
+func press(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if state == "RUNNING":
 		last_key = direction
-		model.request_turn(direction)
+		model.request_turn(direction, strength)
 		remembered_curve = model.active_curve_id
 		return
 	var options := entries()
