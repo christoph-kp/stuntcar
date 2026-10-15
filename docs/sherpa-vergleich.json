@@ -1,0 +1,2692 @@
+{
+  "method": "Synthetic PCM, simulated sample clock; same 500 ms lead-in and 1000 ms tail. Vosk receives 50 ms blocks, sherpa receives 20 ms blocks. Audio times start at the lead-in, not at word end. Excluded: microphone, OS queues, computation, transport, Godot. Compute costs are measured separately. One synthetic English speaker. Parameter search uses these fixtures; it is not an independent validation set.",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.2",
+  "versions": {
+    "sherpa-onnx": "1.13.8",
+    "numpy": "2.5.4",
+    "sentencepiece": "0.2.2",
+    "vosk": "0.3.44"
+  },
+  "keywords": [
+    "left",
+    "right",
+    "faster",
+    "slower"
+  ],
+  "fixture_sha256": {
+    "13.wav": "c91c2a841b6e448765dd34b0698505717b7e4e3227aaff8f22dccb5aae5604b8",
+    "14.wav": "cda6b91819ec51618c9bb5ed4a08f33f3e310f0d17fcec2fc2b749660638876c",
+    "15.wav": "c61ed4e4eed89ece85aa5af662dcf06408e700b6190238a9b1168ef7ff0b1331",
+    "16.wav": "36c4b5bab9eaff0abc1e0ea649901300704ffd4090f76de2ac4833510fe11933",
+    "continuous/left-five.wav": "8ea81aecd91cde801d205c75a0edb2eee84c66dbb602c2a09edcf9a0ce427490",
+    "continuous/right-five.wav": "52b6bc5b66cd9632ab14fc073a28d08a38ecce615a76470ba7f425c43ef73c32",
+    "continuous/faster-five.wav": "341db9de6f8cb0fd793fcb6302cbebd0fbe9a557b1e3fbfac1254b29d8b36645",
+    "continuous/slower-five.wav": "fbc6e38e7440252820ea1837625eff0e0280aedba033f408f7701a2c18b6a741",
+    "23.wav": "d6e02d6469a9144515b9e56c5739f67f6beae0b494c65d6ffbaa4867e156a1cb"
+  },
+  "baseline": {
+    "summary": {
+      "exact_files": 9,
+      "files": 9,
+      "repetition_expected": 20,
+      "repetition_correct_commands": 20,
+      "all_repetition_files_exact": true,
+      "single_word_times_ms": [
+        1150.0,
+        1150.0,
+        1250.0,
+        1350.0
+      ]
+    },
+    "records": [
+      {
+        "file": "13.wav",
+        "expected": [
+          "left"
+        ],
+        "events": [
+          {
+            "command": "left",
+            "audio_time_ms": 1150.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.324,
+        "decode_cost_max_ms": 224.49
+      },
+      {
+        "file": "14.wav",
+        "expected": [
+          "right"
+        ],
+        "events": [
+          {
+            "command": "right",
+            "audio_time_ms": 1150.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.302,
+        "decode_cost_max_ms": 53.863
+      },
+      {
+        "file": "15.wav",
+        "expected": [
+          "faster"
+        ],
+        "events": [
+          {
+            "command": "faster",
+            "audio_time_ms": 1250.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.3,
+        "decode_cost_max_ms": 40.63
+      },
+      {
+        "file": "16.wav",
+        "expected": [
+          "slower"
+        ],
+        "events": [
+          {
+            "command": "slower",
+            "audio_time_ms": 1350.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.32,
+        "decode_cost_max_ms": 49.64
+      },
+      {
+        "file": "continuous/left-five.wav",
+        "expected": [
+          "left",
+          "left",
+          "left",
+          "left",
+          "left"
+        ],
+        "events": [
+          {
+            "command": "left",
+            "audio_time_ms": 1100.0
+          },
+          {
+            "command": "left",
+            "audio_time_ms": 1350.0
+          },
+          {
+            "command": "left",
+            "audio_time_ms": 1350.0
+          },
+          {
+            "command": "left",
+            "audio_time_ms": 1600.0
+          },
+          {
+            "command": "left",
+            "audio_time_ms": 1800.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.36,
+        "decode_cost_max_ms": 65.271
+      },
+      {
+        "file": "continuous/right-five.wav",
+        "expected": [
+          "right",
+          "right",
+          "right",
+          "right",
+          "right"
+        ],
+        "events": [
+          {
+            "command": "right",
+            "audio_time_ms": 1250.0
+          },
+          {
+            "command": "right",
+            "audio_time_ms": 1250.0
+          },
+          {
+            "command": "right",
+            "audio_time_ms": 1500.0
+          },
+          {
+            "command": "right",
+            "audio_time_ms": 1700.0
+          },
+          {
+            "command": "right",
+            "audio_time_ms": 1950.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.326,
+        "decode_cost_max_ms": 36.632
+      },
+      {
+        "file": "continuous/faster-five.wav",
+        "expected": [
+          "faster",
+          "faster",
+          "faster",
+          "faster",
+          "faster"
+        ],
+        "events": [
+          {
+            "command": "faster",
+            "audio_time_ms": 1300.0
+          },
+          {
+            "command": "faster",
+            "audio_time_ms": 1300.0
+          },
+          {
+            "command": "faster",
+            "audio_time_ms": 1800.0
+          },
+          {
+            "command": "faster",
+            "audio_time_ms": 2300.0
+          },
+          {
+            "command": "faster",
+            "audio_time_ms": 2500.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.328,
+        "decode_cost_max_ms": 21.738
+      },
+      {
+        "file": "continuous/slower-five.wav",
+        "expected": [
+          "slower",
+          "slower",
+          "slower",
+          "slower",
+          "slower"
+        ],
+        "events": [
+          {
+            "command": "slower",
+            "audio_time_ms": 1100.0
+          },
+          {
+            "command": "slower",
+            "audio_time_ms": 1350.0
+          },
+          {
+            "command": "slower",
+            "audio_time_ms": 1600.0
+          },
+          {
+            "command": "slower",
+            "audio_time_ms": 2050.0
+          },
+          {
+            "command": "slower",
+            "audio_time_ms": 2300.0
+          }
+        ],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.353,
+        "decode_cost_max_ms": 48.503
+      },
+      {
+        "file": "23.wav",
+        "expected": [],
+        "events": [],
+        "exact_match": true,
+        "decode_cost_median_ms": 0.336,
+        "decode_cost_max_ms": 92.059
+      }
+    ]
+  },
+  "variants": [
+    {
+      "model": "sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01",
+      "chunk": 16,
+      "score": 1.0,
+      "threshold": 0.25,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 4,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 8,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1120.0,
+          null,
+          1440.0,
+          1440.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 6.492
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.603
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1440.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.584
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1440.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.578
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.711
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 4.228
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 3040.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.751
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2400.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.818
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.364
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 1.0,
+      "threshold": 0.1,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 12,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.013
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.054
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.896
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.714
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.998
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.479
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.737
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.019,
+          "decode_cost_max_ms": 3.126
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 4.022
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 1.0,
+      "threshold": 0.1,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 9,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1280.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 4.149
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.87
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.717
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.687
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1760.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.943
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1760.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.018
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.052
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.787
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.863
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 1.0,
+      "threshold": 0.25,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 12,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.551
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.83
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.27
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.673
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.955
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.873
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.057
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.38
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.544
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 1.0,
+      "threshold": 0.25,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 9,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1280.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.279
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.95
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.239
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.481
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1760.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.842
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1760.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.717
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.954
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.737
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.221
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 2.0,
+      "threshold": 0.1,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 12,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.349
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.882
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.602
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.789
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.727
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1920.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 5.865
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.014
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.702
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.954
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 2.0,
+      "threshold": 0.1,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 5,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 10,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.339
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.453
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.97
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.949
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2400.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.967
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.324
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.67
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.397
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.647
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 2.0,
+      "threshold": 0.25,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 4,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 12,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          null,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.818
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.85
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.173
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.69
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.861
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1920.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.924
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.84
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.278
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.19
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 2.0,
+      "threshold": 0.25,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 4,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 8,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          1280.0,
+          null,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.503
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.769
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.131
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.126
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1760.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.075
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.964
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.679
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.966
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.209
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 4.0,
+      "threshold": 0.1,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 4,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 10,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          null,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.476
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.827
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.857
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.129
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.843
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 3.82
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2400.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.534
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.871
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.663
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 4.0,
+      "threshold": 0.1,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 4,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 11,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          null,
+          1120.0,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.031
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.684
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.892
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.545
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 2080.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.626
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.392
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.507
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.41
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.975
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 4.0,
+      "threshold": 0.25,
+      "trailing_blanks": 0,
+      "summary": {
+        "exact_files": 3,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 9,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          null,
+          null,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 3.23
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.672
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.891
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.571
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.662
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 960.0
+            },
+            {
+              "command": "right",
+              "audio_time_ms": 1440.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.716
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2400.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.873
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1760.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.644
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.536
+        }
+      ]
+    },
+    {
+      "model": "sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20",
+      "chunk": 8,
+      "score": 4.0,
+      "threshold": 0.25,
+      "trailing_blanks": 1,
+      "summary": {
+        "exact_files": 3,
+        "files": 9,
+        "repetition_expected": 20,
+        "repetition_correct_commands": 9,
+        "all_repetition_files_exact": false,
+        "single_word_times_ms": [
+          null,
+          null,
+          1280.0,
+          1280.0
+        ]
+      },
+      "records": [
+        {
+          "file": "13.wav",
+          "expected": [
+            "left"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.972
+        },
+        {
+          "file": "14.wav",
+          "expected": [
+            "right"
+          ],
+          "events": [],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.088
+        },
+        {
+          "file": "15.wav",
+          "expected": [
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.634
+        },
+        {
+          "file": "16.wav",
+          "expected": [
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1280.0
+            }
+          ],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.491
+        },
+        {
+          "file": "continuous/left-five.wav",
+          "expected": [
+            "left",
+            "left",
+            "left",
+            "left",
+            "left"
+          ],
+          "events": [
+            {
+              "command": "left",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "left",
+              "audio_time_ms": 1600.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.531
+        },
+        {
+          "file": "continuous/right-five.wav",
+          "expected": [
+            "right",
+            "right",
+            "right",
+            "right",
+            "right"
+          ],
+          "events": [
+            {
+              "command": "right",
+              "audio_time_ms": 1120.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.433
+        },
+        {
+          "file": "continuous/faster-five.wav",
+          "expected": [
+            "faster",
+            "faster",
+            "faster",
+            "faster",
+            "faster"
+          ],
+          "events": [
+            {
+              "command": "faster",
+              "audio_time_ms": 1280.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2080.0
+            },
+            {
+              "command": "faster",
+              "audio_time_ms": 2880.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.499
+        },
+        {
+          "file": "continuous/slower-five.wav",
+          "expected": [
+            "slower",
+            "slower",
+            "slower",
+            "slower",
+            "slower"
+          ],
+          "events": [
+            {
+              "command": "slower",
+              "audio_time_ms": 1120.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 1920.0
+            },
+            {
+              "command": "slower",
+              "audio_time_ms": 2560.0
+            }
+          ],
+          "exact_match": false,
+          "decode_cost_median_ms": 0.018,
+          "decode_cost_max_ms": 2.252
+        },
+        {
+          "file": "23.wav",
+          "expected": [],
+          "events": [],
+          "exact_match": true,
+          "decode_cost_median_ms": 0.017,
+          "decode_cost_max_ms": 2.327
+        }
+      ]
+    }
+  ],
+  "decision": "Do not replace Vosk: no tested sherpa configuration passes all fast repetitions."
+}

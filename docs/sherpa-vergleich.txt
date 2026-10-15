@@ -1,0 +1,93 @@
+Vergleich der englischen Sprachbefehle
+15. Oktober 2026
+
+Ergebnis
+
+Wir übernehmen sherpa-onnx noch nicht als Spielsteuerung.
+Keines der geprüften Modelle erkennt alle schnellen Wiederholungen.
+Die Einschränkung auf Englisch bleibt eine mögliche Grundlage für die erste Veröffentlichung.
+Dieser Versuch ändert die Sprachsteuerung und die Sprache der Oberfläche nicht.
+
+Prüfumfang
+
+Die feste Wortliste enthält left, right, faster und slower.
+Jedes Wort kommt einmal einzeln und fünfmal in schneller Folge vor.
+Eine weitere Datei enthält hello there und darf keinen Befehl auslösen.
+Die Dateien stammen von der künstlichen macOS-Stimme Samantha.
+Die vorhandenen 15 Sprachtests bestehen vor dem Vergleich.
+
+Erkannte schnelle Befehle von insgesamt 20
+
+Vosk, vorhandene zweisprachige Erkennung: 20
+sherpa, englisches GigaSpeech-Modell, Grundeinstellung: 8
+sherpa, neueres Modell mit kurzen Abschnitten, Grundeinstellung: 9
+sherpa, beste geprüfte Einstellung mit kurzen Abschnitten: 12
+
+Das neuere Modell kennt Englisch und Chinesisch.
+Die Wortliste dieses Versuchs enthält ausschließlich die vier englischen Befehle.
+Der Versuch prüft zwölf Einstellungen dieses Modells.
+Er variiert die Wortgewichtung, die Erkennungsschwelle und die Wartezeit nach dem Wort.
+Keine dieser Einstellungen erkennt jede Wiederholung genau einmal.
+
+Vergleich der vier Einzelwörter
+
+Die folgende Differenz vergleicht sherpa mit Vosk.
+Ein positiver Wert bedeutet: sherpa liefert den Befehl später.
+Die Zeile nutzt score=1, threshold=0.1 und trailing_blanks=0.
+
+left:   +130 Millisekunden
+right:   -30 Millisekunden
+faster:  +30 Millisekunden
+slower:  -70 Millisekunden
+
+Damit zeigt dieser Versuch keinen klaren Zeitgewinn über alle vier Befehle.
+Die fehlenden Wiederholungen verhindern den Einsatz im Spiel.
+
+Grenzen der Messung
+
+Die Messung nutzt den Zeitverlauf der Audiodateien.
+Sie wartet beim Abspielen nicht in Echtzeit.
+Beide Verfahren erhalten dieselben Dateien mit 500 Millisekunden Stille vor der Sprache.
+Nach der Sprache folgen 1000 Millisekunden Stille.
+Vosk erhält Abschnitte von 50 Millisekunden, wie im vorhandenen Spiel.
+sherpa erhält Abschnitte von 20 Millisekunden.
+Die Zeitwerte enthalten keine Mikrofonverzögerung, Rechenzeit oder Übertragung ins Spiel.
+Die JSON-Datei nennt die Rechenzeiten gesondert.
+Ihre audio_time_ms-Werte zählen ab Beginn der Datei samt Stille, nicht ab dem Wortende.
+
+Dieser Versuch nutzt eine künstliche Stimme und nur eine fremde Äußerung.
+Er ersetzt keinen Test mit echten Stimmen, Akzenten oder Motorengeräuschen.
+Die Suche nach Einstellungen nutzt dieselben Dateien wie der Vergleich.
+Sie liefert deshalb keinen unabhängigen Nachweis für die beste Einstellung.
+
+Nächster sinnvoller Versuch
+
+Eine englische Vosk-Variante kann auf die zusätzliche deutsche Erkennung verzichten.
+Wir sollten vor allem die langsame Bestätigung mit freiem Wortschatz prüfen.
+Ein schneller Ersatz muss unbekannte Wörter und Motorengeräusche zuverlässig ablehnen.
+Die feste Wortliste allein reicht als Schutz vor falschen Befehlen nicht aus.
+
+Wiederholung des Vergleichs
+
+Das Prüfprogramm liegt unter tools/voice/compare_keyword_spotters.py.
+Die Zusatzbibliotheken stehen in tools/voice/requirements-probe.txt.
+Die normale Spieleinrichtung braucht diese Zusatzbibliotheken nicht.
+Der Versuch nutzte Python 3.13 auf einem Mac mit Apple M4 Pro.
+Die vorhandenen Vosk-Modelle müssen unter .tools/voice-models liegen.
+
+Die beiden sherpa-Archive kommen aus der offiziellen Modellablage:
+https://github.com/k2-fsa/sherpa-onnx/releases/tag/kws-models
+
+Modellordner:
+sherpa-onnx-kws-zipformer-gigaspeech-3.3M-2024-01-01
+sherpa-onnx-kws-zipformer-zh-en-3M-2025-12-20
+
+Aufruf aus dem Projektordner nach der getrennten Installation der Zusatzbibliotheken:
+python tools/voice/compare_keyword_spotters.py --english-model PFAD_ZUM_ENGLISCHEN_MODELL --small-chunk-model PFAD_ZUM_NEUEREN_MODELL --output docs/sherpa-vergleich.json
+
+Quellen für die Modellwahl und die Schnittstelle:
+https://k2-fsa.github.io/sherpa/onnx/kws/pretrained_models/index.html
+https://github.com/k2-fsa/sherpa-onnx/blob/master/sherpa-onnx/python/sherpa_onnx/keyword_spotter.py
+
+Die Schnittstelle verlangt nach jedem Treffer einen Neustart des Erkennungszustands.
+Das Prüfprogramm folgt dieser Vorgabe.
