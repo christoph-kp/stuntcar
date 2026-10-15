@@ -1,0 +1,86 @@
+[
+  {
+    "path": "assets/forest/trees/pine_tree_01_a_near.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 36048
+  },
+  {
+    "path": "assets/forest/trees/pine_tree_01_a_far.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 16697
+  },
+  {
+    "path": "assets/forest/trees/pine_tree_01_b_near.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 33499
+  },
+  {
+    "path": "assets/forest/trees/pine_tree_01_b_far.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 14149
+  },
+  {
+    "path": "assets/forest/trees/pine_tree_01_c_near.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 35333
+  },
+  {
+    "path": "assets/forest/trees/pine_tree_01_c_far.glb",
+    "source": "pine_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 15983
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_a_near.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 39334
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_a_far.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 19983
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_b_near.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 24012
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_b_far.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 14742
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_c_near.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "near",
+    "triangles": 11095
+  },
+  {
+    "path": "assets/forest/trees/fir_tree_01_c_far.glb",
+    "source": "fir_tree_01",
+    "source_detail": "LOD2",
+    "detail": "far",
+    "triangles": 9746
+  }
+]

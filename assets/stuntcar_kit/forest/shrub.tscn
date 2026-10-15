@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/pine_light.tres" id="1_wcu3m"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/moss.tres" id="2_ac5qj"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rxgaf"]
+radius = 0.65
+height = 1.3
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_t1ywx"]
+radius = 0.65
+height = 1.3
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_34ypc"]
+radius = 0.65
+height = 1.3
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_7crcl"]
+radius = 0.65
+height = 1.3
+radial_segments = 12
+rings = 5
+
+[node name="shrub" type="Node3D"]
+
+[node name="Leaves" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0.45, 0.5)
+material_override = ExtResource("1_wcu3m")
+mesh = SubResource("SphereMesh_rxgaf")
+
+[node name="@MeshInstance3D@198" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.3377316, 0.45, -0.36869687)
+material_override = ExtResource("2_ac5qj")
+mesh = SubResource("SphereMesh_t1ywx")
+
+[node name="@MeshInstance3D@199" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, -0.4980823, 0.45, 0.043749493)
+material_override = ExtResource("1_wcu3m")
+mesh = SubResource("SphereMesh_34ypc")
+
+[node name="@MeshInstance3D@200" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.39683393, 0.45, 0.30417565)
+material_override = ExtResource("2_ac5qj")
+mesh = SubResource("SphereMesh_7crcl")

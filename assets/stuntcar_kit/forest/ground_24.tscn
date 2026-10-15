@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/grass.tres" id="1_ga4cc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sd3kn"]
+size = Vector3(24, 0.35, 24)
+
+[node name="ground_24" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175, 0)
+material_override = ExtResource("1_ga4cc")
+mesh = SubResource("BoxMesh_sd3kn")

@@ -1,0 +1,11 @@
+{
+	"adapter": "Apple M4 Pro (Apple9)",
+	"frames": 180,
+	"mean_frame_ms": 14.6258944444445,
+	"median_frame_ms": 14.419,
+	"note": "Static dusk view, VSync enabled. No whole-game performance claim.",
+	"observed_fps": 68.371886847566,
+	"p95_frame_ms": 15.39,
+	"renderer": "forward_plus",
+	"resolution": "1600x1000"
+}

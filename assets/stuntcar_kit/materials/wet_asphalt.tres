@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "wet_asphalt"
+albedo_color = Color(0.14509805, 0.23137255, 0.28627452, 1)
+metallic = 0.15
+roughness = 0.24

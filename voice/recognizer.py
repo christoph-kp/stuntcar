@@ -1,0 +1,238 @@
+"""Local bilingual speech input. Audio remains in memory and is never saved."""
+import argparse
+from array import array
+from collections import deque
+import json
+from pathlib import Path
+import queue
+import select
+import socket
+import time
+import wave
+
+if __package__:
+    from .protocol import choose_command
+    from .streaming import StreamingRecognizer
+else:
+    from protocol import choose_command
+    from streaming import StreamingRecognizer
+
+SAMPLE_RATE = 16000
+BLOCK = 800
+MODEL_ROOT = Path(__file__).resolve().parents[1] / '.tools' / 'voice-models'
+GRAMMARS = {
+    'de': ['links', 'rechts', 'schneller', 'langsamer', 'gas', 'gas geben', 'bremsen', 'bremse',
+           'pause', 'weiter', 'nächstes', 'wählen', 'start', 'starten', '[unk]'],
+    'en-us': ['left', 'right', 'faster', 'slower', 'gas', 'brake', 'brakes', 'accelerate', 'throttle',
+              'pause', 'continue', 'resume', 'next', 'select', 'start', '[unk]'],
+}
+
+
+class BilingualRecognizer:
+    def __init__(self):
+        import vosk
+        vosk.SetLogLevel(-1)
+        self.recognizers = []
+        self.fallback_recognizers = []
+        for language in ['de', 'en-us']:
+            path = MODEL_ROOT / f'vosk-model-small-{language}-0.15'
+            if not path.is_dir():
+                raise RuntimeError('Sprachmodell fehlt. Bitte Sprache einrichten.')
+            model = vosk.Model(str(path))
+            recognizer = vosk.KaldiRecognizer(model, SAMPLE_RATE, json.dumps(GRAMMARS[language], ensure_ascii=False))
+            recognizer.SetWords(True)
+            self.recognizers.append(recognizer)
+            fallback = vosk.KaldiRecognizer(model, SAMPLE_RATE)
+            fallback.SetWords(True)
+            self.fallback_recognizers.append(fallback)
+
+    def recognize(self, pcm):
+        # Real microphone input has pre-roll. Padding also protects a clipped onset.
+        pcm = bytes(6400) + pcm
+        results = self.decode(self.recognizers, pcm)
+        chosen = choose_command(results)
+        if chosen is None:
+            fallback_results = self.decode(self.fallback_recognizers, pcm)
+            fallback = choose_command(fallback_results)
+            # A free recognizer may resolve a language conflict, but only when
+            # the command also appears in the restricted recognizer's words.
+            if fallback and any(fallback[1] in result.get('text', '').split('[unk]')
+                                or fallback[1] == result.get('text', '').replace('[unk]', '').strip()
+                                for result in results):
+                chosen = fallback
+            results += fallback_results
+        return chosen, results
+
+    @staticmethod
+    def decode(recognizers, pcm):
+        results = []
+        for recognizer in recognizers:
+            recognizer.Reset()
+            if recognizer.AcceptWaveform(pcm):
+                results.append(json.loads(recognizer.Result()))
+            else:
+                results.append(json.loads(recognizer.FinalResult()))
+        return results
+
+
+class Segmenter:
+    """A short silence completes a command; no partial words steer the car."""
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.pre_roll = deque(maxlen=3)
+        self.parts = []
+        self.silent_blocks = 0
+        self.speech_blocks = 0
+
+    def feed(self, pcm):
+        samples = array('h', pcm)
+        rms = (sum(value * value for value in samples) / max(1, len(samples))) ** .5
+        speech = rms >= 180
+        if not self.parts:
+            self.pre_roll.append(pcm)
+            if not speech:
+                return None, rms
+            self.parts = list(self.pre_roll)
+            self.speech_blocks = 1
+        else:
+            self.parts.append(pcm)
+            if speech:
+                self.speech_blocks += 1
+        self.silent_blocks = 0 if speech else self.silent_blocks + 1
+        if len(self.parts) > 80:
+            self.reset()
+            return None, rms
+        if self.silent_blocks >= 6:
+            utterance = b''.join(self.parts) if self.speech_blocks >= 2 else None
+            self.reset()
+            return utterance, rms
+        return None, rms
+
+
+class Connection:
+    def __init__(self, port, token):
+        self.socket = socket.create_connection(('127.0.0.1', port), timeout=2)
+        self.socket.settimeout(.5)
+        self.seq = 0
+        self.epoch = 0
+        self.buffer = b''
+        self.send('hello', token=token)
+
+    def send(self, kind, **values):
+        self.seq += 1
+        data = {'type': kind, 'seq': self.seq, 'epoch': self.epoch, **values}
+        self.socket.sendall((json.dumps(data, ensure_ascii=False) + '\n').encode())
+
+    def poll(self):
+        before = self.epoch
+        while select.select([self.socket], [], [], 0)[0]:
+            chunk = self.socket.recv(4096)
+            if not chunk:
+                raise ConnectionError('Das Spiel hat die Verbindung beendet.')
+            self.buffer += chunk
+            if len(self.buffer) > 8192:
+                raise ConnectionError('Ungültige Nachricht vom Spiel.')
+            while b'\n' in self.buffer:
+                line, self.buffer = self.buffer.split(b'\n', 1)
+                data = json.loads(line)
+                if data.get('type') == 'context' and isinstance(data.get('epoch'), int):
+                    self.epoch = data['epoch']
+        return self.epoch != before
+
+
+def run_microphone(connection, device=None):
+    import sounddevice as sd
+    connection.send('loading')
+    engine = BilingualRecognizer()
+    device_info = sd.query_devices(device, 'input')
+    audio_queue = queue.Queue(maxsize=20)
+    problems = queue.Queue(maxsize=1)
+
+    def callback(data, frames, timing, status):
+        if status:
+            try: problems.put_nowait('Das Mikrofon liefert die Daten nicht rechtzeitig.')
+            except queue.Full: pass
+        try:
+            audio_queue.put_nowait((time.monotonic(), bytes(data)))
+        except queue.Full:
+            try: problems.put_nowait('Die Spracheingabe ist zu stark verzögert.')
+            except queue.Full: pass
+
+    with sd.RawInputStream(samplerate=SAMPLE_RATE, blocksize=BLOCK, device=device,
+                           dtype='int16', channels=1, callback=callback):
+        connection.send('ready', device=str(device_info['name'])[:60])
+        stream = StreamingRecognizer(engine)
+        last_feedback = 0.0
+        last_heartbeat = 0.0
+        last_audio = time.monotonic()
+        cutoff = last_audio
+        while True:
+            if connection.poll():
+                stream.reset()
+                cutoff = time.monotonic()
+            if not problems.empty():
+                raise RuntimeError(problems.get_nowait())
+            now = time.monotonic()
+            if now - last_audio > 2:
+                raise RuntimeError('Das Mikrofon liefert keine Daten mehr.')
+            if now - last_heartbeat >= 1:
+                connection.send('heartbeat')
+                last_heartbeat = now
+            try:
+                captured, pcm = audio_queue.get(timeout=.05)
+            except queue.Empty:
+                continue
+            last_audio = now
+            if captured < cutoff:
+                continue
+            if now - captured > .4:
+                raise RuntimeError('Die Spracheingabe ist zu stark verzögert.')
+            epoch = connection.epoch
+            commands, feedback = stream.feed(pcm)
+            if connection.poll():
+                stream.reset()
+                cutoff = time.monotonic()
+            if epoch != connection.epoch:
+                continue
+            for command in commands:
+                connection.send('command', **command)
+            if now - last_feedback >= .1 or commands or feedback['state'] in ('recognized', 'unknown'):
+                connection.send('feedback', **feedback)
+                last_feedback = now
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int)
+    parser.add_argument('--token')
+    parser.add_argument('--device', type=int)
+    parser.add_argument('--wav', type=Path)
+    args = parser.parse_args()
+    if args.wav:
+        with wave.open(str(args.wav), 'rb') as source:
+            if (source.getframerate(), source.getnchannels(), source.getsampwidth()) != (16000, 1, 2):
+                raise ValueError('Die Testdatei braucht 16 kHz, einen Kanal und 16 Bit.')
+            pcm = source.readframes(source.getnframes())
+        chosen, results = BilingualRecognizer().recognize(pcm)
+        print(json.dumps({'chosen': chosen, 'results': results}, ensure_ascii=False))
+        return
+    if not args.port or not args.token:
+        parser.error('Das Spiel muss Anschluss und Kennung übergeben.')
+    connection = Connection(args.port, args.token)
+    try:
+        run_microphone(connection, args.device)
+    except (BrokenPipeError, ConnectionError):
+        pass
+    except Exception as error:
+        message = str(error)
+        if not isinstance(error, RuntimeError):
+            message = 'Mikrofon nicht verfügbar. Prüfe die Mikrofonfreigabe und das Eingabegerät.'
+        try: connection.send('error', message=message[:180])
+        except OSError: pass
+    finally:
+        connection.socket.close()
+
+if __name__ == '__main__':
+    main()

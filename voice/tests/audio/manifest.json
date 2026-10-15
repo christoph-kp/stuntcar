@@ -1,0 +1,122 @@
+[
+  {
+    "file": "0.wav",
+    "text": "links",
+    "expected": "left"
+  },
+  {
+    "file": "1.wav",
+    "text": "rechts",
+    "expected": "right"
+  },
+  {
+    "file": "2.wav",
+    "text": "schneller",
+    "expected": "faster"
+  },
+  {
+    "file": "3.wav",
+    "text": "langsamer",
+    "expected": "slower"
+  },
+  {
+    "file": "4.wav",
+    "text": "Bremsen",
+    "expected": "slower"
+  },
+  {
+    "file": "5.wav",
+    "text": "Gas",
+    "expected": "faster"
+  },
+  {
+    "file": "6.wav",
+    "text": "Pause",
+    "expected": "pause"
+  },
+  {
+    "file": "7.wav",
+    "text": "weiter",
+    "expected": "resume"
+  },
+  {
+    "file": "8.wav",
+    "text": "Start",
+    "expected": "start"
+  },
+  {
+    "file": "9.wav",
+    "text": "nächstes",
+    "expected": "next"
+  },
+  {
+    "file": "10.wav",
+    "text": "wählen",
+    "expected": "select"
+  },
+  {
+    "file": "11.wav",
+    "text": "nicht links",
+    "expected": null
+  },
+  {
+    "file": "12.wav",
+    "text": "Guten Morgen",
+    "expected": null
+  },
+  {
+    "file": "13.wav",
+    "text": "left",
+    "expected": "left"
+  },
+  {
+    "file": "14.wav",
+    "text": "right",
+    "expected": "right"
+  },
+  {
+    "file": "15.wav",
+    "text": "faster",
+    "expected": "faster"
+  },
+  {
+    "file": "16.wav",
+    "text": "slower",
+    "expected": "slower"
+  },
+  {
+    "file": "17.wav",
+    "text": "brake",
+    "expected": "slower"
+  },
+  {
+    "file": "18.wav",
+    "text": "gas",
+    "expected": "faster"
+  },
+  {
+    "file": "19.wav",
+    "text": "accelerate",
+    "expected": "faster"
+  },
+  {
+    "file": "20.wav",
+    "text": "continue",
+    "expected": "resume"
+  },
+  {
+    "file": "21.wav",
+    "text": "next",
+    "expected": "next"
+  },
+  {
+    "file": "22.wav",
+    "text": "select",
+    "expected": "select"
+  },
+  {
+    "file": "23.wav",
+    "text": "hello there",
+    "expected": null
+  }
+]

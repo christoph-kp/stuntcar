@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "glass"
+albedo_color = Color(0.09019608, 0.23921569, 0.29411766, 1)
+metallic = 0.55
+roughness = 0.12

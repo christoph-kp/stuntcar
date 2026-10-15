@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "scenario": "coast",
+  "name": "Küstenfahrt",
+  "description": "Drei Kurven über dem Meer. Regen, Felsen und ein Leuchtturm.",
+  "length_m": 600,
+  "curves": [
+    {
+      "start_m": 100,
+      "end_m": 170,
+      "turn_sign": 1,
+      "radius": 35,
+      "checkpoint_m": 5,
+      "bank_degrees": 12
+    },
+    {
+      "start_m": 270,
+      "end_m": 330,
+      "turn_sign": -1,
+      "radius": 20,
+      "checkpoint_m": 175,
+      "bank_degrees": 18
+    },
+    {
+      "start_m": 430,
+      "end_m": 500,
+      "turn_sign": 1,
+      "radius": 35,
+      "checkpoint_m": 335,
+      "bank_degrees": 12
+    }
+  ],
+  "heights": [
+    {
+      "at_m": 0,
+      "height_m": 12
+    },
+    {
+      "at_m": 190,
+      "height_m": 12
+    },
+    {
+      "at_m": 220,
+      "height_m": 14
+    },
+    {
+      "at_m": 250,
+      "height_m": 12
+    },
+    {
+      "at_m": 600,
+      "height_m": 12
+    }
+  ],
+  "jumps": [],
+  "preview": "previews/coast.png"
+}

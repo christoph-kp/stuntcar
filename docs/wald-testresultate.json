@@ -1,0 +1,114 @@
+[
+  {
+    "test": "run_catalog_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "KATALOG: 7 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_forest_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "WALD: 40 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_input_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "EINGABEPRÜFUNGEN: 12, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_jump_scene_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPRÜNGE IM SPIEL: 56 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_landscape_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "LANDSCHAFTEN: 36 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_scene_test.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPIELPRÜFUNG: FINISHED bei 599.762925634469 m; Zeit: 27.4333333333331 s; Fehler: 0"
+    ]
+  },
+  {
+    "test": "run_selection_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "AUSWAHL: 13 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_speed_bank_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "TEMPO UND STEILKURVEN: 74 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_tension_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPANNUNGSPRÜFUNGEN: 13, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "PRÜFUNGEN: 27, FEHLER: 0"
+    ]
+  },
+  {
+    "test": "run_track_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "STRECKEN: 77 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_bridge_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPRACHVERBINDUNG: 12 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_scene_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPRACHE IM SPIEL: 10 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_voice_tests.gd",
+    "exit_code": 0,
+    "output": [
+      "ERROR: Condition \"ret != noErr\" is true. Returning: \"\"",
+      "SPRACHSTEUERUNG: 10 Prüfungen, 0 Fehler"
+    ]
+  }
+]

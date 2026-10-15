@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/foam.tres" id="1_byesp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_gflu2"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_3126q"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_cpqml"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_2lmbc"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_a2yqy"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_tuid1"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_fviji"]
+radius = 0.6
+height = 1.2
+radial_segments = 12
+rings = 5
+
+[node name="foam_strip" type="Node3D"]
+
+[node name="Foam" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, -2.6, 0, 0)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_gflu2")
+
+[node name="@MeshInstance3D@209" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, -1.75, 0, 0.16829419)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_3126q")
+
+[node name="@MeshInstance3D@210" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, -0.9, 0, 0.18185948)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_cpqml")
+
+[node name="@MeshInstance3D@211" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, -0.05, 0, 0.028224)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_2lmbc")
+
+[node name="@MeshInstance3D@212" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, 0.8, 0, -0.1513605)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_a2yqy")
+
+[node name="@MeshInstance3D@213" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, 1.65, 0, -0.19178486)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_tuid1")
+
+[node name="@MeshInstance3D@214" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.04, 0, 0, 0, 0.6, 2.5, 0, -0.0558831)
+material_override = ExtResource("1_byesp")
+mesh = SubResource("SphereMesh_fviji")

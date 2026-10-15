@@ -1,0 +1,272 @@
+{
+	"assets": [
+		{
+			"category": "vehicle",
+			"id": "stunt_coupe",
+			"path": "vehicle/stunt_coupe.tscn",
+			"title": "Stunt-Coupé"
+		},
+		{
+			"category": "track",
+			"id": "straight_24",
+			"path": "track/straight_24.tscn",
+			"title": "Gerade · 24 m"
+		},
+		{
+			"category": "track",
+			"id": "curve_left_45",
+			"path": "track/curve_left_45.tscn",
+			"title": "Linkskurve · 45 Grad"
+		},
+		{
+			"category": "track",
+			"id": "curve_right_45",
+			"path": "track/curve_right_45.tscn",
+			"title": "Rechtskurve · 45 Grad"
+		},
+		{
+			"category": "track",
+			"id": "bank_left_90",
+			"path": "track/bank_left_90.tscn",
+			"title": "Steilkurve links · 90 Grad"
+		},
+		{
+			"category": "track",
+			"id": "bank_right_90",
+			"path": "track/bank_right_90.tscn",
+			"title": "Steilkurve rechts · 90 Grad"
+		},
+		{
+			"category": "track",
+			"id": "jump_launch",
+			"path": "track/jump_launch.tscn",
+			"title": "Sprungrampe · 18 Grad"
+		},
+		{
+			"category": "track",
+			"id": "jump_landing",
+			"path": "track/jump_landing.tscn",
+			"title": "Landerampe · 18 Grad"
+		},
+		{
+			"category": "track",
+			"id": "hill_32",
+			"path": "track/hill_32.tscn",
+			"title": "Kuppe · 32 m"
+		},
+		{
+			"category": "track",
+			"id": "loop_12",
+			"path": "track/loop_12.tscn",
+			"title": "Looping · 12 m Radius"
+		},
+		{
+			"category": "shared",
+			"id": "road_post",
+			"path": "shared/road_post.tscn",
+			"title": "Randpfosten"
+		},
+		{
+			"category": "shared",
+			"id": "bridge_support_8",
+			"path": "shared/bridge_support_8.tscn",
+			"title": "Brückenstütze · 8 m"
+		},
+		{
+			"category": "shared",
+			"id": "checkpoint_gate",
+			"path": "shared/checkpoint_gate.tscn",
+			"title": "Streckentor"
+		},
+		{
+			"category": "forest",
+			"id": "pine_small",
+			"path": "forest/pine_small.tscn",
+			"title": "Tanne"
+		},
+		{
+			"category": "forest",
+			"id": "pine_tall",
+			"path": "forest/pine_tall.tscn",
+			"title": "Tanne"
+		},
+		{
+			"category": "alpine",
+			"id": "snow_pine_small",
+			"path": "alpine/snow_pine_small.tscn",
+			"title": "Schneetanne"
+		},
+		{
+			"category": "alpine",
+			"id": "snow_pine_tall",
+			"path": "alpine/snow_pine_tall.tscn",
+			"title": "Schneetanne"
+		},
+		{
+			"category": "alpine",
+			"id": "boulder_1",
+			"path": "alpine/boulder_1.tscn",
+			"title": "Felsen 1"
+		},
+		{
+			"category": "alpine",
+			"id": "boulder_2",
+			"path": "alpine/boulder_2.tscn",
+			"title": "Felsen 2"
+		},
+		{
+			"category": "alpine",
+			"id": "cliff_18",
+			"path": "alpine/cliff_18.tscn",
+			"title": "Felswand · etwa 18 m"
+		},
+		{
+			"category": "alpine",
+			"id": "ground_24",
+			"path": "alpine/ground_24.tscn",
+			"title": "Bodenplatte · 24 m"
+		},
+		{
+			"category": "forest",
+			"id": "boulder_1",
+			"path": "forest/boulder_1.tscn",
+			"title": "Felsen 1"
+		},
+		{
+			"category": "forest",
+			"id": "boulder_2",
+			"path": "forest/boulder_2.tscn",
+			"title": "Felsen 2"
+		},
+		{
+			"category": "forest",
+			"id": "cliff_18",
+			"path": "forest/cliff_18.tscn",
+			"title": "Felswand · etwa 18 m"
+		},
+		{
+			"category": "forest",
+			"id": "ground_24",
+			"path": "forest/ground_24.tscn",
+			"title": "Bodenplatte · 24 m"
+		},
+		{
+			"category": "canyon",
+			"id": "boulder_1",
+			"path": "canyon/boulder_1.tscn",
+			"title": "Felsen 1"
+		},
+		{
+			"category": "canyon",
+			"id": "boulder_2",
+			"path": "canyon/boulder_2.tscn",
+			"title": "Felsen 2"
+		},
+		{
+			"category": "canyon",
+			"id": "cliff_18",
+			"path": "canyon/cliff_18.tscn",
+			"title": "Felswand · etwa 18 m"
+		},
+		{
+			"category": "canyon",
+			"id": "ground_24",
+			"path": "canyon/ground_24.tscn",
+			"title": "Bodenplatte · 24 m"
+		},
+		{
+			"category": "coast",
+			"id": "boulder_1",
+			"path": "coast/boulder_1.tscn",
+			"title": "Felsen 1"
+		},
+		{
+			"category": "coast",
+			"id": "boulder_2",
+			"path": "coast/boulder_2.tscn",
+			"title": "Felsen 2"
+		},
+		{
+			"category": "coast",
+			"id": "cliff_18",
+			"path": "coast/cliff_18.tscn",
+			"title": "Felswand · etwa 18 m"
+		},
+		{
+			"category": "coast",
+			"id": "ground_24",
+			"path": "coast/ground_24.tscn",
+			"title": "Bodenplatte · 24 m"
+		},
+		{
+			"category": "alpine",
+			"id": "mountain_group",
+			"path": "alpine/mountain_group.tscn",
+			"title": "Berggruppe"
+		},
+		{
+			"category": "alpine",
+			"id": "snowbank",
+			"path": "alpine/snowbank.tscn",
+			"title": "Schneewall"
+		},
+		{
+			"category": "forest",
+			"id": "fallen_log",
+			"path": "forest/fallen_log.tscn",
+			"title": "Baumstamm"
+		},
+		{
+			"category": "forest",
+			"id": "shrub",
+			"path": "forest/shrub.tscn",
+			"title": "Strauch"
+		},
+		{
+			"category": "canyon",
+			"id": "mesa",
+			"path": "canyon/mesa.tscn",
+			"title": "Tafelberg"
+		},
+		{
+			"category": "canyon",
+			"id": "rock_tower",
+			"path": "canyon/rock_tower.tscn",
+			"title": "Felsturm"
+		},
+		{
+			"category": "coast",
+			"id": "lighthouse",
+			"path": "coast/lighthouse.tscn",
+			"title": "Leuchtturm"
+		},
+		{
+			"category": "coast",
+			"id": "water_48",
+			"path": "coast/water_48.tscn",
+			"title": "Wasserfläche · 48 m"
+		},
+		{
+			"category": "coast",
+			"id": "foam_strip",
+			"path": "coast/foam_strip.tscn",
+			"title": "Schaumkante"
+		},
+		{
+			"category": "weather",
+			"id": "snow",
+			"path": "weather/snow.tscn",
+			"title": "Schneefall"
+		},
+		{
+			"category": "weather",
+			"id": "rain",
+			"path": "weather/rain.tscn",
+			"title": "Regen"
+		}
+	],
+	"forward": "-Z",
+	"road_width": 6.0,
+	"units": "meters",
+	"version": 1
+}

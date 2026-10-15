@@ -1,0 +1,116 @@
+{
+  "format_version": 1,
+  "scenario": "canyon",
+  "name": "Sprungstrecke",
+  "description": "Zwei Sprünge, hohe Kurven und eine lange Abfahrt.",
+  "length_m": 1350,
+  "curves": [
+    {
+      "start_m": 105,
+      "end_m": 180,
+      "turn_sign": -1,
+      "radius": 38,
+      "checkpoint_m": 5,
+      "bank_degrees": 32
+    },
+    {
+      "start_m": 260,
+      "end_m": 330,
+      "turn_sign": 1,
+      "radius": 34,
+      "checkpoint_m": 190,
+      "bank_degrees": 38
+    },
+    {
+      "start_m": 560,
+      "end_m": 635,
+      "turn_sign": -1,
+      "radius": 38,
+      "checkpoint_m": 480,
+      "bank_degrees": 28
+    },
+    {
+      "start_m": 760,
+      "end_m": 835,
+      "turn_sign": 1,
+      "radius": 34,
+      "checkpoint_m": 660,
+      "bank_degrees": 40
+    },
+    {
+      "start_m": 1110,
+      "end_m": 1185,
+      "turn_sign": -1,
+      "radius": 38,
+      "checkpoint_m": 1030,
+      "bank_degrees": 35
+    }
+  ],
+  "heights": [
+    {
+      "at_m": 0,
+      "height_m": 14
+    },
+    {
+      "at_m": 190,
+      "height_m": 24
+    },
+    {
+      "at_m": 340,
+      "height_m": 24
+    },
+    {
+      "at_m": 410,
+      "height_m": 32
+    },
+    {
+      "at_m": 444,
+      "height_m": 22
+    },
+    {
+      "at_m": 510,
+      "height_m": 16
+    },
+    {
+      "at_m": 660,
+      "height_m": 35
+    },
+    {
+      "at_m": 850,
+      "height_m": 35
+    },
+    {
+      "at_m": 920,
+      "height_m": 41
+    },
+    {
+      "at_m": 958,
+      "height_m": 28
+    },
+    {
+      "at_m": 1040,
+      "height_m": 16
+    },
+    {
+      "at_m": 1250,
+      "height_m": 12
+    },
+    {
+      "at_m": 1350,
+      "height_m": 12
+    }
+  ],
+  "jumps": [
+    {
+      "start_m": 410,
+      "end_m": 444,
+      "height_m": 6
+    },
+    {
+      "start_m": 920,
+      "end_m": 958,
+      "height_m": 7
+    }
+  ],
+  "preview": "previews/canyon.png"
+}

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "ivory"
+albedo_color = Color(0.95686275, 0.89411765, 0.7490196, 1)
+metallic = 0.1
+roughness = 0.4

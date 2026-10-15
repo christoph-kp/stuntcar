@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/sandstone.tres" id="1_oxip5"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/sandstone_light.tres" id="2_iid4s"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qk76j"]
+top_radius = 11.0
+bottom_radius = 15.0
+height = 13.0
+radial_segments = 7
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_randr"]
+top_radius = 10.9
+bottom_radius = 11.3
+height = 1.0
+radial_segments = 7
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uspxr"]
+top_radius = 9.5
+bottom_radius = 10.9
+height = 6.0
+radial_segments = 7
+rings = 1
+
+[node name="mesa" type="Node3D"]
+
+[node name="Foot" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 0)
+material_override = ExtResource("1_oxip5")
+mesh = SubResource("CylinderMesh_qk76j")
+
+[node name="Band" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.5, 0)
+material_override = ExtResource("2_iid4s")
+mesh = SubResource("CylinderMesh_randr")
+
+[node name="Top" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 0)
+material_override = ExtResource("1_oxip5")
+mesh = SubResource("CylinderMesh_uspxr")

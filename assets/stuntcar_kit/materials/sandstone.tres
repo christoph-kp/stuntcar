@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "sandstone"
+albedo_color = Color(0.7137255, 0.41568628, 0.27058825, 1)
+roughness = 0.95

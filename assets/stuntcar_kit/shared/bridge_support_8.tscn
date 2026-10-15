@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/concrete.tres" id="1_oumxt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_86805"]
+size = Vector3(0.8, 7.1, 1.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6avs0"]
+size = Vector3(6.6, 0.55, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a7u4a"]
+size = Vector3(2.5, 0.4, 2.6)
+
+[node name="bridge_support_8" type="Node3D"]
+
+[node name="Column" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.45, 0)
+material_override = ExtResource("1_oumxt")
+mesh = SubResource("BoxMesh_86805")
+
+[node name="Beam" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
+material_override = ExtResource("1_oumxt")
+mesh = SubResource("BoxMesh_6avs0")
+
+[node name="Foot" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+material_override = ExtResource("1_oumxt")
+mesh = SubResource("BoxMesh_a7u4a")

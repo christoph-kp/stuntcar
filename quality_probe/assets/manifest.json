@@ -1,0 +1,206 @@
+[
+  {
+    "path": "assets/car/CarConcept.data.bin",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/CarConcept.data.bin",
+    "bytes": 8670516,
+    "sha256": "5cd6ceb6a502dc3c79863c2f11c06f6aa7474e53367bb212b3e3c3f1e7611d20"
+  },
+  {
+    "path": "assets/car/CarConcept.gltf",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/CarConcept.gltf",
+    "bytes": 333111,
+    "sha256": "1a2395a86bdef0a1e9b3d3875bb056f688c624c19cf27c867b6d5cde6f37722f"
+  },
+  {
+    "path": "assets/car/Dash_E.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Dash_E.png",
+    "bytes": 27423,
+    "sha256": "23c7ee30e1bf5e2c243330d4d5be7624f96befca8a224a8eec0b9438a64b09a4"
+  },
+  {
+    "path": "assets/car/Dot_C.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Dot_C.png",
+    "bytes": 321,
+    "sha256": "ac7ca6bf9ee840b78e4a27c82c3c529a1063bba16b9eea120c981a041d922a40"
+  },
+  {
+    "path": "assets/car/Dot_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Dot_N.png",
+    "bytes": 7969,
+    "sha256": "ca9ef95997b387a597738e2f3e9dfa6e9f140c38d2f0baa7aadf226ce05c3635"
+  },
+  {
+    "path": "assets/car/Hex_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Hex_N.png",
+    "bytes": 3331,
+    "sha256": "738427eb37d929a8a9dff41783cea37a10fd2dc98f53d6d320d9aa5c648beea7"
+  },
+  {
+    "path": "assets/car/Khronos_C.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Khronos_C.png",
+    "bytes": 7087,
+    "sha256": "50f16c5a514079b8ea27ba4eb03046b63cd0a9c29686423a2940a8fb2898f1b5"
+  },
+  {
+    "path": "assets/car/Mechanical_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Mechanical_N.png",
+    "bytes": 251901,
+    "sha256": "bc5865f15bffc94e5248cf0a4bb1beaec06150a640b5ca65ad6de3d58d394ca9"
+  },
+  {
+    "path": "assets/car/Mechanical_ORM.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Mechanical_ORM.png",
+    "bytes": 69809,
+    "sha256": "1e026202e92d8b701550d1a6803cb3597f1c0d89adce256b0e360a0f547e4da9"
+  },
+  {
+    "path": "assets/car/Occlusion.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Occlusion.png",
+    "bytes": 1411879,
+    "sha256": "766c01462c9b344871711c6af66bcd1f75371fc25f7c392a0185f6b62b2dd4f8"
+  },
+  {
+    "path": "assets/car/Powdercoat_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Powdercoat_N.png",
+    "bytes": 41240,
+    "sha256": "3f1bf8d127374684c89b0d1963ca57d36a8ea59de96bef752b62daebc6362eeb"
+  },
+  {
+    "path": "assets/car/Rib_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Rib_N.png",
+    "bytes": 143,
+    "sha256": "516aada2d1c574c59352e1221aaf75cc8fa48104aafe05716f02f30b7349c59f"
+  },
+  {
+    "path": "assets/car/Thickness.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Thickness.png",
+    "bytes": 137601,
+    "sha256": "09d0606c1f90caf3cc5d578d1f695e908df1c10288c9918971890d2d98dc5eae"
+  },
+  {
+    "path": "assets/car/Tireside_C.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Tireside_C.png",
+    "bytes": 8094,
+    "sha256": "871509e74cc44ca8fa3b664e59460e62f0edf30007b035bb9f21ad957d6336c1"
+  },
+  {
+    "path": "assets/car/Tireside_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Tireside_N.png",
+    "bytes": 396724,
+    "sha256": "a7335b72bf59441a4e1856c819c1e1655a5bb6c72661429f70cf5857eb26f1c2"
+  },
+  {
+    "path": "assets/car/Tiretread_N.png",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF/Tiretread_N.png",
+    "bytes": 49131,
+    "sha256": "cc8dd22a4b78dfcebdca12270e3db8a9c381d9b1b40b00d7a0043373abd0f72f"
+  },
+  {
+    "path": "assets/car/SOURCE.md",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/README.md",
+    "bytes": 20382,
+    "sha256": "af5f76ead54a5039288924f37081d6e1fcd5ccc5b2628faedb926325a73099cd"
+  },
+  {
+    "path": "assets/car/CC-BY-4.0.txt",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/LICENSES/CC-BY-4.0.txt",
+    "bytes": 13034,
+    "sha256": "c8041334a99cb48852b2139253cbde5f8ac87e27f124aed51223e0d5bf0080eb"
+  },
+  {
+    "path": "assets/car/KHRONOS-MARKS.txt",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/LICENSES/LicenseRef-LegalMark-Khronos.txt",
+    "bytes": 589,
+    "sha256": "2ea9821de870cf8d3faaa115ffc47f56632bf9f98d54d2ac1ce61592040b765c"
+  },
+  {
+    "path": "assets/tree/tree.gltf",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pine_sapling_small/pine_sapling_small_1k.gltf",
+    "bytes": 11442,
+    "sha256": "f358c01926861dd082f32dba60f7c9fba232b585a985cf38c0d2229eecf4bc48"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_twig_arm_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_twig_arm_1k.jpg",
+    "bytes": 394056,
+    "sha256": "2eb0aa44124b5a4ae9401e00b23b3c916f4c3f421616ce1bb932f248fc061288"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_twig_diff_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_twig_diff_1k.jpg",
+    "bytes": 477942,
+    "sha256": "54af7d6fb664b5a38bcb118b557bc50e01e86ec54d6f1a573c3e32c649a53362"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_bark_nor_gl_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_bark_nor_gl_1k.jpg",
+    "bytes": 1016849,
+    "sha256": "05c46455531781b6cf18cae0648cf627f60ee942adaa8bcbfd1592fc2506a9e0"
+  },
+  {
+    "path": "assets/tree/pine_sapling_small.bin",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/pine_sapling_small/pine_sapling_small.bin",
+    "bytes": 17771796,
+    "sha256": "b4d2fc73d53f1d8717eb5ef9a2c66957d2a53152787e543aace88fcd6fca94ef"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_bark_diff_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_bark_diff_1k.jpg",
+    "bytes": 725265,
+    "sha256": "5c76836b01c3536fa0e24207b67bf4f3315b53ebe2b4ecc6f08dfcf3f8d74929"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_bark_arm_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_bark_arm_1k.jpg",
+    "bytes": 801278,
+    "sha256": "336a4680cd571b6076b67afee2310b290b8900d9d126eb39ec1ae92e95be2ea9"
+  },
+  {
+    "path": "assets/tree/textures/pine_sapling_small_twig_nor_gl_1k.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pine_sapling_small/pine_sapling_small_twig_nor_gl_1k.jpg",
+    "bytes": 692711,
+    "sha256": "76af87821d7ff00e25768d5d97a449394fe64a21ae55d099da7f5ed46d9098c8"
+  },
+  {
+    "path": "assets/road/color.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_track/asphalt_track_diff_2k.jpg",
+    "bytes": 3779263,
+    "sha256": "742d1d79560bd661d5871afc857e981e25dcd563bfd24385cbd063ebcaeef06c"
+  },
+  {
+    "path": "assets/road/normal.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_track/asphalt_track_nor_gl_2k.jpg",
+    "bytes": 3694762,
+    "sha256": "d9c635867ed0e022580baac711e0dcff679f8301cd906dff162be1bfbad8cfcd"
+  },
+  {
+    "path": "assets/road/arm.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_track/asphalt_track_arm_2k.jpg",
+    "bytes": 2469962,
+    "sha256": "064f8469a0f9e2a9581551926f02eb760992a9b3e2a3890ec6f6ac00d582944a"
+  },
+  {
+    "path": "assets/ground/color.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_floor/forest_floor_diff_2k.jpg",
+    "bytes": 5452936,
+    "sha256": "308bc5f916dcc113bf276cbfdc411bed48b6a9ce5e3bc0c228faa3d54acf125d"
+  },
+  {
+    "path": "assets/ground/normal.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_floor/forest_floor_nor_gl_2k.jpg",
+    "bytes": 5367757,
+    "sha256": "27ea9cf7778fd3f5eacc24159d2cfc040878125c2289c3bccc49be5806e87bd1"
+  },
+  {
+    "path": "assets/ground/arm.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_floor/forest_floor_arm_2k.jpg",
+    "bytes": 3926636,
+    "sha256": "c5d7ae6d2f6a5b801235b0592e62e67c05f25d41d3f5abd8a68565fdec52fbe9"
+  },
+  {
+    "path": "assets/sky/environment.hdr",
+    "source": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_2k.hdr",
+    "bytes": 6480797,
+    "sha256": "3fbd33f279f29bd64925c1dd3214fd46c627493d21f1100248b6b1098da4d06e"
+  }
+]

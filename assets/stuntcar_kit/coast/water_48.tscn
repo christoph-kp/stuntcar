@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/sea.tres" id="1_sha30"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ir6jw"]
+size = Vector3(48, 0.08, 48)
+
+[node name="water_48" type="Node3D"]
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
+material_override = ExtResource("1_sha30")
+mesh = SubResource("BoxMesh_ir6jw")

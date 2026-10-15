@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "foam"
+albedo_color = Color(0.7254902, 0.84705883, 0.85490197, 1)
+roughness = 0.9

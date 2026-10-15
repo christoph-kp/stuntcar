@@ -1,0 +1,116 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/bark.tres" id="1_k7sxj"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/pine.tres" id="2_ta24d"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/snow.tres" id="3_8hu5p"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/pine_light.tres" id="4_ljtoi"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uic7t"]
+top_radius = 0.13
+bottom_radius = 0.23
+height = 7.83
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pgi5i"]
+top_radius = 0.03
+bottom_radius = 2.835
+height = 3.51
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nw4mt"]
+top_radius = 0.02
+bottom_radius = 2.46645
+height = 3.0105
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h4uq5"]
+top_radius = 0.03
+bottom_radius = 2.322
+height = 3.51
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qe5j5"]
+top_radius = 0.02
+bottom_radius = 2.02014
+height = 3.0105
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ei4iq"]
+top_radius = 0.03
+bottom_radius = 1.809
+height = 3.51
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gy81v"]
+top_radius = 0.02
+bottom_radius = 1.57383
+height = 3.0105
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_82yu1"]
+top_radius = 0.03
+bottom_radius = 1.296
+height = 3.51
+radial_segments = 9
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0fc2n"]
+top_radius = 0.02
+bottom_radius = 1.12752
+height = 3.0105
+radial_segments = 9
+rings = 1
+
+[node name="snow_pine_tall" type="Node3D"]
+
+[node name="Trunk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.915, 0)
+material_override = ExtResource("1_k7sxj")
+mesh = SubResource("CylinderMesh_uic7t")
+
+[node name="Branches" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.24, 0)
+material_override = ExtResource("2_ta24d")
+mesh = SubResource("CylinderMesh_pgi5i")
+
+[node name="Snow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5775, 0)
+material_override = ExtResource("3_8hu5p")
+mesh = SubResource("CylinderMesh_nw4mt")
+
+[node name="@MeshInstance3D@163" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.86, 0)
+material_override = ExtResource("4_ljtoi")
+mesh = SubResource("CylinderMesh_h4uq5")
+
+[node name="@MeshInstance3D@164" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1975, 0)
+material_override = ExtResource("3_8hu5p")
+mesh = SubResource("CylinderMesh_qe5j5")
+
+[node name="@MeshInstance3D@165" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.48, 0)
+material_override = ExtResource("2_ta24d")
+mesh = SubResource("CylinderMesh_ei4iq")
+
+[node name="@MeshInstance3D@166" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8175, 0)
+material_override = ExtResource("3_8hu5p")
+mesh = SubResource("CylinderMesh_gy81v")
+
+[node name="@MeshInstance3D@167" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.1, 0)
+material_override = ExtResource("4_ljtoi")
+mesh = SubResource("CylinderMesh_82yu1")
+
+[node name="@MeshInstance3D@168" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.4375, 0)
+material_override = ExtResource("3_8hu5p")
+mesh = SubResource("CylinderMesh_0fc2n")

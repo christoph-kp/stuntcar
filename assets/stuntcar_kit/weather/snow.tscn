@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy2vo"]
+shading_mode = 0
+albedo_color = Color(0.84705883, 0.9098039, 0.92941177, 1)
+billboard_mode = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_0aksd"]
+material = SubResource("StandardMaterial3D_dy2vo")
+radius = 0.035
+height = 0.07
+radial_segments = 8
+rings = 4
+
+[node name="snow" type="Node3D"]
+
+[node name="Snowflakes" type="CPUParticles3D" parent="."]
+amount = 360
+lifetime = 7.0
+preprocess = 7.0
+use_fixed_seed = true
+seed = 120
+visibility_aabb = AABB(-20, -30, -25, 40, 45, 50)
+mesh = SubResource("SphereMesh_0aksd")
+emission_shape = 3
+emission_box_extents = Vector3(12, 5, 16)
+direction = Vector3(0.12, -1, 0.05)
+spread = 12.0
+gravity = Vector3(0.1, -0.3, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.8

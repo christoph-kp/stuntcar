@@ -1,0 +1,28 @@
+.godot/
+.tools/
+.DS_Store
+*.log
+__pycache__/
+
+# Local Python environments and test caches.
+.venv/
+venv/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated packages and local worktree folders.
+/exports/
+/.worktrees/
+/worktrees/
+
+# Local secrets. Keep documented example files available.
+.env
+.env.*
+!.env.example
+!.env.sample
+export_credentials.cfg
+.export_credentials.cfg

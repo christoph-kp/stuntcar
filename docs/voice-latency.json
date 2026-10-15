@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-15",
+  "machine": "Apple M4 Pro / macOS",
+  "method": "Synthetic PCM at real-time speed through the real microphone loop, local socket and actual game command handler. Word ends are Vosk estimates. Real microphone hardware latency is excluded. The test holds the car at the curve and suppresses focus pauses.",
+  "runs": [
+    {
+      "action": "Ausgeführt: links · Nr. 5",
+      "applied": 5,
+      "delay_after_estimated_word_end_ms": [
+        405.0,
+        221.0,
+        154.0,
+        105.0,
+        155.0
+      ],
+      "expected_words": 5,
+      "fixture": "res://voice/tests/audio/continuous/links-five.wav",
+      "state": "RUNNING",
+      "voice_status": "Mikrofon aktiv · Deutsch und Englisch"
+    },
+    {
+      "action": "Ausgeführt: rechts · Nr. 5",
+      "applied": 5,
+      "delay_after_estimated_word_end_ms": [
+        764.0,
+        434.0,
+        574.0,
+        463.0,
+        351.0
+      ],
+      "expected_words": 5,
+      "fixture": "res://voice/tests/audio/continuous/rechts-five.wav",
+      "state": "RUNNING",
+      "voice_status": "Mikrofon aktiv · Deutsch und Englisch"
+    },
+    {
+      "action": "Ausgeführt: links · Nr. 5",
+      "applied": 5,
+      "delay_after_estimated_word_end_ms": [
+        448.0,
+        355.0,
+        115.0,
+        155.0,
+        75.0
+      ],
+      "expected_words": 5,
+      "fixture": "res://voice/tests/audio/continuous/links-fast.wav",
+      "state": "RUNNING",
+      "voice_status": "Mikrofon aktiv · Deutsch und Englisch"
+    }
+  ],
+  "count": 15,
+  "min_ms": 75.0,
+  "median_ms": 351.0,
+  "max_ms": 764.0
+}

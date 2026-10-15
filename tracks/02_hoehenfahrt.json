@@ -1,0 +1,107 @@
+{
+  "format_version": 1,
+  "scenario": "alpine",
+  "name": "Höhenfahrt",
+  "description": "Hoch hinauf, steil hinunter und über eine Lücke.",
+  "length_m": 1250,
+  "curves": [
+    {
+      "start_m": 110,
+      "end_m": 185,
+      "turn_sign": 1,
+      "radius": 38,
+      "checkpoint_m": 5,
+      "bank_degrees": 25
+    },
+    {
+      "start_m": 255,
+      "end_m": 325,
+      "turn_sign": -1,
+      "radius": 34,
+      "checkpoint_m": 190,
+      "bank_degrees": 32
+    },
+    {
+      "start_m": 550,
+      "end_m": 625,
+      "turn_sign": 1,
+      "radius": 38,
+      "checkpoint_m": 475,
+      "bank_degrees": 38
+    },
+    {
+      "start_m": 755,
+      "end_m": 830,
+      "turn_sign": -1,
+      "radius": 34,
+      "checkpoint_m": 665,
+      "bank_degrees": 28
+    },
+    {
+      "start_m": 1030,
+      "end_m": 1105,
+      "turn_sign": 1,
+      "radius": 38,
+      "checkpoint_m": 900,
+      "bank_degrees": 35
+    }
+  ],
+  "heights": [
+    {
+      "at_m": 0,
+      "height_m": 12
+    },
+    {
+      "at_m": 70,
+      "height_m": 12
+    },
+    {
+      "at_m": 220,
+      "height_m": 30
+    },
+    {
+      "at_m": 340,
+      "height_m": 30
+    },
+    {
+      "at_m": 400,
+      "height_m": 36
+    },
+    {
+      "at_m": 432,
+      "height_m": 25
+    },
+    {
+      "at_m": 505,
+      "height_m": 14
+    },
+    {
+      "at_m": 660,
+      "height_m": 14
+    },
+    {
+      "at_m": 880,
+      "height_m": 40
+    },
+    {
+      "at_m": 980,
+      "height_m": 24
+    },
+    {
+      "at_m": 1150,
+      "height_m": 14
+    },
+    {
+      "at_m": 1250,
+      "height_m": 14
+    }
+  ],
+  "jumps": [
+    {
+      "start_m": 400,
+      "end_m": 432,
+      "height_m": 6
+    }
+  ],
+  "preview": "previews/alpine.png"
+}

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/basalt.tres" id="1_qrwfp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_q0d2d"]
+size = Vector3(24, 0.35, 24)
+
+[node name="ground_24" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175, 0)
+material_override = ExtResource("1_qrwfp")
+mesh = SubResource("BoxMesh_q0d2d")

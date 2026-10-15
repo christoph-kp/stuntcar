@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/bark.tres" id="1_e8j31"]
+[ext_resource type="Material" path="res://assets/stuntcar_kit/materials/sand.tres" id="2_o57wb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ua6nd"]
+top_radius = 0.27
+bottom_radius = 0.34
+height = 3.5
+radial_segments = 10
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_smxid"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hdr5v"]
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[node name="fallen_log" type="Node3D"]
+
+[node name="Log" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.34, 0)
+material_override = ExtResource("1_e8j31")
+mesh = SubResource("CylinderMesh_ua6nd")
+
+[node name="End" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1.76, 0.34, 0)
+material_override = ExtResource("2_o57wb")
+mesh = SubResource("CylinderMesh_smxid")
+
+[node name="@MeshInstance3D@197" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.76, 0.34, 0)
+material_override = ExtResource("2_o57wb")
+mesh = SubResource("CylinderMesh_hdr5v")

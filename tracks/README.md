@@ -1,0 +1,99 @@
+# Eine neue Strecke erstellen
+
+Die Strecke besteht aus einer JSON-Datei. Das Spiel liest diese Datei beim Start. Die Datei enthält den Namen, die Landschaft, die Länge, die Kurven, die Höhen und die Sprünge. Du brauchst keinen Programmcode zu ändern.
+
+1. Kopiere `templates/strecke.json` in diesen Ordner.
+2. Gib der Kopie einen eigenen Namen, zum Beispiel `04_bergfahrt.json`.
+3. Ändere den Namen und die Beschreibung in der Datei.
+4. Ändere die Kurven, die Höhen und die Sprünge.
+5. Öffne `Strecken prüfen.command` im Projektordner mit einem Doppelklick.
+6. Behebe die gemeldeten Fehler.
+7. Starte das Spiel. Die neue Strecke erscheint in der Auswahl.
+
+Die Zahl im Dateinamen bestimmt die Reihenfolge im Menü. Die Vorlage selbst erscheint nicht im Menü. Die Auswahl nennt ungültige Dateien und ihre Fehler. Gültige Strecken bleiben spielbar. Bei einem JSON-Fehler nennt die Meldung auch die Zeile. Wenn keine gültige Datei übrig bleibt, zeigt die Auswahl einen Hinweis.
+
+Zum Entfernen verschiebst du die JSON-Datei aus diesem Ordner. Du kannst sie auch löschen. Starte das Spiel danach neu. Auch die mitgelieferten Strecken kannst du entfernen. Das Spiel braucht keinen bestimmten Dateinamen.
+
+JSON ist ein Textformat mit festen Schreibregeln. Nutze einen Texteditor. Setze Texte in doppelte Anführungszeichen. Trenne Einträge mit Kommas. Hinter dem letzten Eintrag steht kein Komma. Kommentare sind in JSON nicht erlaubt.
+
+## Die Werte
+
+Alle Entfernungen beziehen sich auf den Fortschritt entlang der Strecke. Sie gelten in Metern. Die Breite beträgt sechs Meter. Höhen gelten über dem gemeinsamen Nullpunkt. Der Boden liegt drei Meter unter diesem Nullpunkt.
+
+| Feld | Bedeutung |
+|---|---|
+| `format_version` | Die Version des Formats; aktuell `1`. Alte Dateien ohne dieses Feld gelten als Version 1. |
+| `scenario` | Die Landschaft: `forest`, `alpine`, `canyon` oder `coast`. Ohne dieses Feld nutzt das Spiel den Wald. |
+| `preview` | Optional: ein Bildpfad relativ zu diesem Ordner, etwa `previews/meine-strecke.png`. Ohne Bild nutzt das Spiel eine Landschaftsvorschau. |
+| `name` | Der Name im Spiel |
+| `description` | Eine kurze Beschreibung für die Auswahl |
+| `length_m` | Die Länge; 200 bis 10000 ganze Meter |
+| `curves` | Die Liste der Kurven in Fahrtrichtung |
+| `heights` | Die Liste der Höhenpunkte in Fahrtrichtung |
+| `jumps` | Die Liste der Sprünge in Fahrtrichtung; `[]` erlaubt eine Strecke ohne Sprung |
+
+## Die Landschaft und das Vorschaubild
+
+| Wert für `scenario` | Landschaft |
+|---|---|
+| `forest` | Nebelwald mit Tannen und Felsen |
+| `alpine` | Alpenpass mit Schnee und Bergen |
+| `canyon` | Felsenschlucht mit Sandstein und Felstürmen |
+| `coast` | Regenküste mit Meer, Felsen und einem Leuchtturm |
+
+Die Landschaft verändert das Aussehen. Sie verändert keine Fahrbefehle. Schnee und Regen folgen dem Auto.
+
+Ein eigener Name steht im Feld `name`. Der Dateiname bestimmt die Reihenfolge in der Auswahl. Ein kurzer Name passt besser in die Liste.
+
+Für ein eigenes Bild legst du eine PNG-, JPG- oder WebP-Datei unter `tracks/previews` ab. Trage den Pfad im Feld `preview` ein. Ein Bild im Querformat passt am besten. Nimm es direkt von deiner Strecke auf. Wenn du die Vorlage kopierst, brauchst du zunächst kein Bild.
+
+Falls das Bild fehlt, bleibt die Strecke spielbar. Das Spiel zeigt eine Landschaftsvorschau und eine Meldung. Eine Landschaftsvorschau zeigt das Szenario. Sie zeigt nicht zwingend den Verlauf deiner Strecke.
+
+Die vier mitgelieferten Bilder unter `previews` zeigen die tatsächlichen Strecken. Die Küstenfahrt nutzt den Verlauf der Ersten Fahrt mit einer anderen Landschaft.
+
+## Die Kurven, Höhen und Sprünge
+
+Jede Kurve enthält diese Werte:
+
+| Feld | Bedeutung |
+|---|---|
+| `start_m`, `end_m` | Der Anfang und das Ende der Kurve |
+| `turn_sign` | `-1` für links; `1` für rechts |
+| `radius` | Der Kurvenradius; mindestens 20 Meter |
+| `bank_degrees` | Die Neigung der Steilkurve; 0 bis 45 Grad. Ohne diesen Wert bleibt die Fahrbahn quer eben. |
+| `checkpoint_m` | Der Startpunkt nach einem Fall |
+
+Die Außenseite einer Steilkurve liegt höher. Das Spiel baut die Neigung am Anfang auf und nimmt sie am Ende zurück. Die Vorlage zeigt verschiedene Neigungen.
+
+Lass mindestens 40 Meter zwischen Kurven. Der Startpunkt nach einem Fall muss hinter der vorherigen Kurve liegen. Lass mindestens 25 Meter bis zur nächsten Kurve. Für Sprache sind längere Geraden besser. Die Kurve muss länger als 24 Meter sein. Lass mindestens 20 Meter bis zum Ziel.
+
+Jeder Höhenpunkt enthält `at_m` und `height_m`. Der erste Punkt liegt bei 0 Metern. Der letzte Punkt liegt am Ziel. Die Höhe muss zwischen 5 und 100 Metern liegen. Das Spiel verbindet die Punkte mit weichen Übergängen. Vermeide große Höhenunterschiede auf kurzen Abschnitten.
+
+Jeder Sprung enthält `start_m`, `end_m` und `height_m`. Zwischen Anfang und Ende fehlt die Fahrbahn. Die Sprunglänge beträgt 15 bis 50 Meter. `height_m` bestimmt die zusätzliche Höhe des Flugbogens. Nutze Werte zwischen 2 und 12 Metern.
+
+Lass vor einem Sprung mindestens 60 Meter ohne Kurve. Lass danach mindestens 90 Meter ohne Kurve. Zwischen Sprüngen müssen mindestens 60 Meter liegen. Nach dem letzten Sprung braucht die Strecke mindestens 60 Meter bis zum Ziel.
+
+Der Flug folgt einem vorgegebenen Bogen. Dadurch erreicht das Auto die Landung bei jedem erlaubten Tempo. Die Richtung bleibt wirksam. Eine passende Korrektur richtet das Auto aus. Die Hilfe endet nach der Landung. Sie übernimmt keine spätere Kurve.
+
+Die Dateiprüfung erkennt fehlende Felder, ungültige Zahlen, unbekannte Landschaften und fehlende Abstände. Sie meldet auch unbekannte Felder auf der obersten Ebene. Die Prüfung kontrolliert weder das Spielgefühl noch alle möglichen Baufehler. Sie erkennt keine Kreuzungen der Fahrbahn. Prüfe die Strecke deshalb auch im Spiel. Große Änderungen brauchen einen Fahrtest mit Sprache und mit zwei Tasten.
+
+## Die Strecke prüfen
+
+Für die Dateiprüfung genügt der Doppelklick auf `Strecken prüfen.command`. Das Fenster zeigt jede gültige Datei und alle Meldungen.
+
+Die gleiche Prüfung im Projektordner:
+
+```sh
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tools/check_tracks.gd
+```
+
+Zusätzliche Fahrtests im Projektordner:
+
+```sh
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_jump_scene_tests.gd
+```
+
+Die erste Prüfung liest alle Streckendateien. Sie prüft Fahrten mit 50, 79 und 101 km/h. Sie prüft auch Korrekturen vor dem Sprung und kurz vor der Landung. Die zweite Prüfung fährt die Strecken mit dem sichtbaren Fahrzeugmodell ab. Sie prüft zusätzlich 166 km/h mit kurzen Korrekturen in den Kurven.
+
+Diese Prüfungen ersetzen keinen Spieltest. Prüfe besonders die Sicht auf die Landung und die Zeit bis zur nächsten Kurve.
