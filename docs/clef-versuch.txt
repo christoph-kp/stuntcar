@@ -1,0 +1,88 @@
+Clef-Versuch mit Streckenkontext
+15. Oktober 2026
+
+Stand
+
+Der Zugriff auf Clef-Omni funktioniert.
+Alle 30 Anfragen lieferten eine auswertbare Antwort.
+29 von 30 Antworten erkannten den Befehl und die Anzahl korrekt.
+Der Versuch nutzt vollständige künstliche Aufnahmen und simulierte Positionen.
+
+Ergebnis nach Streckenkontext
+
+Ohne Kontext: 10 von 10 korrekt; mittlere Antwortzeit 359 Millisekunden.
+Vor der Rechtskurve: 9 von 10 korrekt; mittlere Antwortzeit 342 Millisekunden.
+Vor der Linkskurve: 10 von 10 korrekt; mittlere Antwortzeit 322 Millisekunden.
+Die mittlere Antwortzeit bezeichnet hier jeweils den Median.
+Über alle Anfragen beträgt dieser Wert 345 Millisekunden.
+Die kürzeste Antwortzeit beträgt 221 Millisekunden.
+Die längste Antwortzeit beträgt 503 Millisekunden.
+
+Die abweichende Antwort betrifft das einzeln gesprochene Wort left.
+Ohne Kontext und vor der Linkskurve erkennt Clef left.
+Vor der Rechtskurve antwortet Clef none und zählt trotzdem eine Äußerung.
+Die Antwort nennt etwa 60 Prozent für none und 32 Prozent für left.
+Die gemeldete confidence ist ein separates Feld; wir verwenden sie nicht als Wahrscheinlichkeit des gewählten Befehls.
+Diese kleine Messreihe belegt keinen allgemeinen Vorteil durch den Streckenkontext.
+Der Kontext kann die Entscheidung beeinflussen, obwohl der Text einen ausdrücklichen Befehl bevorzugen soll.
+
+Alle zwölf Prüfungen mit fünf Wiederholungen erkennen den Befehl und die Anzahl korrekt.
+Alle sechs Prüfungen mit Stille oder einer fremden Äußerung ergeben keinen Befehl.
+Das Ergebnis sagt noch nichts über die Reaktion auf einzelne Wörter während des Sprechens aus.
+
+Bewertung
+
+Clef kann unsere englischen Befehle in diesen vollständigen Aufnahmen unterscheiden.
+Die Cloud-Anfrage benötigt bereits etwa eine Drittelsekunde.
+Das Sammeln der Aufnahme und die Reaktion des Spiels kommen noch hinzu.
+Der Versuch belegt deshalb keine schnellere Steuerung als die vorhandene Lösung.
+Für eine laufende Steuerung fehlen noch die Aufteilung der Aufnahme und der Schutz vor mehrfach ausgeführten Befehlen.
+Der Streckenkontext sollte keinen klar gesprochenen Befehl ersetzen.
+Der Versuch ändert die Spielsteuerung nicht.
+
+Prüfung
+
+Der Versuch nutzt zehn künstliche Sprachproben.
+Er sendet jede Probe mit drei verschiedenen Angaben:
+- ohne Streckenkontext;
+- zehn Meter vor einer Rechtskurve;
+- zehn Meter vor einer Linkskurve.
+
+Die Streckendatei liefert die Kurven, die Sprünge und die Streckenlänge.
+Die Positionen sind simuliert. Das Auto fährt bei diesem Versuch nicht.
+Der Versuch setzt das Tempo auf 22 Meter pro Sekunde.
+
+Clef soll left, right, faster, slower oder keinen Befehl erkennen.
+Eine zweite Frage prüft die Anzahl der Wiederholungen von null bis fünf.
+Stille und eine fremde Äußerung müssen null Befehle ergeben.
+Die Streckenangaben dürfen einen klar gesprochenen Befehl nicht ersetzen.
+
+Zeitmessung
+
+Die Messung beginnt vor der HTTP-Anfrage und endet nach der Antwort.
+Sie enthält die Übertragung und die Antwortzeit des Dienstes.
+Sie enthält keine Mikrofonaufnahme und keine Reaktion des Spiels.
+Die vollständige Aufnahme liegt bereits vor jeder Anfrage vor.
+Die Erkennung von fünf Wörtern in einer fertigen Aufnahme belegt keine laufende Einzelworterkennung.
+
+Zugang
+
+Die .env enthält CLOUDFLARE_ACCOUNT_ID mit der 32-stelligen Kontokennung.
+Das Prüfprogramm akzeptiert CLOUDFLARE_API_TOKEN, CLOUDFLARE_AUTH_TOKEN oder CLOUDFLARE als Token-Feld.
+Es führt den Inhalt der .env nicht als Programm aus.
+Es nimmt den Token weder in den Text für Clef noch in den Bericht auf.
+Es öffnet kein Mikrofon und führt keine Fahrbefehle aus.
+
+Prüfprogramm
+
+tools/voice/clef_probe.py
+
+Aufruf aus diesem Arbeitsordner:
+/Users/stefan/Documents/railsapps/stuntcar/.tools/voice-env/bin/python tools/voice/clef_probe.py --env /Users/stefan/Documents/railsapps/stuntcar/.env --track /Users/stefan/Documents/railsapps/stuntcar/tracks/01_erste_fahrt.json --output docs/clef-vergleich.json
+
+Mit --limit 1 prüft das Programm zuerst nur eine Aufnahme.
+Ohne diese Begrenzung sendet es höchstens 30 Modellanfragen.
+Bei einem Dienstfehler beendet es den Versuch und speichert den bisherigen Stand.
+
+Quelle der Modellschnittstelle:
+https://developers.cloudflare.com/workers-ai/models/clef-omni/
