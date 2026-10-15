@@ -1,8 +1,8 @@
 {
   "format_version": 1,
   "scenario": "forest",
-  "name": "Erste Fahrt",
-  "description": "Zwei große Sprünge über den Wald, hohe Rampen und drei Steilkurven.",
+  "name": "I18N_TRACK_FOREST_NAME",
+  "description": "I18N_TRACK_FOREST_DESCRIPTION",
   "length_m": 940,
   "curves": [
     {

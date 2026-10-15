@@ -28,11 +28,11 @@ Das Auto startet mit etwa 79 km/h. Mit Sprache kannst du das Tempo ändern. Das 
 1. Öffne `Starten.command` im Finder mit einem Doppelklick.
 2. Wähle eine Strecke anhand der Vorschaubilder.
 3. Nutze A für den nächsten Eintrag und D für die Auswahl. Du kannst auch klicken.
-4. Wähle beim ersten Start danach „Zwei Tasten“ oder „Sprache + Tasten“.
-5. Wähle „Fahrt starten“.
+4. Wähle beim ersten Start danach „Two keys“ oder „Voice + keys“.
+5. Wähle „Start drive“.
 6. Drücke vor der Kurve einmal die passende Richtungstaste.
 
-Bei jedem Start erscheint zuerst die Streckenauswahl. Das Spiel merkt sich die letzte Strecke und die Steuerung. Bei späteren Starts brauchst du die Steuerung nicht erneut zu wählen. Unter „Einstellungen → Steuerung“ kannst du die Steuerung jederzeit ändern. Die Tasten bleiben auch bei Sprache verfügbar. Die bisherige Datei `Mit Sprache starten.command` öffnet ebenfalls diesen gemeinsamen Startweg.
+Bei jedem Start erscheint zuerst die Streckenauswahl. Das Spiel merkt sich die letzte Strecke und die Steuerung. Bei späteren Starts brauchst du die Steuerung nicht erneut zu wählen. Unter „Settings → Controls“ kannst du die Steuerung jederzeit ändern. Die Tasten bleiben auch bei Sprache verfügbar. Die bisherige Datei `Mit Sprache starten.command` öffnet ebenfalls diesen gemeinsamen Startweg.
 
 Godot liegt für diesen Mac im Projektordner `.tools`. Das Spiel braucht keine Internetverbindung.
 
@@ -51,7 +51,7 @@ Du musst keine Taste halten. Gehaltene Tasten erzeugen keine weiteren Befehle. G
 
 Ein erneuter Druck auf dieselbe Richtungstaste korrigiert weiter. Er pausiert die Fahrt nicht. Escape und der Sprachbefehl „Pause“ pausieren die Fahrt bewusst.
 
-Im Pausenmenü setzt D die Fahrt fort. A wählt zum Beispiel „Neu starten“ aus. D startet dann neu.
+Im Pausenmenü setzt D die Fahrt fort. A wählt zum Beispiel „Restart“ aus. D startet dann neu.
 
 Beim Wechsel zu einem anderen Fenster pausiert das Spiel.
 
@@ -79,14 +79,18 @@ Die neue Tastenbelegung gilt erst nach zwei verschiedenen Zuordnungen. Ohne Eing
 
 Godot speichert die Einstellungen im eigenen Benutzerdatenordner. Das Spiel zeichnet keine Eingaben auf.
 
+## Sprache der Oberfläche
+
+Das Spiel zeigt seine Menüs, Fahrhinweise, Streckentexte und Fehlermeldungen auf Englisch. Die Texte liegen in `locales/en.po`. Godot lädt diese Datei direkt. Die Anleitung für weitere Sprachen steht in [locales/README.md](locales/README.md). Die Sprache der Oberfläche ändert die Erkennung der Sprachbefehle nicht.
+
 ## Mit Sprache spielen
 
-1. Öffne `Starten.command` und wähle eine Strecke. Wähle danach beim ersten Start „Sprache + Tasten“.
+1. Öffne `Starten.command` und wähle eine Strecke. Wähle danach beim ersten Start „Voice + keys“.
 2. Erlaube den Mikrofonzugriff, falls macOS danach fragt.
-3. Warte auf „Mikrofon aktiv“ am unteren Rand.
+3. Warte auf „Microphone active · English“ am unteren Rand.
 4. Sage „Start“.
 
-Du kannst die Sprache unter „Einstellungen → Steuerung“ einschalten. Wähle dort „Sprache + Tasten“. Im Pausenmenü findest du die Steuerung auch direkt.
+Du kannst die Sprache unter „Settings → Controls“ einschalten. Wähle dort „Voice + keys“. Im Pausenmenü findest du die Steuerung auch direkt.
 
 Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter „Systemeinstellungen → Ton → Eingabe“ ein anderes Mikrofon.
 
@@ -102,7 +106,7 @@ Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter �
 | Nächsten Menüeintrag wählen | next |
 | Menüeintrag öffnen | select |
 
-Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche bleibt auf Deutsch.
+Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche erscheint auf Englisch.
 
 Du kannst „left left left left left“ direkt hintereinander sagen. Die Erkennung prüft jedes Wort mit zwei Verfahren. Ein Verfahren kennt die Befehle. Das andere Verfahren kennt einen freien Wortschatz. Während des Sprechens müssen beide Verfahren den Befehl bestätigen. Die Erkennung gibt bestätigte Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
 
@@ -118,7 +122,7 @@ Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht a
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
-Die Anzeige „Deine Sprache“ zeigt das Mikrofon und seinen Pegel. „Prüfe“ zeigt vermutete Wörter. Diese Wörter lösen noch nicht unbedingt einen Befehl aus. „Ausgeführt“ bestätigt einen Befehl. Die Nummer steigt bei jeder ausgeführten Wiederholung. „Unklar“ zeigt eine Äußerung ohne erkannten Befehl.
+Die Anzeige „Your voice“ zeigt das Mikrofon und seinen Pegel. „Check“ zeigt vermutete Wörter. Diese Wörter lösen noch nicht unbedingt einen Befehl aus. „Used“ bestätigt einen Befehl. Die Nummer steigt bei jeder ausgeführten Wiederholung. „Not clear“ zeigt eine Äußerung ohne erkannten Befehl.
 
 Die Anzeige nennt auch erkannte Befehle ohne Wirkung. Zum Beispiel lenkt „left“ im Startmenü nicht.
 
@@ -128,7 +132,7 @@ Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprac
 
 ## Mikrofon und Einrichtung
 
-Das Spiel startet die Spracheingabe nach der Wahl „Sprache + Tasten“. Es speichert diese Wahl für den nächsten Start. Die Wahl „Zwei Tasten“ beendet den Mikrofonzugriff.
+Das Spiel startet die Spracheingabe nach der Wahl „Voice + keys“. Es speichert diese Wahl für den nächsten Start. Die Wahl „Two keys“ beendet den Mikrofonzugriff.
 
 Die Erkennung läuft lokal mit Vosk. Sie sendet keine Tonaufnahmen ins Internet. Sie speichert keine Mikrofonaufnahmen.
 
@@ -140,7 +144,7 @@ Die Sprachmodelle liegen unter `.tools/voice-models`. Die Hilfsprogramme liegen 
 
 Falls das Mikrofon fehlt, prüfe „Systemeinstellungen → Datenschutz & Sicherheit → Mikrofon“. Erlaube dort den Zugriff für die angezeigte Anwendung. Starte das Spiel danach erneut.
 
-Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Steuerung“ erneut „Sprache + Tasten“. Setze die Fahrt danach bewusst mit „resume“ oder D fort.
+Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Controls“ erneut „Voice + keys“. Setze die Fahrt danach bewusst mit „resume“ oder D fort.
 
 Die künstlichen Sprachproben prüfen die Erkennung technisch. Die neue Erkennung braucht noch einen Test mit deiner Stimme. Hintergrundgeräusche und die Aussprache können das Ergebnis verändern.
 

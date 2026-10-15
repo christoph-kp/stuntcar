@@ -56,7 +56,7 @@ func run() -> void:
 	send(voice, "faster", 10, voice.epoch)
 	scene._physics_process(1.0/60.0)
 	check(is_equal_approx(scene.model.target_speed_mps, before_speed + 10.0), "Zwei schnelle Gasbefehle erhöhen beide das Zieltempo")
-	check("Ziel" in scene.voice_action_text, "Die Sprachanzeige bestätigt das Zieltempo")
+	check("target" in scene.voice_action_text, "Die Sprachanzeige bestätigt das Zieltempo")
 	send(voice, "slower", 11, voice.epoch)
 	send(voice, "slower", 12, voice.epoch)
 	scene._physics_process(1.0/60.0)

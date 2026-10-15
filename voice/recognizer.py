@@ -30,6 +30,10 @@ GRAMMARS = {
 }
 
 
+class VoiceError(RuntimeError):
+    """A user-facing error code that Godot translates."""
+
+
 class BilingualRecognizer:
     def __init__(self, languages=('de', 'en-us'), frames_per_chunk=None):
         import vosk
@@ -39,7 +43,7 @@ class BilingualRecognizer:
         for language in languages:
             path = MODEL_ROOT / f'vosk-model-small-{language}-0.15'
             if not path.is_dir():
-                raise RuntimeError('Sprachmodell fehlt. Bitte Sprache einrichten.')
+                raise VoiceError('I18N_VOICE_MODEL_MISSING')
             if frames_per_chunk is None:
                 model = vosk.Model(str(path))
             else:
@@ -170,12 +174,12 @@ def run_microphone(connection, device=None):
 
     def callback(data, frames, timing, status):
         if status:
-            try: problems.put_nowait('Das Mikrofon liefert die Daten nicht rechtzeitig.')
+            try: problems.put_nowait('I18N_VOICE_AUDIO_LATE')
             except queue.Full: pass
         try:
             audio_queue.put_nowait((time.monotonic(), bytes(data)))
         except queue.Full:
-            try: problems.put_nowait('Die Spracheingabe ist zu stark verzögert.')
+            try: problems.put_nowait('I18N_VOICE_DELAY')
             except queue.Full: pass
 
     with sd.RawInputStream(samplerate=SAMPLE_RATE, blocksize=BLOCK, device=device,
@@ -191,10 +195,10 @@ def run_microphone(connection, device=None):
                 stream.reset()
                 cutoff = time.monotonic()
             if not problems.empty():
-                raise RuntimeError(problems.get_nowait())
+                raise VoiceError(problems.get_nowait())
             now = time.monotonic()
             if now - last_audio > 2:
-                raise RuntimeError('Das Mikrofon liefert keine Daten mehr.')
+                raise VoiceError('I18N_VOICE_NO_AUDIO')
             if now - last_heartbeat >= 1:
                 connection.send('heartbeat')
                 last_heartbeat = now
@@ -206,7 +210,7 @@ def run_microphone(connection, device=None):
             if captured < cutoff:
                 continue
             if now - captured > .4:
-                raise RuntimeError('Die Spracheingabe ist zu stark verzögert.')
+                raise VoiceError('I18N_VOICE_DELAY')
             epoch = connection.epoch
             commands, feedback = stream.feed(pcm)
             if connection.poll():
@@ -245,8 +249,8 @@ def main():
         pass
     except Exception as error:
         message = str(error)
-        if not isinstance(error, RuntimeError):
-            message = 'Mikrofon nicht verfügbar. Prüfe die Mikrofonfreigabe und das Eingabegerät.'
+        if not isinstance(error, VoiceError):
+            message = 'I18N_VOICE_UNAVAILABLE'
         try: connection.send('error', message=message[:180])
         except OSError: pass
     finally:

@@ -35,7 +35,7 @@ var voice_context := ""
 var last_voice_text := ""
 var voice_echo_seconds := 0.0
 var voice_applied_count := 0
-var voice_action_text := "Noch kein Befehl ausgeführt."
+var voice_action_text := tr("I18N_VOICE_NO_ACTION")
 
 func _ready() -> void:
 	track = TrackData.new()
@@ -108,14 +108,14 @@ func _physics_process(delta: float) -> void:
 			var word := str(packet.get("text", packet.command)).left(40)
 			if session.submit_voice(packet.command):
 				voice_applied_count += 1
-				voice_action_text = "Ausgeführt: %s · Nr. %d" % [word, voice_applied_count]
+				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
 				if packet.command in ["faster", "slower"]:
 					voice_action_text += "\n" + model.speed_feedback
 				last_voice_text = str(packet.get("text", packet.command)).left(40)
 				voice_echo_seconds = 2.0
 				sync_voice_context()
 			else:
-				voice_action_text = "Erkannt: %s · Hier ohne Wirkung." % word
+				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word
 	var both := (held.has(key_left) and held.has(key_right)) or (pending.has(-1) and pending.has(1))
 	if not both and not pending.is_empty():
 		session.press(pending[0])
@@ -160,15 +160,15 @@ func _process(delta: float) -> void:
 	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS"], model.pitch, model.speed_mps)
 	var message := ""
 	if binding_stage == 1:
-		message = "Drücke die neue linke Taste."
+		message = tr("I18N_KEY_BIND_LEFT")
 	elif binding_stage == 2:
-		message = "Drücke eine andere Taste für rechts."
+		message = tr("I18N_KEY_BIND_RIGHT")
 	if binding_stage > 0:
-		message += "\nAbbruch in %d Sekunden.\nOhne Eingabe bleiben die alten Tasten.\nEsc bricht sofort ab." % ceili(bind_timeout)
+		message += tr("I18N_KEY_BIND_TIMEOUT") % ceili(bind_timeout)
 	voice_echo_seconds = maxf(0.0, voice_echo_seconds - delta)
-	ui.voice_text = voice.status_text if voice != null else "Sprache aus"
+	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
 	if voice_echo_seconds > 0:
-		ui.voice_text += " · Erkannt: “%s”" % last_voice_text
+		ui.voice_text += tr("I18N_VOICE_ECHO") % last_voice_text
 	ui.voice_visible = session.voice_enabled
 	ui.voice_level = voice.input_level
 	ui.voice_device = voice.device_name
@@ -194,7 +194,7 @@ func on_action(action: String) -> void:
 			session.voice_enabled = control_mode == "voice"
 			pending.clear()
 			voice_applied_count = 0
-			voice_action_text = "Noch kein Befehl ausgeführt."
+			voice_action_text = tr("I18N_VOICE_NO_ACTION")
 			if session.voice_enabled: voice.start()
 			else: voice.stop()
 			save_settings()
@@ -265,7 +265,7 @@ func save_settings() -> void:
 		config.set_value("audio", key, session.get(key))
 	var error := config.save(settings_path)
 	if error != OK:
-		push_warning("Die Einstellungen gelten für diese Sitzung. Speichern war nicht möglich.")
+		push_warning(tr("I18N_SETTINGS_SAVE_FAILED"))
 
 func load_settings() -> void:
 	var config := ConfigFile.new()

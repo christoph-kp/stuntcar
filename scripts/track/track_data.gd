@@ -5,7 +5,7 @@ const ROAD_WIDTH := 6.0
 const BASE_HEIGHT := 12.0
 const DEFAULT_PATH := "res://tracks/01_erste_fahrt.json"
 var source_path := DEFAULT_PATH
-var track_name := "Erste Fahrt"
+var track_name := String(TranslationServer.translate("I18N_TRACK_FOREST_NAME"))
 var description := ""
 var scenario := "forest"
 var preview_path := ""
@@ -19,12 +19,12 @@ var valid := true
 var validation_error := ""
 
 static func read_definition(path: String) -> Dictionary:
-	if not FileAccess.file_exists(path): return {"error": "Die Datei fehlt.", "data": null}
+	if not FileAccess.file_exists(path): return {"error": String(TranslationServer.translate("I18N_FILE_MISSING")), "data": null}
 	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null: return {"error": "Die Datei lässt sich nicht lesen.", "data": null}
+	if file == null: return {"error": String(TranslationServer.translate("I18N_FILE_UNREADABLE")), "data": null}
 	var parser := JSON.new()
 	if parser.parse(file.get_as_text()) != OK:
-		return {"error": "JSON-Fehler in Zeile %d: %s" % [parser.get_error_line(), parser.get_error_message()], "data": null}
+		return {"error": String(TranslationServer.translate("I18N_TRACK_JSON_ERROR")) % [parser.get_error_line(), parser.get_error_message()], "data": null}
 	return {"error": validate_definition(parser.data), "data": parser.data}
 
 static func scan_catalog(folder: String = "res://tracks") -> Dictionary:
@@ -46,9 +46,9 @@ static func scan_catalog(folder: String = "res://tracks") -> Dictionary:
 		if not custom.is_empty():
 			preview = folder.path_join(custom)
 			if not FileAccess.file_exists(preview):
-				errors.append(file + ": Das Vorschaubild fehlt: " + custom + ". Die Landschaftsvorschau erscheint stattdessen.")
+				errors.append(String(TranslationServer.translate("I18N_TRACK_PREVIEW_MISSING")) % [file, custom])
 				preview = Scenarios.preview(landscape)
-		result.append({"path": path, "name": d.name, "description": d.description,
+		result.append({"path": path, "name": String(TranslationServer.translate(d.name)), "description": String(TranslationServer.translate(d.description)),
 			"scenario": landscape, "preview": preview, "landscape_preview": preview == Scenarios.preview(landscape),
 			"length_m": d.length_m, "curves": d.curves.size(), "jumps": d.jumps.size()})
 	return {"routes": result, "errors": errors}
@@ -57,45 +57,45 @@ static func catalog() -> Array[Dictionary]:
 	return scan_catalog().routes
 
 static func validate_definition(d) -> String:
-	if not d is Dictionary: return "Die Strecke braucht ein JSON-Objekt."
+	if not d is Dictionary: return String(TranslationServer.translate("I18N_TRACK_OBJECT_ERROR"))
 	for key in ["name", "description"]:
-		if not d.get(key) is String or d[key].strip_edges().is_empty(): return "Name oder Beschreibung fehlt."
+		if not d.get(key) is String or d[key].strip_edges().is_empty(): return String(TranslationServer.translate("I18N_TRACK_NAME_ERROR"))
 	if not d.get("scenario", "forest") is String or not Scenarios.NAMES.has(d.get("scenario", "forest")):
-		return "Unbekannte Landschaft. Erlaubt sind forest, alpine, canyon und coast."
-	if not d.get("preview", "") is String: return "Das Vorschaubild braucht einen Dateinamen."
+		return String(TranslationServer.translate("I18N_TRACK_SCENARIO_ERROR"))
+	if not d.get("preview", "") is String: return String(TranslationServer.translate("I18N_TRACK_PREVIEW_NAME_ERROR"))
 	var preview: String = d.get("preview", "")
 	if not preview.is_empty() and (preview.is_absolute_path() or ".." in preview.split("/") or preview.get_extension().to_lower() not in ["png", "jpg", "jpeg", "webp"]):
-		return "Das Vorschaubild muss eine Bilddatei im Streckenordner sein."
-	if not number(d.get("format_version", 1)) or d.get("format_version", 1) != 1: return "Diese Formatversion wird nicht unterstützt. Nutze format_version: 1."
+		return String(TranslationServer.translate("I18N_TRACK_PREVIEW_PATH_ERROR"))
+	if not number(d.get("format_version", 1)) or d.get("format_version", 1) != 1: return String(TranslationServer.translate("I18N_TRACK_VERSION_ERROR"))
 	for key in d:
 		if key not in ["format_version", "name", "description", "scenario", "preview", "length_m", "curves", "heights", "jumps"]:
-			return "Unbekanntes Feld: " + str(key)
-	if not number(d.get("length_m")) or d.length_m < 200 or d.length_m > 10000 or d.length_m != floor(d.length_m): return "Die Länge muss 200 bis 10000 ganze Meter betragen."
+			return String(TranslationServer.translate("I18N_TRACK_FIELD_ERROR")) % str(key)
+	if not number(d.get("length_m")) or d.length_m < 200 or d.length_m > 10000 or d.length_m != floor(d.length_m): return String(TranslationServer.translate("I18N_TRACK_LENGTH_ERROR"))
 	for key in ["curves", "heights", "jumps"]:
-		if not d.get(key) is Array: return "Kurven, Höhen oder Sprünge fehlen."
+		if not d.get(key) is Array: return String(TranslationServer.translate("I18N_TRACK_PARTS_ERROR"))
 	var previous := 0.0
 	for c in d.curves:
-		if not c is Dictionary: return "Ungültige Kurve."
+		if not c is Dictionary: return String(TranslationServer.translate("I18N_TRACK_CURVE_ERROR"))
 		for key in ["start_m", "end_m", "turn_sign", "radius", "checkpoint_m"]:
-			if not number(c.get(key)): return "Eine Kurve enthält keinen gültigen Zahlenwert."
-		if c.start_m < previous + 40 or c.end_m <= c.start_m + 24 or c.end_m > d.length_m - 20 or absf(c.turn_sign) != 1.0 or c.radius < 20 or c.checkpoint_m < previous or c.checkpoint_m > c.start_m - 25: return "Kurven brauchen Platz, einen Radius ab 20 m und einen Startpunkt davor."
-		if not number(c.get("bank_degrees", 0)) or c.get("bank_degrees", 0) < 0 or c.get("bank_degrees", 0) > 45: return "Die Kurvenneigung muss zwischen 0 und 45 Grad liegen."
+			if not number(c.get(key)): return String(TranslationServer.translate("I18N_TRACK_CURVE_NUMBER_ERROR"))
+		if c.start_m < previous + 40 or c.end_m <= c.start_m + 24 or c.end_m > d.length_m - 20 or absf(c.turn_sign) != 1.0 or c.radius < 20 or c.checkpoint_m < previous or c.checkpoint_m > c.start_m - 25: return String(TranslationServer.translate("I18N_TRACK_CURVE_SPACE_ERROR"))
+		if not number(c.get("bank_degrees", 0)) or c.get("bank_degrees", 0) < 0 or c.get("bank_degrees", 0) > 45: return String(TranslationServer.translate("I18N_TRACK_BANK_ERROR"))
 		previous = c.end_m
-	if d.heights.size() < 2: return "Mindestens zwei Höhenpunkte sind nötig."
+	if d.heights.size() < 2: return String(TranslationServer.translate("I18N_TRACK_HEIGHT_COUNT_ERROR"))
 	previous = -1.0
 	for h in d.heights:
-		if not h is Dictionary or not number(h.get("at_m")) or not number(h.get("height_m")): return "Ungültiger Höhenpunkt."
-		if h.at_m <= previous or h.at_m > d.length_m or h.height_m < 5 or h.height_m > 100: return "Höhenpunkte müssen aufsteigend sein und 5 bis 100 m hoch liegen."
+		if not h is Dictionary or not number(h.get("at_m")) or not number(h.get("height_m")): return String(TranslationServer.translate("I18N_TRACK_HEIGHT_ERROR"))
+		if h.at_m <= previous or h.at_m > d.length_m or h.height_m < 5 or h.height_m > 100: return String(TranslationServer.translate("I18N_TRACK_HEIGHT_RANGE_ERROR"))
 		previous = h.at_m
-	if d.heights[0].at_m != 0 or d.heights[-1].at_m != d.length_m: return "Höhenpunkte müssen Start und Ziel einschließen."
+	if d.heights[0].at_m != 0 or d.heights[-1].at_m != d.length_m: return String(TranslationServer.translate("I18N_TRACK_HEIGHT_END_ERROR"))
 	previous = 0.0
 	for j in d.jumps:
-		if not j is Dictionary: return "Ungültiger Sprung."
+		if not j is Dictionary: return String(TranslationServer.translate("I18N_TRACK_JUMP_ERROR"))
 		for key in ["start_m", "end_m", "height_m"]:
-			if not number(j.get(key)): return "Ungültiger Sprungwert."
-		if j.start_m < previous + 60 or j.end_m - j.start_m < 15 or j.end_m - j.start_m > 50 or j.end_m > d.length_m - 60 or j.height_m < 2 or j.height_m > 12: return "Ein Sprung braucht 15 bis 50 m Länge und Platz davor und danach."
+			if not number(j.get(key)): return String(TranslationServer.translate("I18N_TRACK_JUMP_NUMBER_ERROR"))
+		if j.start_m < previous + 60 or j.end_m - j.start_m < 15 or j.end_m - j.start_m > 50 or j.end_m > d.length_m - 60 or j.height_m < 2 or j.height_m > 12: return String(TranslationServer.translate("I18N_TRACK_JUMP_SPACE_ERROR"))
 		for c in d.curves:
-			if j.start_m - 60 < c.end_m and j.end_m + 90 > c.start_m: return "Sprünge brauchen eine Gerade und Abstand zu Kurven."
+			if j.start_m - 60 < c.end_m and j.end_m + 90 > c.start_m: return String(TranslationServer.translate("I18N_TRACK_JUMP_TURN_ERROR"))
 		previous = j.end_m
 	return ""
 
@@ -110,13 +110,13 @@ func _init(path: String = DEFAULT_PATH) -> void:
 	var definition = report.data
 	if not valid:
 		# A removed default route must not prevent the selection screen from opening.
-		definition = {"name": "Keine Strecke gewählt", "description": "Wähle eine gültige Strecke.",
+		definition = {"name": String(TranslationServer.translate("I18N_TRACK_NONE_SELECTED")), "description": String(TranslationServer.translate("I18N_TRACK_SELECT_VALID")),
 			"length_m": 200, "curves": [], "jumps": [], "heights": [{"at_m": 0, "height_m": 12}, {"at_m": 200, "height_m": 12}]}
 		source_path = ""
 	scenario = definition.get("scenario", "forest")
 	preview_path = Scenarios.preview(scenario)
-	track_name = definition.name
-	description = definition.description
+	track_name = tr(definition.name)
+	description = tr(definition.description)
 	length_m = definition.length_m
 	for c in definition.curves:
 		c["id"] = curves.size()

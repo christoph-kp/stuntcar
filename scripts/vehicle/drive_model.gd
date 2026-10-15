@@ -99,9 +99,9 @@ func change_speed(direction: int) -> void:
 	target_speed_mps = clampf(target_speed_mps + direction * SPEED_STEP, MIN_SPEED, MAX_SPEED)
 	speed_feedback_seconds = 2.0
 	if is_equal_approx(before, target_speed_mps):
-		speed_feedback = "Höchsttempo erreicht" if direction > 0 else "Niedrigstes Tempo erreicht"
+		speed_feedback = tr("I18N_SPEED_MAX") if direction > 0 else tr("I18N_SPEED_MIN")
 	else:
-		speed_feedback = ("Gas" if direction > 0 else "Bremsen") + ": Ziel %d km/h" % roundi(target_speed_mps * 3.6)
+		speed_feedback = (tr("I18N_SPEED_FASTER") if direction > 0 else tr("I18N_SPEED_SLOWER")) % roundi(target_speed_mps * 3.6)
 
 func step(delta: float) -> void:
 	if off_road or finished:

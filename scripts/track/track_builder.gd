@@ -73,15 +73,15 @@ func build(track_data) -> void:
 		pillar.rotation.y = -frame.heading
 		add_child(pillar)
 	for curve in data.curves:
-		make_gate(curve.start_m - 16.0, "RECHTS  →" if curve.turn_sign > 0 else "←  LINKS", Color("ecf5eb"), Color("203d4c"))
+		make_gate(curve.start_m - 16.0, tr("I18N_SIGN_RIGHT") if curve.turn_sign > 0 else tr("I18N_SIGN_LEFT"), Color("ecf5eb"), Color("203d4c"))
 	make_gate(1.0, data.track_name.to_upper(), Color("a3dbc6"), Color("163949"))
-	make_gate(data.length_m - 3.0, "ZIEL", Color("f4bc73"), Color("203d4c"))
+	make_gate(data.length_m - 3.0, tr("I18N_SIGN_FINISH"), Color("f4bc73"), Color("203d4c"))
 	for jump in data.jumps:
 		# On the tall forest ramps, place the sign before the climb so the
 		# follow camera cannot pass through the panel above the car.
 		var warning_distance: float = 65.0 if data.scenario == "forest" else 22.0
-		make_gate(jump.start_m - warning_distance, "SPRUNG", Color("f4bc73"), Color("203d4c"))
-		make_gate(jump.end_m + 15.0, "LANDUNG", Color("a3dbc6"), Color("203d4c"))
+		make_gate(jump.start_m - warning_distance, tr("I18N_SIGN_JUMP"), Color("f4bc73"), Color("203d4c"))
+		make_gate(jump.end_m + 15.0, tr("I18N_SIGN_LAND"), Color("a3dbc6"), Color("203d4c"))
 	make_landscape()
 
 func quad(surface: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector3, color: Color, uvs: Array = []) -> void:

@@ -53,8 +53,8 @@ func _ready() -> void:
 	var layout := VBoxContainer.new()
 	layout.add_theme_constant_override("separation", 14)
 	add_child(layout)
-	layout.add_child(text_label("STUNTCAR", 17, MINT))
-	layout.add_child(text_label("Wohin geht deine Fahrt?", 36))
+	layout.add_child(text_label(tr("I18N_APP_BRAND"), 17, MINT))
+	layout.add_child(text_label(tr("I18N_TRACK_SELECT_TITLE"), 36))
 	var columns := HBoxContainer.new()
 	columns.add_theme_constant_override("separation", 28)
 	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -114,7 +114,7 @@ func render(value, left_key: String, right_key: String, speech_status: String = 
 	voice_status.visible = session.control_mode == "voice"
 	voice_status.text = speech_status
 	if voice_status.visible and not session.voice_enabled:
-		voice_status.text += " Prüfe die Steuerung unter Einstellungen."
+		voice_status.text += tr("I18N_VOICE_SETTINGS_HELP")
 	var entries: Array[String] = session.entries()
 	if entries != previous_entries or session.routes != previous_routes:
 		for button in buttons:
@@ -145,9 +145,9 @@ func render(value, left_key: String, right_key: String, speech_status: String = 
 		previous_routes = session.routes.duplicate(true)
 		previous_index = -1
 	errors.visible = not session.catalog_errors.is_empty()
-	errors.text = "Dateien prüfen:\n" + "\n".join(session.catalog_errors)
-	footer.text = "[ %s ] Nächster Eintrag     [ %s ] Auswählen     ·     Du kannst auch klicken." % [left_key, right_key]
-	if session.voice_enabled: footer.text += "\nSprache: next · select"
+	errors.text = tr("I18N_TRACK_ERRORS") + "\n".join(session.catalog_errors)
+	footer.text = tr("I18N_TRACK_SELECT_KEYS") % [left_key, right_key]
+	if session.voice_enabled: footer.text += tr("I18N_TRACK_SELECT_VOICE")
 	if previous_index == session.menu_index: return
 	previous_index = session.menu_index
 	for i in range(buttons.size()):
@@ -159,14 +159,14 @@ func render(value, left_key: String, right_key: String, speech_status: String = 
 		var route: Dictionary = session.routes[previous_index]
 		picture.texture = texture(route.preview)
 		route_title.text = route.name
-		landscape_label.text = Scenarios.NAMES[route.scenario]
-		facts.text = "%d m   ·   %d Kurven   ·   %d Sprünge" % [route.length_m, route.curves, route.jumps]
+		landscape_label.text = tr(Scenarios.NAMES[route.scenario])
+		facts.text = tr("I18N_TRACK_FACTS") % [route.length_m, route.curves, route.jumps]
 		description.text = route.description
-		caption.text = "Landschaftsvorschau" if route.landscape_preview else "Blick auf die Strecke"
+		caption.text = tr("I18N_PREVIEW_LANDSCAPE") if route.landscape_preview else tr("I18N_PREVIEW_TRACK")
 	else:
 		picture.texture = texture(Scenarios.preview(session.model.track.scenario))
 		landscape_label.text = ""
-		route_title.text = "Keine gültige Strecke" if session.routes.is_empty() else entries[previous_index]
+		route_title.text = tr("I18N_TRACK_NONE_VALID") if session.routes.is_empty() else entries[previous_index]
 		facts.text = ""
-		caption.text = "Landschaftsvorschau"
-		description.text = "Lege eine gültige JSON-Datei in den Ordner tracks. Starte das Spiel danach neu." if session.routes.is_empty() else ("Ändere die Steuerung, die Tasten und die Hinweise." if previous_index == session.routes.size() else "Das Spiel schließen.")
+		caption.text = tr("I18N_PREVIEW_LANDSCAPE")
+		description.text = tr("I18N_TRACK_ADD_HELP") if session.routes.is_empty() else (tr("I18N_TRACK_SETTINGS_HELP") if previous_index == session.routes.size() else tr("I18N_QUIT_HELP"))

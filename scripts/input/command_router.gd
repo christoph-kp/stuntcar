@@ -49,19 +49,19 @@ func _init(drive_model) -> void:
 	model = drive_model
 
 func entries() -> Array[String]:
-	var voice_entry := "Steuerung: Sprache + Tasten" if control_mode == "voice" else "Steuerung: Zwei Tasten"
+	var voice_entry := tr("I18N_CONTROL_VOICE_ENTRY") if control_mode == "voice" else tr("I18N_CONTROL_KEYS_ENTRY")
 	match state:
-		"MENU": return ["Fahrt starten", "Strecke wählen", "Einstellungen", "Beenden"]
-		"PAUSED": return ["Weiterfahren", "Neu starten", "Einstellungen", voice_entry, "Beenden"]
-		"FINISHED": return ["Noch einmal fahren", "Zur Übersicht", "Strecke wählen", "Beenden"]
-		"SETTINGS": return ["Hinweis: %d Sekunden" % int(model.hint_seconds), "Ton: " + ("Ein" if sound_enabled else "Aus"), "Tasten ändern", voice_entry, "Lautstärke", "Zurück"]
-		"AUDIO": return ["Motor: %d %%" % roundi(engine_volume * 100), "Umgebung: %d %%" % roundi(environment_volume * 100), "Hinweise: %d %%" % roundi(hint_volume * 100), "Zurück"]
-		"CONTROL": return ["Zwei Tasten", "Sprache + Tasten"]
+		"MENU": return [tr("I18N_MENU_START"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_SETTINGS"), tr("I18N_MENU_QUIT")]
+		"PAUSED": return [tr("I18N_MENU_CONTINUE"), tr("I18N_MENU_RESTART"), tr("I18N_MENU_SETTINGS"), voice_entry, tr("I18N_MENU_QUIT")]
+		"FINISHED": return [tr("I18N_MENU_AGAIN"), tr("I18N_MENU_MAIN"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_QUIT")]
+		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_BACK")]
+		"AUDIO": return [tr("I18N_VOLUME_ENGINE") % roundi(engine_volume * 100), tr("I18N_VOLUME_ENVIRONMENT") % roundi(environment_volume * 100), tr("I18N_VOLUME_HINTS") % roundi(hint_volume * 100), tr("I18N_MENU_BACK")]
+		"CONTROL": return [tr("I18N_CONTROL_KEYS"), tr("I18N_CONTROL_VOICE")]
 		"TRACKS":
 			var result: Array[String] = []
 			for route in routes: result.append(route.name)
-			result.append("Einstellungen")
-			result.append("Beenden")
+			result.append(tr("I18N_MENU_SETTINGS"))
+			result.append(tr("I18N_MENU_QUIT"))
 			return result
 	return []
 

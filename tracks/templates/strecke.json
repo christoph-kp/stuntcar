@@ -1,8 +1,8 @@
 {
   "format_version": 1,
   "scenario": "forest",
-  "name": "Meine Strecke",
-  "description": "Hoch hinauf, steil hinunter und über eine Lücke.",
+  "name": "I18N_TRACK_TEMPLATE_NAME",
+  "description": "I18N_TRACK_ALPINE_DESCRIPTION",
   "length_m": 1250,
   "curves": [
     {

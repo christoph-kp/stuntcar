@@ -25,7 +25,7 @@ func _initialize() -> void:
 		write_file(folder + "/02_fehler.json", "{\n  falsches JSON")
 		var report: Dictionary = track.scan_catalog(folder)
 		check(report.routes.size() == 1 and report.errors.size() == 1, "Eine defekte Datei darf die gültige Strecke nicht verbergen.")
-		check("02_fehler.json" in report.errors[0] and "Zeile" in report.errors[0], "Der Fehler nennt die Datei und die Zeile.")
+		check("02_fehler.json" in report.errors[0] and "line 1" in report.errors[0], "Der Fehler nennt die Datei und die Zeile.")
 		DirAccess.remove_absolute(folder + "/01_test.json")
 		report = track.scan_catalog(folder)
 		check(report.routes.is_empty(), "Eine entfernte Strecke verschwindet aus der Auswahl.")
