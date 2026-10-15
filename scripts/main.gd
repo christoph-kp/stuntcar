@@ -106,7 +106,7 @@ func _physics_process(delta: float) -> void:
 		var events: Array[Dictionary] = voice.take_commands()
 		for level_event in voice.take_level_events():
 			if level_event.epoch != voice.epoch: continue
-			session.practice.capture_level(level_event.rms, level_event.peak_rms)
+			session.practice.capture_level(level_event.rms, level_event.peak_rms, level_event.clipped, level_event.speech_end)
 			sync_voice_context()
 		var feedback_events: Array[Dictionary] = voice.take_feedback_events()
 		if session.state == "PRACTICE":

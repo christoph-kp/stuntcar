@@ -61,6 +61,7 @@ class StreamingRecognizer:
         self.since = []
         self.heard = ''
         self.recent_levels = deque()
+        self.recent_clips = deque()
 
     def confirmed(self, results):
         if self.mode == 'direct':
@@ -110,8 +111,12 @@ class StreamingRecognizer:
         rms = (sum(value * value for value in samples) / max(1, len(samples))) ** .5
         self.elapsed += len(pcm) / 32000
         self.recent_levels.append((self.elapsed, rms))
+        clipped = sum(abs(value) >= 32760 for value in samples) >= max(1, len(samples) * .02)
+        self.recent_clips.append((self.elapsed, clipped))
         while self.recent_levels and self.recent_levels[0][0] < self.elapsed - .45:
             self.recent_levels.popleft()
+        while self.recent_clips and self.recent_clips[0][0] < self.elapsed - .45:
+            self.recent_clips.popleft()
         self.pre_roll.append(pcm)
         if rms >= 180:
             if not self.active:
@@ -145,6 +150,7 @@ class StreamingRecognizer:
             (text for text in texts[self.restricted_count:] if text), next((text for text in texts if text), ''))
         events = self.new_commands(confirmed) if self.active else []
         status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening',
+                  'clipped': any(value for _, value in self.recent_clips),
                   'rms': rms, 'peak_rms': max((level for _, level in self.recent_levels), default=0.0)}
         status['direction'] = (confirmed[-1]['command'] if confirmed and rms >= 180
                                and confirmed[-1]['command'] in {'left', 'right', 'faster', 'slower'} else '')

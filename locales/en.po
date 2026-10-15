@@ -612,16 +612,28 @@ msgid "I18N_CALIBRATION_START"
 msgstr "Calibrate voice"
 
 msgid "I18N_CALIBRATION_NORMAL"
-msgstr "Speak normally"
+msgstr "Say this word in your normal voice"
 
 msgid "I18N_CALIBRATION_LOUDER"
-msgstr "Speak louder"
+msgstr "Say this word louder"
 
 msgid "I18N_CALIBRATION_LOUDEST"
-msgstr "Speak very loudly"
+msgstr "Say this word very loudly"
 
 msgid "I18N_CALIBRATION_MORE"
-msgstr "Speak a little louder"
+msgstr "Say this word a little louder"
 
 msgid "I18N_CALIBRATION_SAVED"
 msgstr "Level saved"
+
+msgid "I18N_CALIBRATION_WORD"
+msgstr "okay"
+
+msgid "I18N_CALIBRATION_RANGE_ADJUSTED"
+msgstr "Sensitivity adjusted. Say the word again in your normal voice."
+
+msgid "I18N_CALIBRATION_TOO_LOUD"
+msgstr "Input too loud. Move a little farther away and repeat the word."
+
+msgid "I18N_CALIBRATION_REPEAT_WORD"
+msgstr "Say the whole word again. Then pause briefly."

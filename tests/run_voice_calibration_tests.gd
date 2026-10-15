@@ -12,7 +12,7 @@ func check(ok: bool, message: String) -> void:
 		push_error(message)
 
 func sample(cal, raw: float) -> void:
-	for index in range(5): cal.receive(raw, raw)
+	for index in range(5): cal.receive(raw, raw, false, index == 4)
 
 func run() -> void:
 	var cal = Calibration.new()

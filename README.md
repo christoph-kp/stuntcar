@@ -146,9 +146,17 @@ Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprac
 
 ## Die Sprachübung
 
-Öffne „Settings → Voice practice“. Wähle „Calibrate voice“. Sprich zuerst normal. Sprich danach lauter. Sprich zuletzt sehr laut. Die Balken steigen von links nach rechts an.
+Öffne „Settings → Voice practice“. Wähle „Calibrate voice“. Sage zuerst „okay“ mit deiner normalen Stimme. Sage „okay“ danach lauter. Sage „okay“ zuletzt sehr laut. Mache nach jedem Wort eine kurze Pause.
 
-Die Balken zeigen den aktuellen Mikrofonpegel. Die kurze Linie darunter zeigt den Fortschritt der Aufnahme. Jede Stufe braucht mehrere kurze Pegelmessungen. Eine kurze Bestätigung trennt die Stufen. Bei fast gleichen Pegeln fordert die Seite zum lauteren Sprechen auf.
+Die Balken steigen von links nach rechts an.
+
+Die Anzeige passt ihren Maßstab an die normale Stimme an. Der normale Pegel füllt ungefähr ein Drittel der Balken. Die Bestätigung behält diesen Pegel bei. Die zweite gespeicherte Stufe füllt zwei Drittel. Erst die dritte gespeicherte Stufe füllt alle Balken.
+
+Wenn die erste Messung den bisherigen Maßstab überschreitet, passt die Anzeige die Empfindlichkeit an. Danach fordert sie erneut zum normalen Sprechen auf. Ein übersteuerter Mikrofoneingang löst eine Aufforderung zum leiseren Eingang aus. Diese Messung zählt nicht. Die gespeicherten Werte bleiben bis zum erfolgreichen Abschluss erhalten.
+
+Die Balken zeigen den Mikrofonpegel im persönlichen Maßstab. Die kurze Linie darunter zeigt den Fortschritt der Aufnahme. Jede Stufe braucht mehrere kurze Pegelmessungen. Die Stufe zählt erst am Wortende.
+
+Ein abgeschlossenes kurzes Wort genügt ab zwei gültigen Messungen. Ein zu kurzes Wort fordert zur Wiederholung auf. Eine kurze Bestätigung trennt die Stufen. Bei fast gleichen Pegeln fordert die Seite zum lauteren Sprechen auf.
 
 Das Spiel speichert erst nach allen drei Stufen ein neues Profil. Ein Abbruch behält das bisherige Profil. Das Profil gehört zum Namen des Mikrofons. Ein anderes Mikrofon verwendet die bisherigen festen Grenzen.
 
@@ -227,6 +235,7 @@ Führe diese Aufrufe im Projektordner aus:
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_cues_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_auto_range_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_scene_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd

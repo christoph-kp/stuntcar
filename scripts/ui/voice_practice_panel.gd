@@ -18,6 +18,7 @@ const PROMPT_RECTS := {
 }
 var meter: Control
 var calibration_prompt: Label
+var calibration_instruction: Label
 var compass: Control
 var prompt: Label
 var phase_label: Label
@@ -80,7 +81,10 @@ func _ready() -> void:
 	layout.add_child(field)
 	meter = VoiceLevelMeter.new()
 	centered(meter, field, Rect2(-260, -40, 520, 210))
-	calibration_prompt = text_label("", 36, MINT)
+	calibration_instruction = text_label("", 21, MINT)
+	calibration_instruction.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	centered(calibration_instruction, field, Rect2(-430, -240, 860, 70))
+	calibration_prompt = text_label("", 48, PAPER)
 	centered(calibration_prompt, field, Rect2(-400, -170, 800, 90))
 	compass = VoiceCompass.new()
 	centered(compass, field, Rect2(-140, -140, 280, 280))
@@ -146,6 +150,7 @@ func render(value, voice_ready: bool, voice_status: String) -> void:
 	compass.visible = not calibrating
 	meter.visible = calibrating
 	calibration_prompt.visible = calibrating
+	calibration_instruction.visible = calibrating
 	var expected: String = practice.last_expected if transition else practice.expected_word()
 	prompt.visible = phase in ["listening", "transition"]
 	prompt.text = word_text(expected)
@@ -181,14 +186,15 @@ func render(value, voice_ready: bool, voice_status: String) -> void:
 	if calibrating:
 		var calibration = practice.calibration
 		var keys := ["I18N_CALIBRATION_NORMAL", "I18N_CALIBRATION_LOUDER", "I18N_CALIBRATION_LOUDEST"]
-		calibration_prompt.text = tr(calibration.error) if not calibration.error.is_empty() else tr(keys[calibration.stage])
+		calibration_prompt.text = tr("I18N_CALIBRATION_WORD")
+		calibration_instruction.text = tr(calibration.error) if not calibration.error.is_empty() else tr(keys[calibration.stage])
 		calibration_prompt.modulate.a = 1.0
 		if calibration.phase == "transition":
-			calibration_prompt.text = tr("I18N_CALIBRATION_SAVED")
+			calibration_instruction.text = tr("I18N_CALIBRATION_SAVED")
 			calibration_prompt.modulate.a = clampf(calibration.remaining_s / 0.18, 0.0, 1.0)
 		phase_label.visible = true
 		phase_label.text = tr("I18N_PRACTICE_PROGRESS") % [calibration.stage + 1, 3]
-		meter.set_signal(calibration.live_rms, calibration.phase == "transition", float(calibration.samples.size()) / calibration.SAMPLE_COUNT)
+		meter.set_signal(calibration.display_level(), calibration.phase == "transition", 1.0 if calibration.phase == "transition" else float(calibration.samples.size()) / calibration.SAMPLE_COUNT)
 	elif phase == "ready":
 		buttons[0].text = tr("I18N_CALIBRATION_START")
 	for index in range(buttons.size()):

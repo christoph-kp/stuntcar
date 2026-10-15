@@ -169,7 +169,7 @@ func accept_packet(packet: Dictionary) -> void:
 				if level_events.size() >= 64:
 					fail(tr("I18N_VOICE_TOO_MANY"))
 					return
-				level_events.append({"epoch":epoch, "rms":input_rms, "peak_rms":input_peak_rms})
+				level_events.append({"epoch":epoch, "rms":input_rms, "peak_rms":input_peak_rms, "clipped":typeof(packet.get("clipped")) == TYPE_BOOL and packet.get("clipped", false), "speech_end":packet.get("state", "") in ["recognized", "unknown"]})
 			level_ms = Time.get_ticks_msec()
 			var direction := str(packet.get("direction", ""))
 			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""

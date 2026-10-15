@@ -52,10 +52,10 @@ func begin_calibration(selected_mode: String) -> void:
 	calibration.begin()
 	phase = "calibrating"
 
-func capture_level(rms: Variant, peak_rms: Variant) -> void:
+func capture_level(rms: Variant, peak_rms: Variant, clipped: bool = false, speech_end: bool = false) -> void:
 	if phase != "calibrating": return
 	var previous: String = calibration.phase
-	calibration.receive(rms, peak_rms)
+	calibration.receive(rms, peak_rms, clipped, speech_end)
 	if calibration.phase != previous: generation += 1
 
 func wait_for_microphone(selected_mode: String) -> void:

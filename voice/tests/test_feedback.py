@@ -57,6 +57,17 @@ class VoiceFeedback(unittest.TestCase):
         self.assertEqual([event['command'] for event in events], ['left'])
         self.assertGreater(events[0]['peak_rms'], 3000)
 
+    def test_clipped_input_is_reported_and_reset_clears_it(self):
+        stream = StreamingRecognizer(self.engine)
+        clipped = array('h', [32767] * 40 + [0] * 760).tobytes()
+        _, feedback = stream.feed(clipped)
+        self.assertTrue(feedback.get('clipped', False))
+        _, feedback = stream.feed(array('h', [1000] * 800).tobytes())
+        self.assertTrue(feedback.get('clipped', False))
+        stream.reset()
+        _, feedback = stream.feed(array('h', [1000] * 800).tobytes())
+        self.assertFalse(feedback.get('clipped', False))
+
     def test_feedback_has_direction_only_for_confirmed_speech(self):
         events, feedback = self.run_audio(bytes(16000) + speech_at_level(1500) + bytes(32000))
         self.assertEqual(len(events), 1)

@@ -1,0 +1,58 @@
+extends SceneTree
+const Calibration = preload("res://scripts/input/voice_calibration.gd")
+const Meter = preload("res://scripts/ui/voice_level_meter.gd")
+var checks := 0
+var failures := 0
+func _initialize() -> void: call_deferred("run")
+func check(ok: bool, message: String) -> void:
+	checks += 1
+	if not ok:
+		failures += 1
+		push_error(message)
+func sample(cal, rms: float) -> void:
+	for index in range(5): cal.receive(rms, rms, false, index == 4)
+func run() -> void:
+	var cal = Calibration.new()
+	cal.begin()
+	sample(cal, 20000.0)
+	check(cal.phase == "retry" and cal.values.is_empty(), "Ein anfänglich voller Normalpegel passt den Bereich an und fordert eine Wiederholung.")
+	check(cal.has_method("display_level"), "Die Anzeige verwendet den persönlichen Maßstab.")
+	if cal.has_method("display_level"):
+		check(cal.display_level() > 0.25 and cal.display_level() < 0.45, "Die normale Stimme liegt nach der Anpassung ungefähr bei einem Drittel.")
+		cal.step(1.0)
+		sample(cal, 20000.0)
+		check(cal.phase == "transition" and cal.values == [20000.0], "Die wiederholte normale Stimme speichert die erste Stufe.")
+		var meter = Meter.new()
+		root.add_child(meter)
+		meter.set_signal(cal.display_level(), true, 1.0)
+		check(meter.lit_bars() == 4, "Auch die Bestätigung der normalen Stimme zeigt nur vier von zwölf Balken.")
+		cal.step(1.0)
+		sample(cal, 23000.0)
+		meter.set_signal(cal.display_level(), true, 1.0)
+		check(meter.lit_bars() == 8, "Der zweite persönliche Pegel füllt zwei Drittel der Balken.")
+		cal.step(1.0)
+		sample(cal, 26500.0)
+		meter.set_signal(cal.display_level(), true, 1.0)
+		check(meter.lit_bars() == 12, "Erst die dritte persönliche Stufe füllt alle Balken.")
+		meter.free()
+		cal.begin()
+		cal.receive(5000, 6000, true)
+		check(cal.phase == "retry" and cal.values.is_empty() and not cal.error.is_empty(), "Ein übersteuerter Eingang zählt nicht als gültige Normalstimme.")
+		cal.step(1.0)
+		cal.receive(1000, 1400)
+		cal.receive(1100, 1500)
+		cal.receive(0, 1500, false, true)
+		check(cal.phase == "transition", "Ein kurzes abgeschlossenes Testwort genügt ohne fünf lange Sprachblöcke.")
+	var complete_word = Calibration.new()
+	complete_word.begin()
+	for index in range(5): complete_word.receive(1000, 1000)
+	complete_word.receive(5000, 5000, true, true)
+	check(complete_word.phase == "retry" and complete_word.values.is_empty(), "Ein später übersteuerter Teil des Wortes verhindert die Übernahme.")
+	var short_word = Calibration.new()
+	short_word.begin()
+	short_word.receive(4000, 4000, false, true)
+	short_word.step(1.0)
+	short_word.receive(1000, 1000, false, true)
+	check(short_word.values.is_empty() and short_word.samples.is_empty(), "Zwei zu kurze Wörter teilen keine alten Pegel.")
+	print("AUTOMATISCHER PEGELBEREICH: %d Prüfungen, %d Fehler" % [checks, failures])
+	quit(0 if failures == 0 else 1)

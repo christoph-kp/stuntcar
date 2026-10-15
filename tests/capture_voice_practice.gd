@@ -22,11 +22,25 @@ func prepare_volume(scene, stage: int = 0) -> void:
 	scene.sync_voice_context()
 	for previous in range(stage):
 		for index in range(5):
-			scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, previous), "peak_rms":1000.0 * pow(2.0, previous), "level":1.0})
+			scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, previous), "peak_rms":1000.0 * pow(2.0, previous), "level":1.0, "state":"unknown" if index == 4 else "checking"})
 		scene._physics_process(0.016)
 		scene._physics_process(1.0)
 	for index in range(3):
-		scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, stage), "peak_rms":1000.0 * pow(2.0, stage), "level":1.0})
+		scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0 * pow(2.0, stage), "peak_rms":1000.0 * pow(2.0, stage), "level":1.0, "state":"unknown" if index == 4 else "checking"})
+	scene._physics_process(0.016)
+
+func prepare_range_retry(scene) -> void:
+	scene.session.practice.begin_calibration("direct")
+	scene.sync_voice_context()
+	for index in range(5):
+		scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":20000.0, "peak_rms":20000.0, "level":1.0, "state":"unknown" if index == 4 else "checking"})
+	scene._physics_process(0.016)
+
+func prepare_normal_saved(scene) -> void:
+	scene.session.practice.begin_calibration("direct")
+	scene.sync_voice_context()
+	for index in range(5):
+		scene.voice.accept_packet({"type":"feedback", "seq":scene.voice.last_seq + 1, "epoch":scene.voice.epoch, "rms":1000.0, "peak_rms":1000.0, "level":0.3, "state":"unknown" if index == 4 else "checking"})
 	scene._physics_process(0.016)
 
 func capture(scene, path: String, prepare: Callable, phase: String) -> void:
@@ -59,6 +73,8 @@ func run() -> void:
 	scene.ui.practice_panel.compass.set_process(false)
 	DisplayServer.window_set_size(Vector2i(1280, 800))
 	await capture(scene, "res://docs/voice-calibration.png", func(): prepare_volume(scene), "calibrating")
+	await capture(scene, "res://docs/voice-calibration-retry.png", func(): prepare_range_retry(scene), "calibrating")
+	await capture(scene, "/private/tmp/voice-normal-confirmed.png", func(): prepare_normal_saved(scene), "calibrating")
 	for stage in [1, 2]:
 		await capture(scene, "/private/tmp/voice-calibration-stage-%d.png" % stage, func(): prepare_volume(scene, stage), "calibrating")
 	await capture(scene, "res://docs/voice-practice.png", func(): prepare_prompt(scene), "listening")

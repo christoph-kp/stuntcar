@@ -32,7 +32,7 @@ func next_attempt(scene) -> void:
 func finish_calibration(scene) -> void:
 	scene.voice.device_name = "Test microphone"
 	for value in [1000.0, 2000.0, 4000.0]:
-		for index in range(5): packet(scene, {"type":"feedback", "rms":value, "peak_rms":value, "level":1.0})
+		for index in range(5): packet(scene, {"type":"feedback", "rms":value, "peak_rms":value, "level":1.0, "state":"unknown" if index == 4 else "checking"})
 		scene._physics_process(0.016)
 		scene._physics_process(1.0)
 	scene._process(0.016)
