@@ -56,7 +56,8 @@ def copy_credits(bundle):
                 source = Path(distribution.locate_file(item))
                 if source.is_file():
                     shutil.copy2(source, target / source.name)
-    # PyInstaller includes the Python runtime license inside its internal folder.
+    shutil.copy2(Path(sys.base_prefix) / 'LICENSE.txt', credits / 'Python-LICENSE.txt')
+    shutil.copy2(ROOT / 'tools/release/licenses/PortAudio-LICENSE.txt', credits / 'PortAudio-LICENSE.txt')
     shutil.copy2(ROOT / 'LICENSE', credits / 'Vosk-model-Apache-2.0.txt')
 
 
@@ -77,6 +78,9 @@ def main():
          '--distpath', exports / 'voice-dist', '--workpath', exports / 'voice-build',
          '--specpath', exports, ROOT / 'voice/recognizer.py'])
     shutil.copytree(exports / 'voice-dist/stuntcar-voice', bundle / 'voice')
+    for binary in (bundle / 'voice/_internal/_sounddevice_data/portaudio-binaries').glob('libportaudio*.dll'):
+        if binary.name != 'libportaudio64bit.dll':
+            binary.unlink()
     shutil.copytree(ROOT / '.tools/voice-models/vosk-model-small-en-us-0.15',
                     bundle / 'voice/models/vosk-model-small-en-us-0.15')
     copy_credits(bundle)
@@ -87,6 +91,9 @@ def main():
     with tempfile.TemporaryDirectory(prefix='Stuntcar package test ') as temporary:
         shutil.unpack_archive(archive, temporary)
         portable = Path(temporary) / bundle.name
+        for name in ('Python-LICENSE.txt', 'PortAudio-LICENSE.txt', 'car/CC-BY-4.0.txt', 'assets/audio/CREDITS.txt'):
+            if not (portable / 'licenses' / name).is_file():
+                raise RuntimeError('The package lacks a license or credit: ' + name)
         voice = portable / 'voice/stuntcar-voice.exe'
         run([voice, '--check-runtime'], cwd=temporary)
         result = run([voice, '--mode', 'checked', '--wav', ROOT / 'voice/tests/audio/17.wav'], cwd=temporary)

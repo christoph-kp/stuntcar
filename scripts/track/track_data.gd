@@ -45,7 +45,7 @@ static func scan_catalog(folder: String = "res://tracks") -> Dictionary:
 		var custom: String = d.get("preview", "")
 		if not custom.is_empty():
 			preview = folder.path_join(custom)
-			if not FileAccess.file_exists(preview):
+			if not ResourceLoader.exists(preview) and not FileAccess.file_exists(preview):
 				errors.append(String(TranslationServer.translate("I18N_TRACK_PREVIEW_MISSING")) % [file, custom])
 				preview = Scenarios.preview(landscape)
 		result.append({"path": path, "name": String(TranslationServer.translate(d.name)), "description": String(TranslationServer.translate(d.description)),
