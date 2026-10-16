@@ -1,6 +1,6 @@
 #!/bin/zsh
 set -eu
-cd -- "$(dirname -- "$0")"
+cd -- "$(dirname -- "$0")/../.."
 mkdir -p reports/voice
 report="$PWD/reports/voice/$(date +%Y%m%d-%H%M%S)-$$.jsonl"
 print 'Der Test öffnet die Sprachübung im Spiel.'

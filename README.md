@@ -21,7 +21,7 @@ Das Spiel enthält vier Strecken mit dem neuen Auto und vier Landschaften:
 | Sprungstrecke | 1350 m | Felsenschlucht, fünf Kurven und zwei Sprünge | etwa 62 Sekunden |
 | Küstenfahrt | 600 m | Regenküste, drei Kurven und eine Kuppe | etwa 27 Sekunden |
 
-Das Auto startet mit etwa 79 km/h. Mit Sprache kannst du das Tempo ändern. Das Auto fährt durchgehend. Die Sprünge brauchen keine zusätzliche Taste.
+Das Auto startet mit etwa 79 km/h. Mit Sprache kannst du das Tempo ändern. Eine laute Vollbremsung hält das Auto an. Mit „faster“ fährt es wieder an. Die Sprünge brauchen keine zusätzliche Taste.
 
 ## Start auf diesem Mac
 
@@ -32,7 +32,11 @@ Das Auto startet mit etwa 79 km/h. Mit Sprache kannst du das Tempo ändern. Das 
 5. Wähle „Start drive“.
 6. Drücke vor der Kurve einmal die passende Richtungstaste.
 
-Bei jedem Start erscheint zuerst die Streckenauswahl. Das Spiel merkt sich die letzte Strecke und die Steuerung. Bei späteren Starts brauchst du die Steuerung nicht erneut zu wählen. Unter „Settings → Controls“ kannst du die Steuerung jederzeit ändern. Die Tasten bleiben auch bei Sprache verfügbar. Die bisherige Datei `Mit Sprache starten.command` öffnet ebenfalls diesen gemeinsamen Startweg.
+Bei jedem Start erscheint zuerst die Streckenauswahl. Das Spiel merkt sich die letzte Strecke und die Steuerung. Bei späteren Starts brauchst du die Steuerung nicht erneut zu wählen. Unter „Settings → Controls“ kannst du die Steuerung jederzeit ändern. Die Tasten bleiben auch bei Sprache verfügbar.
+
+Im Hauptordner startet nur `Starten.command` das Spiel.
+Die weiteren Werkzeuge liegen unter `tools/macos/`.
+Die Übersicht steht in [tools/macos/README.md](tools/macos/README.md).
 
 Godot liegt für diesen Mac im Projektordner `.tools`. Das Spiel braucht keine Internetverbindung.
 
@@ -184,9 +188,14 @@ Der Zeitvergleich steht in `docs/voice-direct-comparison.txt`. Er nutzt künstli
 
 Das Spiel startet die Spracheingabe nach der Wahl „Voice + keys“. Es speichert diese Wahl für den nächsten Start. Die Wahl „Two keys“ beendet den Mikrofonzugriff.
 
+Das Spiel speichert die Steuerung, die Tasten, die Strecke, die Tonlautstärken und die persönliche Sprachkalibrierung.
+Beim normalen Start nutzt es die gespeicherten Werte.
+Du musst die Kalibrierung nicht bei jedem Start wiederholen.
+Unter „Settings → Voice practice“ kannst du sie bei Bedarf neu durchführen.
+
 Die Erkennung läuft lokal mit Vosk. Sie sendet keine Tonaufnahmen ins Internet. Sie speichert keine Mikrofonaufnahmen.
 
-Auf diesem Mac sind die Bibliotheken und Sprachmodelle bereits eingerichtet. Ein anderer Mac braucht einmalig Python 3.11 oder neuer. Öffne dort `Sprache einrichten.command`. Diese Einrichtung braucht eine Internetverbindung. Danach funktioniert die Sprachsteuerung ohne Internet.
+Auf diesem Mac sind die Bibliotheken und Sprachmodelle bereits eingerichtet. Ein anderer Mac braucht einmalig Python 3.11 oder neuer. Öffne dort `tools/macos/Sprache einrichten.command`. Diese Einrichtung braucht eine Internetverbindung. Danach funktioniert die Sprachsteuerung ohne Internet.
 
 Die Einrichtung lädt nur das englische Modell. Alte zweisprachige Vergleichstests brauchen zusätzlich das deutsche Modell. `python3 voice/setup.py --with-german` richtet auch dieses Modell ein.
 
@@ -208,7 +217,7 @@ Der Flug folgt einem vorgegebenen Bogen. So reicht jedes erlaubte Tempo für die
 
 Die Kurven haben eine geneigte Fahrbahn. Die Waldstrecke enthält Steilkurven mit 38, 45 und 42 Grad Neigung. Zwei Rampen führen über jeweils 50 Meter breite Lücken. Beim normalen Tempo dauert jeder Flug etwa 2,3 Sekunden. Das Auto erreicht rund 70 Meter Höhe über dem Nullpunkt der Spielwelt. Der Wald bleibt unten im Tal. Das Auto folgt der Neigung. Absprung und Landung bleiben quer zur Fahrbahn eben.
 
-Weitere Strecken entstehen aus `tracks/templates/strecke.json`. Jede Strecke ist eine eigene Textdatei mit einem Namen. Du kannst Dateien hinzufügen oder entfernen. `Strecken prüfen.command` prüft die Dateien mit einem Doppelklick. Die Anleitung steht in [tracks/README.md](tracks/README.md). Das Spiel nimmt gültige Streckendateien beim nächsten Start automatisch in die Auswahl auf.
+Weitere Strecken entstehen aus `tracks/templates/strecke.json`. Jede Strecke ist eine eigene Textdatei mit einem Namen. Du kannst Dateien hinzufügen oder entfernen. `tools/macos/Strecken prüfen.command` prüft die Dateien mit einem Doppelklick. Die Anleitung steht in [tracks/README.md](tracks/README.md). Das Spiel nimmt gültige Streckendateien beim nächsten Start automatisch in die Auswahl auf.
 
 Die Tests prüfen die Spielregeln und die Fahrzeugbewegung. Sie belegen noch nicht das Spielgefühl für Menschen mit körperlichen Einschränkungen.
 

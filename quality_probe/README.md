@@ -6,7 +6,7 @@ Das bestehende Spiel bleibt ein eigenes Projekt.
 
 ## Start
 
-Öffne im Projektordner die Datei `Qualitätsprobe starten.command`.
+Öffne im Projektordner die Datei `tools/macos/Qualitätsprobe starten.command`.
 Die Probe startet mit der Ansicht des Autos.
 
 | Taste | Funktion |

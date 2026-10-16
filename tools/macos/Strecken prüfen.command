@@ -1,5 +1,5 @@
 #!/bin/zsh
-cd -- "$(dirname -- "$0")"
+cd -- "$(dirname -- "$0")/../.."
 if [[ -x .tools/Godot.app/Contents/MacOS/Godot ]]; then
   .tools/Godot.app/Contents/MacOS/Godot --headless --path . --log-file "${TMPDIR:-/tmp/}stuntcar-streckenpruefung.log" --script tools/check_tracks.gd
 elif [[ -x /Applications/Godot.app/Contents/MacOS/Godot ]]; then

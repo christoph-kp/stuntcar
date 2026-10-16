@@ -24,7 +24,7 @@ Die zwölf Dateien `tests/run*tests.gd` meldeten zusammen 337 erfolgreiche Einze
 `tests/run_scene_test.gd` erreichte das Ziel ohne Fehler.
 Die 15 Python-Prüfungen der Sprache bestanden ebenfalls.
 Die Dateiprüfung `tools/check_tracks.gd` meldete vier gültige Strecken ohne Hinweise.
-Die Shell-Prüfung der Datei `Strecken prüfen.command` bestand.
+Die Shell-Prüfung der Datei `tools/macos/Strecken prüfen.command` bestand.
 
 Die Auswahlprüfung umfasst den ersten Start, den späteren Start, den Streckenwechsel und die gespeicherten Einstellungen.
 Sie prüft auch eine Datei, die nach dem Öffnen der Auswahl fehlt.

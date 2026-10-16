@@ -6,7 +6,7 @@ Die Strecke besteht aus einer JSON-Datei. Das Spiel liest diese Datei beim Start
 2. Gib der Kopie einen eigenen Namen, zum Beispiel `04_bergfahrt.json`.
 3. Ändere den Namen und die Beschreibung in der Datei.
 4. Ändere die Kurven, die Höhen und die Sprünge.
-5. Öffne `Strecken prüfen.command` im Projektordner mit einem Doppelklick.
+5. Öffne `tools/macos/Strecken prüfen.command` im Projektordner mit einem Doppelklick.
 6. Behebe die gemeldeten Fehler.
 7. Starte das Spiel. Die neue Strecke erscheint in der Auswahl.
 
@@ -79,7 +79,7 @@ Die Dateiprüfung erkennt fehlende Felder, ungültige Zahlen, unbekannte Landsch
 
 ## Die Strecke prüfen
 
-Für die Dateiprüfung genügt der Doppelklick auf `Strecken prüfen.command`. Das Fenster zeigt jede gültige Datei und alle Meldungen.
+Für die Dateiprüfung genügt der Doppelklick auf `tools/macos/Strecken prüfen.command`. Das Fenster zeigt jede gültige Datei und alle Meldungen.
 
 Die gleiche Prüfung im Projektordner:
 

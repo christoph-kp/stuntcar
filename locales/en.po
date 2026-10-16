@@ -450,7 +450,7 @@ msgid "I18N_VOICE_SETTINGS_HELP"
 msgstr " Check the controls in Settings."
 
 msgid "I18N_VOICE_SETUP_MISSING"
-msgstr "Voice control is not installed. Open Set up voice.command."
+msgstr "Voice control is not installed. Open tools/macos/Sprache einrichten.command."
 
 msgid "I18N_VOICE_STARTING"
 msgstr "Voice control starts. You may need to permit microphone access."

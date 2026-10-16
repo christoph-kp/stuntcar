@@ -1,7 +1,7 @@
 # Mikrofontest
 
 1. Schließe eine bereits offene Spielinstanz.
-2. Öffne `Mikrofon testen.command`.
+2. Öffne `tools/macos/Mikrofon testen.command`.
 3. Klicke in der Sprachübung auf **Start**.
 4. Führe die drei Schritte der Kalibrierung durch.
 5. Sprich die angezeigten Wörter zuerst normal und dann laut.

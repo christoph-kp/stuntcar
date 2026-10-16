@@ -25,7 +25,7 @@ Erstelle für eine örtliche Änderung zuerst eine eigene Kopie des Materials.
 
 ## Vorschau öffnen
 
-Auf diesem Mac öffnet `Bauteile ansehen.command` die Vorschau im Godot-Editor.
+Auf diesem Mac öffnet `tools/macos/Bauteile ansehen.command` die Vorschau im Godot-Editor.
 
 1. Öffne das vorhandene Projekt in Godot.
 2. Öffne `assets/stuntcar_kit/examples/stunt_preview.tscn`.
