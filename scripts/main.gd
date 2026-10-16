@@ -3,6 +3,7 @@ extends Node3D
 const TrackData = preload("res://scripts/track/track_data.gd")
 const TrackBuilder = preload("res://scripts/track/track_builder.gd")
 const DriveModel = preload("res://scripts/vehicle/drive_model.gd")
+const KeyboardControls = preload("res://scripts/input/keyboard_controls.gd")
 const CommandRouter = preload("res://scripts/input/command_router.gd")
 const CarView = preload("res://scripts/vehicle/car_view.gd")
 const FollowCamera = preload("res://scripts/camera/follow_camera.gd")
@@ -25,10 +26,12 @@ var sound: AudioStreamPlayer
 var race_audio
 var key_left := KEY_A
 var key_right := KEY_D
+var key_faster := KEY_W
+var key_slower := KEY_S
 var pending: Array[int] = []
 var held: Dictionary = {}
 var binding_stage := 0
-var candidate_key := 0
+var candidate_keys: Array[int] = []
 var bind_timeout := 0.0
 var hinted_ids: Dictionary = {}
 var previous_state := "MENU"
@@ -113,13 +116,27 @@ func _input(event: InputEvent) -> void:
 		pending.clear()
 		if session.state == "PRACTICE": session.close_practice()
 		else: session.pause()
-	elif code == key_left:
+	elif keyboard_action(code) == "left":
 		pending.append(-1)
-	elif code == key_right:
+	elif keyboard_action(code) == "right":
 		pending.append(1)
+	elif keyboard_action(code) in ["faster", "slower"]:
+		pass
 	else:
 		return
 	get_viewport().set_input_as_handled()
+
+func keyboard_action(code: int) -> String:
+	return KeyboardControls.action_for(code, [key_left, key_right, key_faster, key_slower])
+
+func action_held(action: String) -> bool:
+	for code in held:
+		if keyboard_action(code) == action: return true
+	return false
+
+func clear_speed_keys() -> void:
+	for code in held.keys():
+		if keyboard_action(code) in ["faster", "slower"]: held.erase(code)
 
 func _physics_process(delta: float) -> void:
 	if session == null:
@@ -174,7 +191,7 @@ func _physics_process(delta: float) -> void:
 		if session.practice.phase == "calibrated":
 			if session.practice.calibration.accept_profile(voice.device_name): save_settings()
 			session.practice.start(session.voice_mode)
-	var both := (held.has(key_left) and held.has(key_right)) or (pending.has(-1) and pending.has(1))
+	var both := (action_held("left") and action_held("right")) or (pending.has(-1) and pending.has(1))
 	if not both and not pending.is_empty():
 		session.press(pending[0])
 	pending.clear()
@@ -182,6 +199,9 @@ func _physics_process(delta: float) -> void:
 		bind_timeout -= delta
 		if bind_timeout <= 0:
 			binding_stage = 0
+			candidate_keys.clear()
+	if session.state == "RUNNING" and binding_stage == 0:
+		model.keyboard_speed(int(action_held("faster")) - int(action_held("slower")), delta)
 	var was_running: bool = session.state == "RUNNING"
 	session.step(delta)
 	if was_running:
@@ -204,6 +224,7 @@ func sync_voice_context() -> void:
 	var context := "%s:%d:%d" % [session.state, binding_stage, session.practice.generation if session.state == "PRACTICE" else 0]
 	if context != voice_context:
 		voice_context = context
+		clear_speed_keys()
 		pending.clear()
 		voice.invalidate()
 		ui.voice_compass.clear()
@@ -226,6 +247,10 @@ func _process(delta: float) -> void:
 		message = tr("I18N_KEY_BIND_LEFT")
 	elif binding_stage == 2:
 		message = tr("I18N_KEY_BIND_RIGHT")
+	elif binding_stage == 3:
+		message = tr("I18N_KEY_BIND_FASTER")
+	elif binding_stage == 4:
+		message = tr("I18N_KEY_BIND_SLOWER")
 	if binding_stage > 0:
 		message += tr("I18N_KEY_BIND_TIMEOUT") % ceili(bind_timeout)
 	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
@@ -282,6 +307,7 @@ func on_action(action: String) -> void:
 			save_settings()
 		"quit": get_tree().quit()
 		"reset_car":
+			clear_speed_keys()
 			if race_audio != null: race_audio.reset()
 			if voice != null: voice.invalidate()
 			if is_instance_valid(car):
@@ -292,6 +318,9 @@ func on_action(action: String) -> void:
 			pending.clear()
 		"save_settings": save_settings()
 		"rebind":
+			held.clear()
+			pending.clear()
+			candidate_keys.clear()
 			binding_stage = 1
 			bind_timeout = 30.0
 
@@ -319,21 +348,29 @@ func select_track(path: String) -> void:
 func capture_binding(code: int) -> void:
 	if code == KEY_ESCAPE:
 		binding_stage = 0
+		candidate_keys.clear()
 		return
-	if binding_stage == 1:
-		candidate_key = code
-		binding_stage = 2
+	if code in candidate_keys: return
+	candidate_keys.append(code)
+	if candidate_keys.size() < 4:
+		binding_stage = candidate_keys.size() + 1
 		bind_timeout = 30.0
-	elif code != candidate_key:
-		key_left = candidate_key
-		key_right = code
-		binding_stage = 0
-		save_settings()
-		update_key_names()
+		return
+	key_left = candidate_keys[0]
+	key_right = candidate_keys[1]
+	key_faster = candidate_keys[2]
+	key_slower = candidate_keys[3]
+	binding_stage = 0
+	candidate_keys.clear()
+	held.clear()
+	save_settings()
+	update_key_names()
 
 func update_key_names() -> void:
 	ui.left_name = OS.get_keycode_string(key_left)
 	ui.right_name = OS.get_keycode_string(key_right)
+	ui.faster_name = OS.get_keycode_string(key_faster)
+	ui.slower_name = OS.get_keycode_string(key_slower)
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
@@ -343,6 +380,8 @@ func save_settings() -> void:
 	config.set_value("game", "track", track.source_path)
 	config.set_value("input", "left", key_left)
 	config.set_value("input", "right", key_right)
+	config.set_value("input", "faster", key_faster)
+	config.set_value("input", "slower", key_slower)
 	config.set_value("game", "hint_seconds", model.hint_seconds)
 	config.set_value("game", "sound", session.sound_enabled)
 	for key in ["engine_volume", "environment_volume", "hint_volume"]:
@@ -369,11 +408,11 @@ func load_settings() -> void:
 			model.track = track
 			model.reset(5.0)
 			break
-	var left = config.get_value("input", "left", KEY_A)
-	var right = config.get_value("input", "right", KEY_D)
-	if typeof(left) == TYPE_INT and typeof(right) == TYPE_INT and left != right and left > 0 and right > 0 and left != KEY_ESCAPE and right != KEY_ESCAPE:
-		key_left = left
-		key_right = right
+	var bindings := KeyboardControls.restored(config)
+	key_left = bindings[0]
+	key_right = bindings[1]
+	key_faster = bindings[2]
+	key_slower = bindings[3]
 	var seconds = config.get_value("game", "hint_seconds", 5.0)
 	if seconds in [3.0, 5.0, 8.0]:
 		model.hint_seconds = seconds

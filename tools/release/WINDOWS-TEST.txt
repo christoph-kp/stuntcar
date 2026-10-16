@@ -8,12 +8,19 @@ Start
 2. Keep Stuntcar.exe, Stuntcar.pck and the voice folder together.
 3. Open Stuntcar.exe.
 4. Select a track.
-5. Select "Voice + keys" or "Two keys".
+5. Select "Voice + keyboard" or "Keyboard".
 6. Select "Start drive".
 
 You do not need to install Godot or Python.
 The game uses local English speech input.
 The game does not send or save microphone audio.
+
+Keyboard
+- A/D or Left/Right: tap to turn.
+- W or Up: hold to accelerate.
+- S or Down: hold to brake, down to a stop.
+- Release the speed key to keep the current target speed.
+- Settings > Change keys: assign left, right, acceleration, and brake.
 
 Voice test
 1. Select your microphone in the Windows sound settings.
@@ -34,6 +41,9 @@ Please check
 - Does the game start after you extract the ZIP?
 - Do all four tracks and their preview images appear?
 - Do the car, trees, road, jumps, sound and menus work?
+- Do W/S and the arrow keys change the speed?
+- Can you brake to a stop and then accelerate again?
+- Does Change keys save all four assigned keys?
 - Does the game find your microphone?
 - Does one spoken word give one command?
 - Do the three voice levels give the same effect as the arrow bars?

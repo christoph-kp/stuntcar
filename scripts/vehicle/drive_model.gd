@@ -143,6 +143,19 @@ func change_speed(direction: int, strength: float = VoiceStrength.NORMAL) -> voi
 	else:
 		speed_feedback = (tr("I18N_SPEED_FASTER") if direction > 0 else tr("I18N_SPEED_SLOWER")) % roundi(target_speed_mps * 3.6)
 
+func keyboard_speed(direction: int, delta: float) -> void:
+	if direction not in [-1, 1] or delta <= 0.0 or off_road or finished: return
+	speed_strength = 1.0
+	if direction > 0:
+		emergency_braking = false
+		target_speed_mps = minf(MAX_SPEED, maxf(target_speed_mps, speed_mps) + 10.0 * delta)
+	else:
+		boost_remaining = 0.0
+		if emergency_braking: return
+		# Brake now, even when the previous voice target was much higher.
+		target_speed_mps = maxf(0.0, minf(target_speed_mps, speed_mps) - 18.0 * delta)
+	speed_feedback_seconds = 0.0
+
 func effective_target_speed() -> float:
 	return minf(MAX_SPEED + BOOST_BONUS, target_speed_mps + BOOST_BONUS) if boost_remaining > 0.0 else target_speed_mps
 

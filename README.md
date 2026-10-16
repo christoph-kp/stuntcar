@@ -12,14 +12,14 @@ Stuntcar takes its inspiration from Stunt Car Racer. It is an early prototype, m
 
 | Platform | Download | Status |
 | --- | --- | --- |
-| Windows x64 | [Download the ZIP](https://github.com/stefan-kp/stuntcar/releases/download/v0.0.0-preview.1/stuntcar-windows.zip) | Untested on Windows |
+| Windows x64 | [Download the ZIP](https://github.com/stefan-kp/stuntcar/releases/download/v0.0.0-windows-preview.2/stuntcar-windows.zip) | Untested on Windows |
 | macOS | [Run the project](#run-the-project-on-a-mac) | We develop on Mac. A separate app download is planned. |
 
 1. Download the Windows ZIP.
 2. Extract the complete ZIP into a folder.
 3. Open `Stuntcar.exe`.
 4. Select a track.
-5. Select “Voice + keys” or “Two keys”.
+5. Select “Voice + keyboard” or “Keyboard”.
 6. Select “Start drive”.
 
 Keep `Stuntcar.exe`, `Stuntcar.pck`, and the `voice` folder together. The package includes everything that voice input needs. You do not need to install Godot or Python.
@@ -32,7 +32,7 @@ We want people who cannot use a controller because of physical limitations to ha
 
 We looked at existing solutions such as VoiceAttack. For this project, we chose to build voice control into the game. The voice commands, the force of each command, and the help through curves form part of the game design.
 
-The voice input runs locally with Vosk. The game does not save microphone audio or send it to an internet service. You can also play with two keys.
+The voice input runs locally with Vosk. The game does not save microphone audio or send it to an internet service. You can also use the keyboard to steer, accelerate, and brake.
 
 ## The game
 
@@ -51,19 +51,21 @@ The car jumps without a separate command. A direction command can help the car r
 
 ## Controls
 
-The menus and voice commands use English. You can use the two keys at the same time as voice control. You do not need to hold a key.
+The menus and voice commands use English. Keyboard control also works with voice control. Tap a direction key to turn. Hold the acceleration or brake key to change speed. The car keeps its target speed after you release the key.
 
 | Action | Key | Voice command |
 | --- | --- | --- |
-| Turn left | A | `left` |
-| Turn right | D | `right` |
-| Increase speed | — | `faster` or `fast` |
-| Decrease speed | — | `slower` |
+| Turn left | A or ← | `left` |
+| Turn right | D or → | `right` |
+| Increase speed | W or ↑ | `faster` or `fast` |
+| Brake | S or ↓ | `slower` |
 | Pause | Escape | `pause` in “Two checks” mode |
 | Resume | D in the pause menu | `resume` or `continue` |
 | Select the next menu item | A | `next` |
 | Open a menu item | D | `select` |
 | Start from the start menu | Select “Start drive” | `start` |
+
+These are the default keys. Use “Settings → Change keys” to assign all four controls. The game saves the new keys after all four assignments. A custom assignment takes priority over an arrow key.
 
 One spoken word is sufficient for a command. You can say `left left left` to make three corrections. The default mode uses one recognizer. The optional “Two checks” mode checks the same speech twice. It does not need a second spoken word.
 

@@ -34,6 +34,8 @@ var current_entries: Array[String] = []
 var buttons: Array[Button] = []
 var left_name := "A"
 var right_name := "D"
+var faster_name := "W"
+var slower_name := "S"
 
 func _ready() -> void:
 	root = Control.new()
@@ -200,7 +202,7 @@ func render(session, rebind_message: String = "") -> void:
 	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
 	var curve: Dictionary = model.track.next_curve(model.distance_m)
 	var near_curve: bool = not curve.is_empty() and curve.start_m - model.distance_m <= model.input_window_m()
-	keys_label.text = tr("I18N_DRIVE_KEYS") % [left_name, right_name]
+	keys_label.text = tr("I18N_DRIVE_KEYS") % [left_name, right_name, faster_name, slower_name]
 	status_label.text = tr("I18N_DRIVE_HELP")
 	if session.voice_enabled:
 		status_label.text = tr("I18N_DRIVE_VOICE")
@@ -274,7 +276,7 @@ func render(session, rebind_message: String = "") -> void:
 	if state == "AUDIO":
 		menu_footer.text = tr("I18N_AUDIO_FOOTER")
 	if state == "CONTROL":
-		menu_footer.text = tr("I18N_CONTROL_FOOTER") % [left_name, right_name]
+		menu_footer.text = tr("I18N_CONTROL_FOOTER") % [left_name, right_name, faster_name, slower_name]
 	var entries: Array[String] = session.entries()
 	if current_menu != state or entries != current_entries:
 		for button in buttons:

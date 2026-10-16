@@ -39,6 +39,7 @@ It checks the native voice libraries and reads a real test WAV with the packaged
 It starts the exported game without a display.
 The game check loads all four tracks, their preview images, and the car.
 It checks that the car can move on each track.
+It also checks that W accelerates and S brakes in the exported game.
 A script error, a resource error, or a failed check stops the build.
 
 These checks use no microphone.

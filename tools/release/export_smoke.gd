@@ -32,6 +32,26 @@ func run() -> void:
         scene.session.restart()
         scene._physics_process(1.0 / 60.0)
         check(scene.car != null and scene.model.distance_m > 5.0, "The car and track run in the package.")
+        if i == 0:
+            scene.sync_voice_context()
+            var gas := InputEventKey.new()
+            gas.physical_keycode = KEY_W
+            gas.pressed = true
+            scene._input(gas)
+            var before: float = scene.model.speed_mps
+            scene._physics_process(0.1)
+            check(scene.model.speed_mps > before, "W accelerates in the exported game.")
+            gas.pressed = false
+            scene._input(gas)
+            var brake := InputEventKey.new()
+            brake.physical_keycode = KEY_S
+            brake.pressed = true
+            scene._input(brake)
+            before = scene.model.speed_mps
+            scene._physics_process(0.1)
+            check(scene.model.speed_mps < before, "S brakes in the exported game.")
+            brake.pressed = false
+            scene._input(brake)
     scene.queue_free()
     for i in range(3):
         await process_frame

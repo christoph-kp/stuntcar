@@ -15,31 +15,31 @@ msgid "I18N_AUDIO_TITLE"
 msgstr "Your sound."
 
 msgid "I18N_CONTROL_FOOTER"
-msgstr "%s: next item · %s: select\nYou can also click an item.\nVoice control uses your microphone. It works on this computer."
+msgstr "%s: next item · %s: select\n%s: gas · %s: brake · Hold to change speed.\nYou can also click an item."
 
 msgid "I18N_CONTROL_HELP"
 msgstr "Select your controls. You can change them in Settings."
 
 msgid "I18N_CONTROL_KEYS"
-msgstr "Two keys"
+msgstr "Keyboard"
 
 msgid "I18N_CONTROL_KEYS_ENTRY"
-msgstr "Controls: two keys"
+msgstr "Controls: keyboard"
 
 msgid "I18N_CONTROL_TITLE"
 msgstr "Your controls."
 
 msgid "I18N_CONTROL_VOICE"
-msgstr "Voice + keys"
+msgstr "Voice + keyboard"
 
 msgid "I18N_CONTROL_VOICE_ENTRY"
-msgstr "Controls: voice + keys"
+msgstr "Controls: voice + keyboard"
 
 msgid "I18N_DRIVE_HELP"
-msgstr "Press once: turn  ·  Press again: correct  ·  Esc: pause"
+msgstr "Tap to turn · Hold gas or brake · Esc: pause"
 
 msgid "I18N_DRIVE_KEYS"
-msgstr "[ %s ]   Left                 Right   [ %s ]"
+msgstr "%s / %s: turn     %s: gas     %s: brake"
 
 msgid "I18N_DRIVE_VOICE"
 msgstr "Say: left · right · faster · slower · pause"
@@ -105,10 +105,10 @@ msgid "I18N_KEYS_CHANGE"
 msgstr "Change keys"
 
 msgid "I18N_KEY_BIND_LEFT"
-msgstr "Press the new left key."
+msgstr "1 of 4 · Press the key for left."
 
 msgid "I18N_KEY_BIND_RIGHT"
-msgstr "Press a different key for right."
+msgstr "2 of 4 · Press a different key for right."
 
 msgid "I18N_KEY_BIND_TIMEOUT"
 msgstr "\nCancel in %d seconds.\nWithout input, the old keys stay.\nPress Esc to cancel now."
@@ -643,3 +643,9 @@ msgstr "Turbo boost"
 
 msgid "I18N_FULL_BRAKE"
 msgstr "Full brake · Say faster to move"
+
+msgid "I18N_KEY_BIND_FASTER"
+msgstr "3 of 4 · Press a different key for gas."
+
+msgid "I18N_KEY_BIND_SLOWER"
+msgstr "4 of 4 · Press a different key for the brake."
