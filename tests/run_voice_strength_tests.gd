@@ -46,7 +46,7 @@ func run() -> void:
 	var accelerations: Array[float] = []
 	var braking: Array[float] = []
 	var targets: Array[float] = []
-	for item in [[0.2, 24.0, 20.0, 1], [0.5, 27.0, 17.0, 2], [0.9, 30.0, 14.0, 3]]:
+	for item in [[0.2, 24.0, 20.0, 1], [0.5, 27.0, 17.0, 2], [0.9, 30.0, 0.0, 3]]:
 		reset_scene(scene)
 		command(scene, "faster", item[0])
 		targets.append(scene.model.target_speed_mps)
@@ -127,9 +127,9 @@ func run() -> void:
 	check(scene.voice_applied_count == count and is_equal_approx(scene.model.target_speed_mps, 26.0), "Ein doppeltes Paket löst keinen zusätzlichen starken Befehl aus.")
 	reset_scene(scene, 0.0, 30.0)
 	command(scene, "slower", 0.9)
-	check(is_equal_approx(scene.model.target_speed_mps, 22.0), "Ein lauter Bremsbefehl senkt das Zieltempo stark.")
+	check(is_equal_approx(scene.model.target_speed_mps, 0.0), "Ein lauter Bremsbefehl verlangt Stillstand.")
 	command(scene, "faster", 0.2)
-	check(is_equal_approx(scene.model.target_speed_mps, 24.0), "Ein leiser Gegenbefehl übernimmt keine alte hohe Stärke.")
+	check(is_equal_approx(scene.model.target_speed_mps, 14.0), "Ein leiser Gegenbefehl löst die Vollbremsung und fährt wieder an.")
 	reset_scene(scene, 0.0, 14.0)
 	command(scene, "left", 0.9)
 	reset_scene(scene, 0.0, 14.0)
@@ -140,7 +140,7 @@ func run() -> void:
 	for i in range(8): command(scene, "faster", 0.9)
 	check(scene.model.target_speed_mps == 46.0, "Laute Gasbefehle überschreiten das Höchsttempo nicht.")
 	for i in range(8): command(scene, "slower", 0.9)
-	check(scene.model.target_speed_mps == 14.0, "Laute Bremsbefehle unterschreiten das Mindesttempo nicht.")
+	check(scene.model.target_speed_mps == 0.0, "Laute Bremsbefehle halten das Auto an.")
 	scene.session.pause()
 	scene.sync_voice_context()
 	var target: float = scene.model.target_speed_mps

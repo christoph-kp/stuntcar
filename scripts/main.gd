@@ -219,7 +219,8 @@ func _process(delta: float) -> void:
 	if session == null:
 		return
 	if is_instance_valid(builder.landscape): builder.landscape.follow(car.global_position)
-	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps)
+	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
+	if session.state != "RUNNING": car.effects.suspend()
 	var message := ""
 	if binding_stage == 1:
 		message = tr("I18N_KEY_BIND_LEFT")

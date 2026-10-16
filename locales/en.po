@@ -637,3 +637,9 @@ msgstr "Input too loud. Move a little farther away and repeat the word."
 
 msgid "I18N_CALIBRATION_REPEAT_WORD"
 msgstr "Say the whole word again. Then pause briefly."
+
+msgid "I18N_TURBO_BOOST"
+msgstr "Turbo boost"
+
+msgid "I18N_FULL_BRAKE"
+msgstr "Full brake · Say faster to move"

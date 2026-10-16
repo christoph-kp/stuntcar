@@ -6,6 +6,16 @@ const CRUISE_SPEED := 22.0
 const MIN_SPEED := 14.0
 const MAX_SPEED := 46.0
 const SPEED_STEP := 5.0
+const BOOST_SECONDS := 1.2
+const BOOST_COOLDOWN := 2.8
+const BOOST_BONUS := 12.0
+const BOOST_ACCEL := 32.0
+const FULL_BRAKE_DECEL := 42.0
+var boost_remaining := 0.0
+var boost_cooldown := 0.0
+var emergency_braking := false
+var drift_angle := 0.0
+var steering_input := 0.0
 var target_speed_mps := CRUISE_SPEED
 var speed_strength := 1.0
 var turn_strength := 1.0
@@ -67,12 +77,18 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	speed_feedback_seconds = 0.0
 	jump_assist_until = -1.0
 	landing_pulse = 0.0
+	boost_remaining = 0.0
+	boost_cooldown = 0.0
+	emergency_braking = false
+	drift_angle = 0.0
+	steering_input = 0.0
 
 func request_turn(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if off_road or finished or direction not in [-1, 1]:
 		return
 	last_command = direction
 	turn_strength = VoiceStrength.multiplier(strength)
+	steering_input = float(direction) * turn_strength
 	var curve: Dictionary = track.next_curve(distance_m)
 	var jump: Dictionary = track.jump_for_correction(distance_m)
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
@@ -102,21 +118,49 @@ func input_window_m() -> float:
 
 func change_speed(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if direction not in [-1, 1] or off_road or finished: return
+	var strong := VoiceStrength.bars(strength) == 3
+	if direction < 0:
+		boost_remaining = 0.0
+		if strong or emergency_braking:
+			emergency_braking = true
+			target_speed_mps = 0.0
+			speed_feedback = tr("I18N_FULL_BRAKE")
+			speed_feedback_seconds = 2.0
+			return
+	else:
+		emergency_braking = false
 	var before := target_speed_mps
 	speed_strength = VoiceStrength.multiplier(strength)
 	target_speed_mps = clampf(target_speed_mps + direction * SPEED_STEP * speed_strength, MIN_SPEED, MAX_SPEED)
 	speed_feedback_seconds = 2.0
+	if direction > 0 and strong and boost_cooldown <= 0.0:
+		boost_remaining = BOOST_SECONDS
+		boost_cooldown = BOOST_COOLDOWN
+		speed_feedback = tr("I18N_TURBO_BOOST")
+		return
 	if is_equal_approx(before, target_speed_mps):
 		speed_feedback = tr("I18N_SPEED_MAX") if direction > 0 else tr("I18N_SPEED_MIN")
 	else:
 		speed_feedback = (tr("I18N_SPEED_FASTER") if direction > 0 else tr("I18N_SPEED_SLOWER")) % roundi(target_speed_mps * 3.6)
+
+func effective_target_speed() -> float:
+	return minf(MAX_SPEED + BOOST_BONUS, target_speed_mps + BOOST_BONUS) if boost_remaining > 0.0 else target_speed_mps
 
 func step(delta: float) -> void:
 	if off_road or finished:
 		return
 	elapsed_s += delta
 	speed_feedback_seconds = maxf(0.0, speed_feedback_seconds - delta)
-	speed_mps = move_toward(speed_mps, target_speed_mps, (18.0 if target_speed_mps < speed_mps else 10.0) * speed_strength * delta)
+	boost_remaining = maxf(0.0, boost_remaining - delta)
+	boost_cooldown = maxf(0.0, boost_cooldown - delta)
+	var desired_speed := effective_target_speed()
+	var rate := BOOST_ACCEL if boost_remaining > 0.0 else (18.0 if desired_speed < speed_mps else 10.0) * speed_strength
+	if emergency_braking: rate = FULL_BRAKE_DECEL
+	# Brakes act on the road. Preserve forward motion until the landing.
+	if desired_speed >= speed_mps or track.jump_at(distance_m).is_empty():
+		speed_mps = move_toward(speed_mps, desired_speed, rate * delta)
+	steering_input = move_toward(steering_input, 0.0, delta * 2.2)
+	var rolling_steer := clampf(speed_mps / MIN_SPEED, 0.0, 1.0)
 	correction_remaining = maxf(0.0, correction_remaining - delta)
 	landing_pulse = maxf(0.0, landing_pulse - delta * 3.0)
 	if jump_assist_until > distance_m:
@@ -127,7 +171,7 @@ func step(delta: float) -> void:
 		desired = lerp_angle(desired, target.heading, exit_blend)
 		# Scale the lateral correction around the road direction.
 		desired = lerp_angle(target.heading, desired, turn_strength)
-		heading = rotate_toward(heading, desired, deg_to_rad(65.0) * turn_strength * delta)
+		heading = rotate_toward(heading, desired, deg_to_rad(65.0) * turn_strength * rolling_steer * delta)
 	elif active_curve_id >= 0:
 		var curve: Dictionary = track.curves[active_curve_id]
 		# A command authorizes only this curve, never the rest of the road.
@@ -159,9 +203,9 @@ func step(delta: float) -> void:
 			var desired := atan2(offset.x, -offset.z)
 			var exit_blend := clampf((distance_m - float(curve.end_m) + 8.0) / 8.0, 0.0, 1.0)
 			desired = lerp_angle(desired, track.sample(curve.end_m).heading, exit_blend)
-			heading = rotate_toward(heading, desired, deg_to_rad(170.0) * turn_strength * delta)
+			heading = rotate_toward(heading, desired, deg_to_rad(170.0) * turn_strength * rolling_steer * delta)
 	elif manual_remaining > 0.0:
-		heading += float(manual_direction) * deg_to_rad(25.0) * turn_strength * minf(delta, manual_remaining)
+		heading += float(manual_direction) * deg_to_rad(25.0) * turn_strength * rolling_steer * minf(delta, manual_remaining)
 		manual_remaining = maxf(0.0, manual_remaining - delta)
 	position += track.forward(heading) * speed_mps * delta
 	var projection: Dictionary = track.project(position, distance_m)
@@ -176,6 +220,12 @@ func step(delta: float) -> void:
 	var ahead_height: float = track.flight_height(ahead.distance_m) + ahead.lateral * tan(ahead.bank)
 	pitch = atan2(ahead_height - position.y, 0.4)
 	if was_airborne and not airborne: landing_pulse = 1.0
+	var drift_target := 0.0
+	if active_curve_id >= 0 and not airborne and speed_mps > 26.0:
+		var curve: Dictionary = track.curves[active_curve_id]
+		var blend := smoothstep(curve.start_m, curve.start_m + 10.0, distance_m) * (1.0 - smoothstep(curve.end_m - 12.0, curve.end_m, distance_m))
+		drift_target = -float(curve.turn_sign) * deg_to_rad(20.0) * clampf((speed_mps - 26.0) / 20.0, 0.0, 1.0) * blend
+	drift_angle = lerpf(drift_angle, drift_target, 1.0 - exp(-6.0 * delta))
 	# No horizontal snap or lane clamp: a missed turn really leaves the deck.
 	if absf(lateral) > 3.2 or projection.gap > 3.2:
 		off_road = true

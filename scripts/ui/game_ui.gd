@@ -193,8 +193,9 @@ func render(session, rebind_message: String = "") -> void:
 	hint_detail.visible = driving
 	progress.value = model.distance_m / model.track.length_m * 100.0
 	var speed_text := tr("I18N_HUD_SPEED") % (roundi(model.speed_mps * 3.6) if driving else 0)
-	if driving and absf(model.target_speed_mps - model.speed_mps) > 0.3:
-		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(model.target_speed_mps * 3.6)]
+	var target_speed: float = model.effective_target_speed()
+	if driving and absf(target_speed - model.speed_mps) > 0.3:
+		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(target_speed * 3.6)]
 	time_label.text = tr("I18N_HUD_TIME") % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
 	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
 	var curve: Dictionary = model.track.next_curve(model.distance_m)
@@ -229,7 +230,11 @@ func render(session, rebind_message: String = "") -> void:
 			hint_detail.text = tr("I18N_JUMP_RIGHT")
 		else:
 			hint_detail.text = tr("I18N_JUMP_READY")
-	if driving and model.speed_feedback_seconds > 0.0:
+	if driving and model.emergency_braking:
+		status_label.text = tr("I18N_FULL_BRAKE")
+	elif driving and model.boost_remaining > 0.0:
+		status_label.text = tr("I18N_TURBO_BOOST")
+	elif driving and model.speed_feedback_seconds > 0.0:
 		status_label.text = model.speed_feedback
 	elif driving and model.speed_mps > 30.0:
 		status_label.text = tr("I18N_HIGH_SPEED")

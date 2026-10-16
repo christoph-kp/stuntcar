@@ -64,7 +64,7 @@ func update(model, session, delta: float) -> void:
 	var falling: bool = session.state == "FALLING"
 	# Muting keeps the engine state current. Pause freezes it.
 	if running or falling:
-		motor.step(model.speed_mps, model.target_speed_mps, model.pitch, model.airborne or falling, delta)
+		motor.step(model.speed_mps, model.effective_target_speed(), model.pitch, model.airborne or falling, delta)
 	enabled = session.sound_enabled and (running or falling)
 	hint_level = session.hint_volume
 	if not enabled:
