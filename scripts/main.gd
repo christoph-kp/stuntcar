@@ -10,6 +10,7 @@ const GameUI = preload("res://scripts/ui/game_ui.gd")
 const RaceAudio = preload("res://scripts/audio/race_audio.gd")
 const VoiceBridge = preload("res://scripts/input/voice_bridge.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
+const VoiceDiagnostics = preload("res://scripts/input/voice_diagnostics.gd")
 
 var track
 var builder: Node3D
@@ -33,6 +34,7 @@ var hinted_ids: Dictionary = {}
 var previous_state := "MENU"
 var voice
 var voice_context := ""
+var voice_diagnostics
 var voice_applied_count := 0
 var voice_action_text := tr("I18N_VOICE_NO_ACTION")
 
@@ -70,6 +72,28 @@ func _ready() -> void:
 		session.voice_enabled = true
 		voice.start(session.voice_mode)
 	sync_voice_context()
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--voice-diagnostics="):
+			if start_voice_diagnostics(argument.trim_prefix("--voice-diagnostics=")):
+				session.open_settings()
+				session.activate(5)
+				sync_voice_context()
+
+func start_voice_diagnostics(path: String) -> bool:
+	var report = VoiceDiagnostics.new()
+	if not report.start(path):
+		push_warning("Cannot open the voice report: " + path)
+		return false
+	if voice_diagnostics != null:
+		voice.packet_observed.disconnect(voice_diagnostics.observe_packet)
+		voice_diagnostics.close()
+	voice_diagnostics = report
+	voice.packet_observed.connect(report.observe_packet)
+	report.observe_state(self)
+	return true
+
+func _exit_tree() -> void:
+	if voice_diagnostics != null: voice_diagnostics.close()
 
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:
@@ -103,10 +127,12 @@ func _physics_process(delta: float) -> void:
 	sync_voice_context()
 	if voice != null:
 		voice.poll()
+		if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 		var events: Array[Dictionary] = voice.take_commands()
 		for level_event in voice.take_level_events():
 			if level_event.epoch != voice.epoch: continue
 			session.practice.capture_level(level_event.rms, level_event.peak_rms, level_event.clipped, level_event.speech_end)
+			if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 			sync_voice_context()
 		var feedback_events: Array[Dictionary] = voice.take_feedback_events()
 		if session.state == "PRACTICE":
@@ -121,11 +147,16 @@ func _physics_process(delta: float) -> void:
 				if packet.get("type", "") == "feedback":
 					session.practice.unrecognized(str(packet.heard))
 					sync_voice_context()
-				elif session.practice.receive(packet.command):
-					sync_voice_context()
-					ui.practice_panel.compass.confirm(packet.command, strength)
+				else:
+					var accepted: bool = session.practice.receive(packet.command)
+					if voice_diagnostics != null: voice_diagnostics.observe_command(packet, strength, accepted, self)
+					if accepted:
+						sync_voice_context()
+						ui.practice_panel.compass.confirm(packet.command, strength)
 				continue
-			if session.submit_voice(packet.command, strength):
+			var accepted: bool = session.submit_voice(packet.command, strength)
+			if voice_diagnostics != null: voice_diagnostics.observe_command(packet, strength, accepted, self)
+			if accepted:
 				voice_applied_count += 1
 				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
 				if packet.command in ["faster", "slower"]:
@@ -166,6 +197,7 @@ func _physics_process(delta: float) -> void:
 				race_audio.play_hint()
 	previous_state = session.state
 	sync_voice_context()
+	if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 
 func sync_voice_context() -> void:
 	if voice == null: return

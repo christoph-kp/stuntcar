@@ -4,6 +4,7 @@ const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 
 signal unavailable(message: String)
+signal packet_observed(packet: Dictionary)
 const COMMANDS := ["left", "right", "faster", "slower", "pause", "resume", "next", "select", "start"]
 var server := TCPServer.new()
 var peer: StreamPeerTCP
@@ -158,8 +159,10 @@ func accept_packet(packet: Dictionary) -> void:
 			if mode in ["direct", "checked"]: recognition_mode = mode
 			device_name = str(packet.get("device", tr("I18N_VOICE_DEFAULT_DEVICE"))).left(60)
 			status_text = tr("I18N_VOICE_READY")
+			packet_observed.emit(packet)
 		"feedback":
 			if not is_ready or packet.get("epoch", -1) != epoch: return
+			packet_observed.emit(packet)
 			var level = packet.get("level", 0.0)
 			var valid_level := typeof(level) in [TYPE_INT, TYPE_FLOAT] and is_finite(float(level))
 			input_level = clampf(float(level), 0.0, 1.0) if valid_level else 0.0
@@ -197,6 +200,7 @@ func accept_packet(packet: Dictionary) -> void:
 			var strength = packet.get("strength", VoiceStrength.NORMAL)
 			packet["strength"] = VoiceStrength.normalize(strength)
 			commands.append(packet)
+			packet_observed.emit(packet)
 
 func take_commands() -> Array[Dictionary]:
 	var result := commands.duplicate()
