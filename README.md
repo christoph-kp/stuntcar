@@ -1,6 +1,82 @@
 # Stuntcar · Erste Fahrt
 
-Ein erster Prototyp mit Godot 4.5.1. Das Spiel verwendet eigene Strecken und kostenlose 3D-Modelle.
+**Version 0.0 · Ein früher Prototyp mit Sprachsteuerung.**
+
+Stuntcar ist ein vollständig „vibe-gecodetes“ Spiel mit Godot 4.5.1.
+Das heißt: Wir beschreiben die Idee, und KI-Agenten schreiben den Spielcode.
+Wir probieren das Ergebnis aus und entwickeln es mit den Agenten weiter.
+Das Projekt entstand nebenbei als Versuch.
+
+## Warum wir das Spiel entwickeln
+
+Wir möchten Computerspiele auch für Menschen anbieten, die wegen körperlicher Einschränkungen keinen Controller bedienen können.
+Deshalb setzen wir hier auf Sprachsteuerung.
+Kurze englische Befehle steuern das Auto.
+Die eigene Lautstärke bestimmt die Stärke der Lenkung, der Beschleunigung und der Bremse.
+Eine Lenkhilfe unterstützt die Fahrt durch die Kurven.
+
+Wir arbeiten auch an Projekten wie Voice Tech.
+Diese Projekte haben einen anderen Schwerpunkt.
+Bei Stuntcar steht der Zugang zu Computerspielen im Mittelpunkt.
+Das Spiel soll dabei auch einfach Spaß machen.
+
+Der Prototyp ist ein erster Versuch.
+Wir müssen seine Bedienung noch gemeinsam mit Menschen mit unterschiedlichen körperlichen Einschränkungen prüfen.
+Die Sprachsteuerung passt nicht für jeden Menschen.
+Deshalb möchten wir weitere Möglichkeiten zur Steuerung ergänzen.
+
+## Was wir vorhaben
+
+Künftig möchten wir auch eine Gestensteuerung ermöglichen.
+Sie gehört noch nicht zu diesem Prototyp.
+
+Früher wäre ein solches Projekt für uns wahrscheinlich zu teuer gewesen.
+Eine kommerzielle Entwicklung hätte sich vermutlich nicht getragen.
+Neue Werkzeuge mit KI-Agenten verringern den Aufwand für die Entwicklung.
+Dadurch können wir auch solche Projekte beginnen und Schritt für Schritt verbessern.
+
+Version 0.0 ist noch kein fertiges Spiel.
+Wir hoffen, dass sich Stuntcar weiterentwickelt und schon jetzt Freude beim Spielen macht.
+Rückmeldungen zur Steuerung, zur Spracherkennung und zum Spielspaß helfen uns dabei.
+
+## Danke für die Modelle, Oberflächen und Geräusche
+
+Die Arbeit anderer Menschen macht diesen Prototyp möglich.
+Wir danken allen, die ihre Modelle, Oberflächen und Geräusche frei bereitstellen.
+Dieser Dank gilt ausdrücklich auch für Quellen unter CC0.
+CC0 verlangt keine Namensnennung. Wir möchten die Arbeit trotzdem sichtbar machen.
+
+| Beitrag | Unser Dank gilt | Quellen und Angaben |
+| --- | --- | --- |
+| Auto „Car Concept“ | Eric Chadwick und der Darmstadt Graphics Group; der ursprüngliche Entwurf stammt von Unity Fan | [Auto und Oberflächen](assets/quality/README.md) |
+| Bäume, Pflanzen, Felsen, Böden und Himmel | Poly Haven und allen dort genannten Urhebern | [Grundausstattung](assets/quality/README.md), [Wald](assets/forest/README.md) |
+| Motoraufnahme | qubodup | [Tonquellen](assets/audio/README.md), [Namensnennung](assets/audio/CREDITS.txt) |
+| Wald, Wind und Landungen | ktokrzysiek, SketchMan3, JaggedStone und Kenney | [Tonquellen](assets/audio/README.md) |
+
+Die Quellen sind kostenlos. Sie verwenden unterschiedliche Lizenzen.
+Die Naturmodelle und viele Geräusche nutzen CC0.
+Das Auto nutzt CC BY 4.0. Die Motoraufnahme nutzt CC BY 3.0.
+Die verlinkten Quellenangaben beschreiben auch unsere Änderungen.
+
+Wir danken außerdem den Menschen hinter Godot, Vosk und sounddevice für die Werkzeuge und die Spracherkennung.
+Die [Quellen der Sprachsteuerung](#quellen-der-sprachsteuerung) stehen weiter unten.
+
+## Verfügbarkeit
+
+Wir entwickeln und erproben das Spiel derzeit auf einem Mac.
+Dieses Repository enthält den Spielcode und die benötigten Spielinhalte.
+Die lokalen Werkzeuge und Sprachmodelle gehören nicht zum Repository.
+Die Einrichtung steht weiter unten.
+
+Ein Windows-Paket möchten wir ebenfalls anbieten.
+Es gibt derzeit noch kein fertiges Windows-Paket.
+Wir haben keinen Windows-Rechner für einen eigenen Test.
+Eine erste Windows-Fassung soll deshalb klar als ungetestet gelten.
+Rückmeldungen zum Mikrofonzugriff und zur Sprachsteuerung auf Windows helfen uns besonders.
+
+## Das Spiel
+
+Das Spiel verwendet eigene Strecken und kostenlose 3D-Modelle.
 
 Das Auto und der Asphalt aus der Qualitätsprobe stehen auf allen vier Strecken bereit.
 Die Strecke „Erste Fahrt“ führt durch einen Wald mit Tannen, Kiefern und bewachsenen Hängen.
@@ -126,7 +202,7 @@ Die drei Balken bestimmen die Wirkung eines bestätigten Fahrbefehls:
 | --- | --- | --- |
 | 1 | Kleine Lenkkorrektur, schwache Beschleunigung oder Bremse | rund 7 km/h |
 | 2 | Normale Lenkkorrektur, Beschleunigung oder Bremse | 18 km/h |
-| 3 | Große Lenkkorrektur, starke Beschleunigung oder Bremse | rund 29 km/h |
+| 3 | Große Lenkkorrektur; Turbo bei „faster“, Vollbremsung bei „slower“ | rund 29 km/h; bei der Vollbremsung Zieltempo null |
 
 „Faster“ erhöht das Zieltempo. „Slower“ senkt das Zieltempo. Wiederholte Befehle zählen einzeln. Die tatsächliche Geschwindigkeit folgt dem Zieltempo. Ein lauter Befehl verändert sie schneller. Eine Lenkbewegung auf der Geraden dauert jeweils 0,3 Sekunden. Leise Befehle ändern dabei die Richtung um etwa 3 Grad. Normale Befehle ändern sie um 7,5 Grad. Laute Befehle ändern sie um 12 Grad. In Kurven und vor Sprüngen skaliert die Korrekturhilfe ihre Wirkung entsprechend.
 
@@ -134,7 +210,15 @@ Zum Beispiel erhöht ein normal gesprochenes „faster, faster“ das Zieltempo 
 
 Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
 
-Der Bereich reicht von etwa 50 bis 166 km/h. „Slower“ hält das Auto nicht an. Für eine bewusste Pause drücke Escape. Im Modus „Two checks“ kannst du auch „pause“ sagen.
+Das normale Fahrtempo reicht von etwa 50 bis 166 km/h.
+Bei drei Balken löst „faster“ einen kurzen Turbo aus.
+Bei drei Balken löst „slower“ eine Vollbremsung bis zum Stillstand aus.
+Danach fährt das Auto mit „faster“ wieder an.
+Schnelle Kurven zeigen einen sichtbaren Drift mit Reifenrauch.
+Die Lenkhilfe bleibt dabei aktiv.
+Weitere Angaben stehen unter [Sprachsteuerung und Fahrgefühl](docs/voice-stunts.md).
+
+Für eine bewusste Pause drücke Escape. Im Modus „Two checks“ kannst du auch „pause“ sagen.
 
 Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
 
@@ -142,7 +226,18 @@ Die Sprachfahrt zeigt ein Pfeilkreuz rechts neben der Strecke. Links und rechts 
 
 Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Solange die Spitze leuchtet, zeigen die Balken die übernommene Stärke. Ein neuer Livepegel verändert diese Bestätigung nicht. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
 
-Die Balken und die Steuerung nutzen dieselben drei Pegelstufen. Das Spiel nutzt die Stärke des bestätigten Befehls. Die laufende Pegelanzeige allein steuert das Auto nicht. Die Messung nutzt die stärksten Signalabschnitte der letzten 450 Millisekunden. Sie misst keinen absoluten Schalldruck. Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige. Die persönliche Kalibrierung unter „Settings → Voice practice“ ersetzt die festen Pegelgrenzen. Ohne gültige Kalibrierung nutzt das Spiel weiter die bisherigen Grenzen. Normales Sprechen genügt für den Versuch. Stark gedehnte Wörter können die Erkennung erschweren.
+Die Balken und die Steuerung nutzen dieselben drei Pegelstufen.
+Das Spiel nutzt die Stärke des bestätigten Befehls.
+Die laufende Pegelanzeige allein steuert das Auto nicht.
+Die Messung behält den stärksten Pegel bis zur Ausgabe des Befehls.
+Sie berücksichtigt auch die letzten 450 Millisekunden für direkt aufeinanderfolgende Wörter.
+
+Die Messung zeigt keinen absoluten Schalldruck.
+Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige.
+Die persönliche Kalibrierung unter „Settings → Voice practice“ ersetzt die festen Pegelgrenzen.
+Ohne gültige Kalibrierung nutzt das Spiel weiter die bisherigen Grenzen.
+Normales Sprechen genügt für den Versuch.
+Stark gedehnte Wörter können die Erkennung erschweren.
 
 Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
 
