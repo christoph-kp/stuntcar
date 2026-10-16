@@ -61,6 +61,7 @@ class StreamingRecognizer:
         self.since = []
         self.heard = ''
         self.recent_levels = deque()
+        self.pending_peak_rms = 0.0
         self.recent_clips = deque()
 
     def confirmed(self, results):
@@ -98,9 +99,12 @@ class StreamingRecognizer:
                               self.mode == 'checked' and self.elapsed - times[index] < .049):
                 break
             event = dict(words[index])
-            # Keep the voice peak through the decoder's short confirmation delay.
-            # This is a signal level, not calibrated sound pressure.
-            event['peak_rms'] = max((level for _, level in self.recent_levels), default=0.0)
+            # Hold the spoken peak until the decoder releases the command.
+            # Its onset can precede recognition by more than the live meter window.
+            # Keep the short overlap too: the next word may already have started
+            # when the decoder releases the previous word.
+            event['peak_rms'] = max(self.pending_peak_rms,
+                                    max((level for _, level in self.recent_levels), default=0.0))
             event['strength'] = min(1.0, event['peak_rms'] / 3000)
             events.append(event)
             self.emitted.append(commands[index])
@@ -110,6 +114,7 @@ class StreamingRecognizer:
         samples = array('h', pcm)
         rms = (sum(value * value for value in samples) / max(1, len(samples))) ** .5
         self.elapsed += len(pcm) / 32000
+        self.pending_peak_rms = max(self.pending_peak_rms, rms)
         self.recent_levels.append((self.elapsed, rms))
         clipped = sum(abs(value) >= 32760 for value in samples) >= max(1, len(samples) * .02)
         self.recent_clips.append((self.elapsed, clipped))
@@ -171,6 +176,10 @@ class StreamingRecognizer:
             events += self.new_commands(words, final=True)
             status['state'] = 'recognized' if self.emitted else 'unknown'
             self.reset()
+        if events:
+            # All commands released in this block share its available measurement.
+            # Do not carry it into the next command.
+            self.pending_peak_rms = 0.0
         if events and events[-1]['command'] in {'left', 'right', 'faster', 'slower'}:
             status['direction'] = events[-1]['command']
         return events, status

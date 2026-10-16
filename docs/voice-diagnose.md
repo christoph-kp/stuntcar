@@ -36,14 +36,29 @@ Die Zahl `bars` beschreibt die berechnete Stufe.
 Die Anzeige hängt zusätzlich vom Spielzustand ab.
 Der Wert `accepted` zeigt, ob das Spiel den Befehl angenommen hat.
 
-## Bisheriger Befund
+## Bestätigter Fehler und Korrektur
 
-Die Kalibrierung speichert den höchsten Pegel des ganzen Wortes.
-Ein Befehl nutzt den höchsten Pegel der letzten 450 Millisekunden.
-Ein kontrollierter Versuch zeigt den Unterschied:
-Ein Anfangspegel von 6.000 ergibt nach einem längeren leisen Wortende einen Befehlspegel von 700.
-Diese unterschiedlichen Messungen können die Stufe senken.
-Der Versuch belegt noch nicht die Ursache an Stefans Mikrofon.
-Der Mikrofontest soll diese Ursache prüfen.
+Der Bericht vom 16. Oktober zeigt den Pegelverlust bei echten Befehlen.
+Bei einem „right“ fällt der verwendete Pegel von 5.781 auf 511.
+Bei einem „faster“ fällt er von 5.525 auf 2.237.
+Das Profil bleibt währenddessen gleich.
+Das Spiel nutzt das richtige Mikrofon und das gespeicherte Profil.
+
+Bisher behält ein Befehl nur den höchsten Pegel der letzten 450 Millisekunden.
+Die Erkennung gibt manche Befehle später aus.
+Dann fehlt der laute Anfang des Wortes in dieser Messung.
+Die Kalibrierung behält dagegen den höchsten Pegel des ganzen Wortes.
+
+Die Korrektur behält den höchsten Pegel bis zur Ausgabe des Befehls.
+Danach beginnt die Messung für den nächsten Befehl neu.
+Das kurze Messfenster bleibt zusätzlich erhalten.
+Es schützt den Anfang eines Folgewortes, das schon vor der vorherigen Erkennung beginnt.
+Eine Sprechpause oder ein Wechsel der Übung löscht einen noch nicht zugeordneten Pegel.
+Die Korrektur fügt keine Wartezeit hinzu.
+Mehrere Befehle aus demselben Verarbeitungsschritt teilen sich den gemessenen Pegel.
+Die Live-Anzeige behält ihr kurzes Messfenster.
+Die Bestätigung am Pfeil nutzt den erhaltenen Befehlspegel.
+Bei sehr schnellen Befehlen können sich die Messungen der Wörter überlappen.
+Die Messung ordnet dann nicht jeden Pegel eindeutig einem Wort zu.
 
 Die normalen Starts erstellen keinen Bericht.
