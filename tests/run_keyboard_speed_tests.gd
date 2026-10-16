@@ -61,6 +61,14 @@ func run() -> void:
     for i in range(20): tick(scene)
     check(is_zero_approx(scene.model.speed_mps) and is_zero_approx(scene.model.target_speed_mps), "A held brake stops the car.")
     key(scene, KEY_S, false)
+    scene.session.submit_voice("slower")
+    check(is_zero_approx(scene.model.target_speed_mps), "Slower does not start a car stopped with the keyboard.")
+    scene.model.speed_mps = 8.0
+    scene.model.target_speed_mps = 8.0
+    scene.session.submit_voice("slower")
+    check(scene.model.target_speed_mps < 8.0, "Slower decreases a low target set by the keyboard.")
+    scene.model.speed_mps = 0.0
+    scene.model.target_speed_mps = 0.0
     key(scene, KEY_W)
     tick(scene)
     check(scene.model.speed_mps > 0.0 and not scene.model.emergency_braking, "W starts the stopped car again.")
