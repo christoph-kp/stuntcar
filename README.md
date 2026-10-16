@@ -12,7 +12,7 @@ Stuntcar takes its inspiration from Stunt Car Racer. It is an early prototype, m
 
 | Platform | Download | Status |
 | --- | --- | --- |
-| Windows x64 | [Download the ZIP](https://github.com/stefan-kp/stuntcar/releases/download/v0.0.0-windows-preview.2/stuntcar-windows.zip) | Untested on Windows |
+| Windows x64 | [Download the ZIP](https://github.com/stefan-kp/stuntcar/releases/download/v0.0.0-preview.2/stuntcar-windows.zip) | Untested on Windows |
 | macOS | [Run the project](#run-the-project-on-a-mac) | We develop on Mac. A separate app download is planned. |
 
 1. Download the Windows ZIP.
