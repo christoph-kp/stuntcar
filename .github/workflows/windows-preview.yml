@@ -1,0 +1,73 @@
+name: Windows preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, codex/windows-preview]
+    tags: ['v*-windows-preview.*']
+    paths:
+      - '.github/workflows/windows-preview.yml'
+      - 'export_presets.cfg'
+      - 'project.godot'
+      - 'scripts/**'
+      - 'scenes/**'
+      - 'assets/**'
+      - 'tracks/**'
+      - 'locales/**'
+      - 'voice/**'
+      - 'tools/release/**'
+      - 'README.md'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            voice/requirements.txt
+            tools/release/requirements.txt
+      - name: Install voice and build tools
+        run: |
+          python -m pip install -r voice/requirements.txt -r tools/release/requirements.txt
+          python voice/setup.py --with-german
+      - name: Check speech input
+        run: python -m unittest discover -s voice/tests
+      - name: Install Godot 4.5.1 and Windows export template
+        run: python tools/release/install_godot.py
+      - name: Build and check the portable package
+        run: python tools/release/build_windows.py --godot .tools/export-toolchain/Godot_v4.5.1-stable_win64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stuntcar-windows-${{ github.sha }}
+          path: exports/stuntcar-windows.zip
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: stuntcar-windows-${{ github.sha }}
+      - name: Publish the tester package
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: >-
+          gh release create "$RELEASE_TAG" stuntcar-windows.zip
+          --title "Stuntcar 0.0 - Windows preview"
+          --prerelease
+          --notes "Portable Windows x64 prototype. Extract the complete ZIP and start Stuntcar.exe. Includes local English speech input. Automated package checks passed; a human Windows play test is pending. See WINDOWS-TEST.txt inside the package."

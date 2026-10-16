@@ -105,8 +105,11 @@ func _ready() -> void:
 
 func texture(path: String) -> Texture2D:
 	if not textures.has(path):
-		var img := Image.load_from_file(path)
-		textures[path] = null if img == null or img.is_empty() else ImageTexture.create_from_image(img)
+		if ResourceLoader.exists(path):
+			textures[path] = load(path) as Texture2D
+		else:
+			var img := Image.load_from_file(path)
+			textures[path] = null if img == null or img.is_empty() else ImageTexture.create_from_image(img)
 	return textures[path]
 
 func render(value, left_key: String, right_key: String, speech_status: String = "") -> void:

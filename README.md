@@ -1,387 +1,219 @@
-# Stuntcar · Erste Fahrt
+# Stuntcar · First Drive
 
-**Version 0.0 · Ein früher Prototyp mit Sprachsteuerung.**
+**Version 0.0 · An early game prototype with voice control.**
 
-Stuntcar ist ein vollständig „vibe-gecodetes“ Spiel mit Godot 4.5.1.
-Das heißt: Wir beschreiben die Idee, und KI-Agenten schreiben den Spielcode.
-Wir probieren das Ergebnis aus und entwickeln es mit den Agenten weiter.
-Das Projekt entstand nebenbei als Versuch.
+Stuntcar is a fully “vibe-coded” game, made as a side project with Godot 4.5.1.
+We describe the idea, and AI agents write the game code.
+We test the result and work with the agents to change it.
 
-## Warum wir das Spiel entwickeln
+## Why we make this game
 
-Wir möchten Computerspiele auch für Menschen anbieten, die wegen körperlicher Einschränkungen keinen Controller bedienen können.
-Deshalb setzen wir hier auf Sprachsteuerung.
-Kurze englische Befehle steuern das Auto.
-Die eigene Lautstärke bestimmt die Stärke der Lenkung, der Beschleunigung und der Bremse.
-Eine Lenkhilfe unterstützt die Fahrt durch die Kurven.
+We want to make computer games available to people who cannot use a controller because of physical limitations.
+This is why we chose voice control.
+Short English commands control the car.
+Your voice level sets the force of a turn, the acceleration, and the brake.
+A system helps you turn through each curve after you give the correct direction.
 
-Wir arbeiten auch an Projekten wie Voice Tech.
-Diese Projekte haben einen anderen Schwerpunkt.
-Bei Stuntcar steht der Zugang zu Computerspielen im Mittelpunkt.
-Das Spiel soll dabei auch einfach Spaß machen.
+We also work on projects such as Voice Tech.
+Those projects have a different focus.
+Our goal here is access to computer games.
+We also want Stuntcar to be fun for anyone who wants to play it.
 
-Der Prototyp ist ein erster Versuch.
-Wir müssen seine Bedienung noch gemeinsam mit Menschen mit unterschiedlichen körperlichen Einschränkungen prüfen.
-Die Sprachsteuerung passt nicht für jeden Menschen.
-Deshalb möchten wir weitere Möglichkeiten zur Steuerung ergänzen.
+This prototype needs tests with people who have different physical limitations.
+Voice control will not meet every person's needs.
+We want to add other ways to control the game.
 
-## Was wir vorhaben
+## What comes next
 
-Künftig möchten wir auch eine Gestensteuerung ermöglichen.
-Sie gehört noch nicht zu diesem Prototyp.
+We plan to add gesture control.
+This feature is not in the current prototype.
 
-Früher wäre ein solches Projekt für uns wahrscheinlich zu teuer gewesen.
-Eine kommerzielle Entwicklung hätte sich vermutlich nicht getragen.
-Neue Werkzeuge mit KI-Agenten verringern den Aufwand für die Entwicklung.
-Dadurch können wir auch solche Projekte beginnen und Schritt für Schritt verbessern.
+In the past, a project like this would probably have cost too much for us to develop.
+A commercial project would probably not have covered that cost.
+New tools with AI agents reduce the work that we need to do.
+These tools let us start projects that we could not otherwise make.
 
-Version 0.0 ist noch kein fertiges Spiel.
-Wir hoffen, dass sich Stuntcar weiterentwickelt und schon jetzt Freude beim Spielen macht.
-Rückmeldungen zur Steuerung, zur Spracherkennung und zum Spielspaß helfen uns dabei.
+Version 0.0 is an early prototype.
+We hope that it will develop further and that you will already have fun with it.
+Tell us what works, what fails, and what makes the game fun.
 
-## Danke für die Modelle, Oberflächen und Geräusche
+## Windows test version
 
-Die Arbeit anderer Menschen macht diesen Prototyp möglich.
-Wir danken allen, die ihre Modelle, Oberflächen und Geräusche frei bereitstellen.
-Dieser Dank gilt ausdrücklich auch für Quellen unter CC0.
-CC0 verlangt keine Namensnennung. Wir möchten die Arbeit trotzdem sichtbar machen.
+We are preparing a portable Windows x64 package for a tester.
+We use a Windows computer on GitHub to build the package and run automatic checks.
+A tester will then check the game, the microphone, and the voice control on a real Windows computer.
+We do not yet claim that this prototype works on every Windows computer.
 
-| Beitrag | Unser Dank gilt | Quellen und Angaben |
+The [Windows build page](https://github.com/stefan-kp/stuntcar/actions/workflows/windows-preview.yml) has the build results and test packages.
+The [release page](https://github.com/stefan-kp/stuntcar/releases) has the published test packages.
+Use a Windows ZIP file from a release when one is available.
+The GitHub “Source code” ZIP contains the project files. It is not a ready-to-run game.
+
+1. Download `stuntcar-windows.zip`.
+2. Extract the complete ZIP into a folder.
+3. Keep `Stuntcar.exe`, `Stuntcar.pck`, and the `voice` folder together.
+4. Open `Stuntcar.exe`.
+5. Select a track.
+6. Select “Voice + keys” or “Two keys”.
+7. Select “Start drive”.
+
+The portable package includes Python, the voice libraries, and the English voice model.
+You do not need to install Godot or Python.
+Read `WINDOWS-TEST.txt` in the package for the microphone setup and the test steps.
+The [Windows test guide](docs/windows-testing.md) also has those steps.
+
+## The game
+
+The game has four tracks, jumps, banked curves, and a car with lights and shadows.
+There is no time limit.
+After a fall, the car starts again before the curve.
+Loops are not yet available.
+
+| Track | Length | Main features |
 | --- | --- | --- |
-| Auto „Car Concept“ | Eric Chadwick und der Darmstadt Graphics Group; der ursprüngliche Entwurf stammt von Unity Fan | [Auto und Oberflächen](assets/quality/README.md) |
-| Bäume, Pflanzen, Felsen, Böden und Himmel | Poly Haven und allen dort genannten Urhebern | [Grundausstattung](assets/quality/README.md), [Wald](assets/forest/README.md) |
-| Motoraufnahme | qubodup | [Tonquellen](assets/audio/README.md), [Namensnennung](assets/audio/CREDITS.txt) |
-| Wald, Wind und Landungen | ktokrzysiek, SketchMan3, JaggedStone und Kenney | [Tonquellen](assets/audio/README.md) |
+| First Drive | 940 m | Forest, two large jumps, three banked curves |
+| High Drive | 1,250 m | Mountain pass, five curves, one jump |
+| Jump Track | 1,350 m | Canyon, five curves, two jumps |
+| Coast Drive | 600 m | Wet coast, three curves, one hill |
 
-Die Quellen sind kostenlos. Sie verwenden unterschiedliche Lizenzen.
-Die Naturmodelle und viele Geräusche nutzen CC0.
-Das Auto nutzt CC BY 4.0. Die Motoraufnahme nutzt CC BY 3.0.
-Die verlinkten Quellenangaben beschreiben auch unsere Änderungen.
+Give one direction command before each curve.
+The system then helps the car turn through that curve.
+Another command in the same direction moves the car towards the inside of the curve.
+A late command gives less time for a correction.
+A command in the wrong direction turns the car in that direction.
 
-Wir danken außerdem den Menschen hinter Godot, Vosk und sounddevice für die Werkzeuge und die Spracherkennung.
-Die [Quellen der Sprachsteuerung](#quellen-der-sprachsteuerung) stehen weiter unten.
+The car jumps without a separate command.
+A direction command can help the car reach the centre of the track before it lands.
+The flight follows a fixed path.
+The car shows a drift effect in fast curves.
+The camera stays level with the horizon.
 
-## Verfügbarkeit
+## Controls
 
-Wir entwickeln und erproben das Spiel derzeit auf einem Mac.
-Dieses Repository enthält den Spielcode und die benötigten Spielinhalte.
-Die lokalen Werkzeuge und Sprachmodelle gehören nicht zum Repository.
-Die Einrichtung steht weiter unten.
+The menus and the voice commands use English.
+You can use the two keys at the same time as voice control.
+You do not need to hold a key.
 
-Ein Windows-Paket möchten wir ebenfalls anbieten.
-Es gibt derzeit noch kein fertiges Windows-Paket.
-Wir haben keinen Windows-Rechner für einen eigenen Test.
-Eine erste Windows-Fassung soll deshalb klar als ungetestet gelten.
-Rückmeldungen zum Mikrofonzugriff und zur Sprachsteuerung auf Windows helfen uns besonders.
-
-## Das Spiel
-
-Das Spiel verwendet eigene Strecken und kostenlose 3D-Modelle.
-
-Das Auto und der Asphalt aus der Qualitätsprobe stehen auf allen vier Strecken bereit.
-Die Strecke „Erste Fahrt“ führt durch einen Wald mit Tannen, Kiefern und bewachsenen Hängen.
-Moosige Felsen, Farne und Gras ergänzen den Waldboden.
-Die Alpen verwenden weiterhin die Kiefern aus der Probe.
-Das Spiel verwendet jetzt den Grafikmodus Forward+ für Licht, Reflexionen und Schatten.
-Die Steuerung, die Sprünge und die Steilkurven bleiben erhalten.
-Die übrigen Landschaften verwenden weiterhin das erste Paket.
-Die Quellen und Nutzungsrechte stehen in [assets/quality/README.md](assets/quality/README.md).
-Die zusätzlichen Waldmodelle stehen unter der Lizenz CC0. Ihre Quellen stehen in [assets/forest/README.md](assets/forest/README.md).
-
-Das Spiel enthält vier Strecken mit dem neuen Auto und vier Landschaften:
-
-| Strecke | Länge | Inhalt | Dauer bei normalem Tempo |
-|---|---|---|---|
-| Erste Fahrt | 940 m | Wald, zwei große Sprünge und drei Steilkurven | etwa 43 Sekunden |
-| Höhenfahrt | 1250 m | Alpenpass, fünf Kurven und ein Sprung | etwa 57 Sekunden |
-| Sprungstrecke | 1350 m | Felsenschlucht, fünf Kurven und zwei Sprünge | etwa 62 Sekunden |
-| Küstenfahrt | 600 m | Regenküste, drei Kurven und eine Kuppe | etwa 27 Sekunden |
-
-Das Auto startet mit etwa 79 km/h. Mit Sprache kannst du das Tempo ändern. Eine laute Vollbremsung hält das Auto an. Mit „faster“ fährt es wieder an. Die Sprünge brauchen keine zusätzliche Taste.
-
-## Start auf diesem Mac
-
-1. Öffne `Starten.command` im Finder mit einem Doppelklick.
-2. Wähle eine Strecke anhand der Vorschaubilder.
-3. Nutze A für den nächsten Eintrag und D für die Auswahl. Du kannst auch klicken.
-4. Wähle beim ersten Start danach „Two keys“ oder „Voice + keys“.
-5. Wähle „Start drive“.
-6. Drücke vor der Kurve einmal die passende Richtungstaste.
-
-Bei jedem Start erscheint zuerst die Streckenauswahl. Das Spiel merkt sich die letzte Strecke und die Steuerung. Bei späteren Starts brauchst du die Steuerung nicht erneut zu wählen. Unter „Settings → Controls“ kannst du die Steuerung jederzeit ändern. Die Tasten bleiben auch bei Sprache verfügbar.
-
-Im Hauptordner startet nur `Starten.command` das Spiel.
-Die weiteren Werkzeuge liegen unter `tools/macos/`.
-Die Übersicht steht in [tools/macos/README.md](tools/macos/README.md).
-
-Godot liegt für diesen Mac im Projektordner `.tools`. Das Spiel braucht keine Internetverbindung.
-
-Für Änderungen öffne `project.godot` mit Godot 4.5.1. Starte das Projekt dort mit F5.
-
-Auf einem anderen Rechner brauchst du Godot. Importiere dort `project.godot`. Die Datei `Starten.command` gilt nur für macOS.
-
-## Die Tasten
-
-| Zustand | A | D |
-|---|---|---|
-| Fahrt | Links lenken | Rechts lenken |
-| Menü | Nächsten Eintrag wählen | Den Eintrag öffnen |
-
-Du musst keine Taste halten. Gehaltene Tasten erzeugen keine weiteren Befehle. Gleichzeitige Tastendrücke erzeugen keinen Lenkbefehl.
-
-Ein erneuter Druck auf dieselbe Richtungstaste korrigiert weiter. Er pausiert die Fahrt nicht. Escape und der Sprachbefehl „Pause“ pausieren die Fahrt bewusst.
-
-Im Pausenmenü setzt D die Fahrt fort. A wählt zum Beispiel „Restart“ aus. D startet dann neu.
-
-Beim Wechsel zu einem anderen Fenster pausiert das Spiel.
-
-## Deine Richtung zählt
-
-Das Auto beschleunigt selbstständig. Ohne Eingabe fährt es geradeaus. In einer Kurve fährt es dann über den Rand.
-
-Ein Hinweis zeigt die nächste Richtung. Eine passende Eingabe aktiviert die Lenkhilfe für diese eine Kurve. Die Lenkhilfe übernimmt die Genauigkeit.
-
-In der Kurve kommt das Auto nahe an den äußeren Rand. Ein weiterer passender Tastendruck zieht es nach innen. Dafür musst du keine Taste halten.
-
-Nach der Kurve endet die Lenkhilfe. Die nächste Kurve braucht eine neue Eingabe. Eine falsche Eingabe lenkt tatsächlich in die falsche Richtung.
-
-Eine spätere Eingabe lässt weniger Platz für die Korrektur. Die Lenkhilfe kann nicht jede Lage retten.
-
-Nach einem Fall startet das Auto selbstständig auf der Geraden vor der Kurve. Es fährt sofort mit vollem Tempo weiter. Es gibt kein Bestätigungsmenü. Das Spiel hat keine Zeitgrenze.
-
-## Die Einstellungen
-
-- Wähle drei, fünf oder acht Sekunden Vorlauf für den Hinweis.
-- Schalte den Hinweiston ein oder aus.
-- Weise zwei andere Tasten zu.
-
-Die neue Tastenbelegung gilt erst nach zwei verschiedenen Zuordnungen. Ohne Eingabe bricht die Zuordnung nach 30 Sekunden ab. Die alten Tasten bleiben dann erhalten.
-
-Godot speichert die Einstellungen im eigenen Benutzerdatenordner. Das Spiel zeichnet keine Eingaben auf.
-
-## Sprache der Oberfläche
-
-Das Spiel zeigt seine Menüs, Fahrhinweise, Streckentexte und Fehlermeldungen auf Englisch. Die Texte liegen in `locales/en.po`. Godot lädt diese Datei direkt. Die Anleitung für weitere Sprachen steht in [locales/README.md](locales/README.md). Die Sprache der Oberfläche ändert die Erkennung der Sprachbefehle nicht.
-
-## Mit Sprache spielen
-
-1. Öffne `Starten.command` und wähle eine Strecke. Wähle danach beim ersten Start „Voice + keys“.
-2. Erlaube den Mikrofonzugriff, falls macOS danach fragt.
-3. Warte auf „Microphone active · English“ am unteren Rand.
-4. Sage „Start“.
-
-Du kannst die Sprache unter „Settings → Controls“ einschalten. Wähle dort „Voice + keys“. Im Pausenmenü findest du die Steuerung auch direkt.
-
-Die Spracheingabe nutzt das Standardmikrofon des Macs. Wähle bei Bedarf unter „Systemeinstellungen → Ton → Eingabe“ ein anderes Mikrofon.
-
-| Wirkung | Englischer Befehl |
-|---|---|
-| Links korrigieren | left |
-| Rechts korrigieren | right |
-| Tempo erhöhen | faster, fast, gas, accelerate, throttle |
-| Tempo senken | slower, brake, brakes |
-| Fahrt pausieren | pause |
-| Fahrt fortsetzen | continue, resume |
-| Fahrt starten | start |
-| Nächsten Menüeintrag wählen | next |
-| Menüeintrag öffnen | select |
-
-Die Spracheingabe erkennt jetzt Englisch. Deutsche Sprachbefehle entfallen vorerst. Die Oberfläche erscheint auf Englisch.
-
-Du kannst „left left left left left“ direkt hintereinander sagen. Ein gesprochenes Wort genügt für einen Befehl. Der neue Standard nutzt einen Erkenner ohne zusätzliche Bestätigung. Die Einstellung „Two checks“ nutzt zwei Erkenner für dieselbe Äußerung. Sie verlangt kein zweites gesprochenes Wort.
-
-Die Ergebnisse „fasta“ und „foster“ gelten ebenfalls als „faster“. Bei anderen unbekannten Fahrwörtern erlaubt der Vergleich höchstens ein anderes, fehlendes oder zusätzliches Zeichen. Der Treffer muss eindeutig zu einem Fahrbefehl passen. „Fast“ und „faster“ gelten als ein Fahrbefehl. Menübefehle bleiben exakt. Der Vergleich ersetzt keine vollständigen fremden Sätze durch einen Befehl.
-
-Der Vergleich ergänzt keine Wartezeit. Der technische Nachweis steht in `docs/levenshtein-command-check.txt`. Beide Modi geben Fahrbefehle bereits während des Sprechens weiter. Menüs warten auf das Ende der Äußerung.
-
-Ein erneut gesprochenes „left“ oder „right“ korrigiert erneut. Die Lautstärke bestimmt die Stärke der Korrektur. Die Tasten nutzen weiter die normale Stärke.
-
-Die drei Balken bestimmen die Wirkung eines bestätigten Fahrbefehls:
-
-| Balken | Wirkung | Änderung des Zieltempos |
+| Action | Key | Voice command |
 | --- | --- | --- |
-| 1 | Kleine Lenkkorrektur, schwache Beschleunigung oder Bremse | rund 7 km/h |
-| 2 | Normale Lenkkorrektur, Beschleunigung oder Bremse | 18 km/h |
-| 3 | Große Lenkkorrektur; Turbo bei „faster“, Vollbremsung bei „slower“ | rund 29 km/h; bei der Vollbremsung Zieltempo null |
+| Turn left | A | `left` |
+| Turn right | D | `right` |
+| Increase speed | — | `faster` or `fast` |
+| Decrease speed | — | `slower` |
+| Pause | Escape | `pause` in “Two checks” mode |
+| Resume | D in the pause menu | `resume` or `continue` |
+| Select the next menu item | A | `next` |
+| Open a menu item | D | `select` |
+| Start from the start menu | Select “Start drive” | `start` |
 
-„Faster“ erhöht das Zieltempo. „Slower“ senkt das Zieltempo. Wiederholte Befehle zählen einzeln. Die tatsächliche Geschwindigkeit folgt dem Zieltempo. Ein lauter Befehl verändert sie schneller. Eine Lenkbewegung auf der Geraden dauert jeweils 0,3 Sekunden. Leise Befehle ändern dabei die Richtung um etwa 3 Grad. Normale Befehle ändern sie um 7,5 Grad. Laute Befehle ändern sie um 12 Grad. In Kurven und vor Sprüngen skaliert die Korrekturhilfe ihre Wirkung entsprechend.
+One spoken word is sufficient for a command.
+You can say `left left left` to make three corrections.
+The default voice mode uses one recognizer and adds no second check.
+“Two checks” uses two recognizers for the same speech. It does not need a second spoken word.
 
-Zum Beispiel erhöht ein normal gesprochenes „faster, faster“ das Zieltempo von 79 auf 115 km/h. „Slower, slower“ senkt es wieder auf 79 km/h. Die Anzeige zeigt das aktuelle Tempo und das Zieltempo.
+The arrow display shows the command and its force.
+The upper arrow increases speed. The lower arrow applies the brake.
 
-Bei hohem Tempo kommt das Auto stärker an den äußeren Kurvenrand. Eine weitere kurze Korrektur zieht es wieder nach innen. Alternativ kannst du vor der Kurve langsamer fahren. Die Kamera erweitert bei hohem Tempo den Blick. Der Horizont bleibt ruhig.
+| Bars | Turn | `faster` | `slower` |
+| --- | --- | --- | --- |
+| 1 | Small correction | Small speed increase | Small speed decrease |
+| 2 | Normal correction | Normal speed increase | Normal speed decrease |
+| 3 | Large correction | Short turbo boost | Full brake to a stop |
 
-Das normale Fahrtempo reicht von etwa 50 bis 166 km/h.
-Bei drei Balken löst „faster“ einen kurzen Turbo aus.
-Bei drei Balken löst „slower“ eine Vollbremsung bis zum Stillstand aus.
-Danach fährt das Auto mit „faster“ wieder an.
-Schnelle Kurven zeigen einen sichtbaren Drift mit Reifenrauch.
-Die Lenkhilfe bleibt dabei aktiv.
-Weitere Angaben stehen unter [Sprachsteuerung und Fahrgefühl](docs/voice-stunts.md).
+Say `faster` to move again after a full brake.
+A quiet command is sufficient.
+A brake command stops an active turbo boost.
+The [voice control notes](docs/voice-stunts.md) have more details.
 
-Für eine bewusste Pause drücke Escape. Im Modus „Two checks“ kannst du auch „pause“ sagen.
+## Set your voice levels
 
-Bei einem erneuten Versuch startet das Auto wieder mit etwa 79 km/h.
+1. Open “Settings”.
+2. Open “Voice practice”.
+3. Select “Calibrate voice”.
+4. Say `okay` with your normal voice.
+5. Say `okay` more loudly at the next step.
+6. Say `okay` very loudly at the last step.
+7. Complete the word test that follows.
 
-Die Sprachfahrt zeigt ein Pfeilkreuz rechts neben der Strecke. Links und rechts zeigen die Lenkrichtung. Der obere Pfeil steht für Beschleunigen. Der untere Pfeil steht für Bremsen. Er steht nicht für eine Rückwärtsfahrt.
+The display tells you when to speak again.
+The word test asks for `left`, `right`, `fast`, and `slower`.
+It shows how many commands the game recognized.
+It does not train or change the voice model.
 
-Jeder Pfeil enthält drei Balken. Ein leiser Befehl füllt einen Balken. Ein mittlerer Befehl füllt zwei Balken. Ein lauter Befehl füllt drei Balken. Die Pfeilspitze leuchtet erst, wenn das Spiel den Befehl übernimmt. Solange die Spitze leuchtet, zeigen die Balken die übernommene Stärke. Ein neuer Livepegel verändert diese Bestätigung nicht. Wiederholte Wörter bestätigen den Pfeil erneut. Die Anzeige klingt danach ab. Erkannte Wörter erscheinen nicht als Text.
+The game saves the voice levels for your microphone.
+It also saves the keys, the control mode, the track, and the sound levels.
+You do not need to set your voice levels after each start.
+A different microphone needs a new check of the voice levels.
 
-Die Balken und die Steuerung nutzen dieselben drei Pegelstufen.
-Das Spiel nutzt die Stärke des bestätigten Befehls.
-Die laufende Pegelanzeige allein steuert das Auto nicht.
-Die Messung behält den stärksten Pegel bis zur Ausgabe des Befehls.
-Sie berücksichtigt auch die letzten 450 Millisekunden für direkt aufeinanderfolgende Wörter.
+Voice input runs locally with Vosk.
+The game does not save microphone audio or send it to an internet service.
+Background noise, microphone settings, and the distance from the microphone can change the result.
 
-Die Messung zeigt keinen absoluten Schalldruck.
-Der Abstand zum Mikrofon und die Mikrofoneinstellung beeinflussen die Anzeige.
-Die persönliche Kalibrierung unter „Settings → Voice practice“ ersetzt die festen Pegelgrenzen.
-Ohne gültige Kalibrierung nutzt das Spiel weiter die bisherigen Grenzen.
-Normales Sprechen genügt für den Versuch.
-Stark gedehnte Wörter können die Erkennung erschweren.
+## Run the project on a Mac
 
-Die Erkennung verarbeitet intern kürzere Audioabschnitte. Der Vergleich mit der bisherigen Erkennung steht in `docs/vosk-english-vergleich.txt`. Die Messwerte stehen in `docs/vosk-english-latency.json`.
+The files under `.tools` are local tools. Git does not include them.
+A new project copy needs Godot 4.5.1.
+Voice input also needs Python 3.11 or later for the first setup.
 
-Fahrbefehle verändern kein Menü. Nutze dort „next“ und „select“. Sprache und Tasten bleiben gleichzeitig verfügbar.
+1. Open `project.godot` with Godot 4.5.1.
+2. Open `tools/macos/Sprache einrichten.command` to set up voice input.
+3. Run the project from Godot with F5.
 
-## Die Sprachübung
+The first voice setup needs an internet connection.
+After setup, voice input works without an internet connection.
+Allow microphone access when macOS asks for it.
 
-Öffne „Settings → Voice practice“. Wähle „Calibrate voice“. Sage zuerst „okay“ mit deiner normalen Stimme. Sage „okay“ danach lauter. Sage „okay“ zuletzt sehr laut. Mache nach jedem Wort eine kurze Pause.
+`Starten.command` starts the game when Godot is in `.tools/Godot.app` or `/Applications/Godot.app`.
+It is the only game start file in the main folder.
+The [Mac tools guide](tools/macos/README.md) describes the other tools.
 
-Die Balken steigen von links nach rechts an.
+## Thanks to the asset creators
 
-Die Anzeige passt ihren Maßstab an die normale Stimme an. Der normale Pegel füllt ungefähr ein Drittel der Balken. Die Bestätigung behält diesen Pegel bei. Die zweite gespeicherte Stufe füllt zwei Drittel. Erst die dritte gespeicherte Stufe füllt alle Balken.
+Other people's work makes this prototype possible.
+We thank everyone who shares models, surface images, and sounds.
+This includes the creators who use CC0, even when they do not require a credit.
+We want to show our thanks for their work.
 
-Wenn die erste Messung den bisherigen Maßstab überschreitet, passt die Anzeige die Empfindlichkeit an. Danach fordert sie erneut zum normalen Sprechen auf. Ein übersteuerter Mikrofoneingang löst eine Aufforderung zum leiseren Eingang aus. Diese Messung zählt nicht. Die gespeicherten Werte bleiben bis zum erfolgreichen Abschluss erhalten.
+| Part | Creators | Source and license details |
+| --- | --- | --- |
+| Car Concept | Eric Chadwick and Darmstadt Graphics Group; original design by Unity Fan | [Car and surfaces](assets/quality/README.md), CC BY 4.0 |
+| Trees, plants, rocks, ground, road, and sky | Poly Haven and the creators named in the source lists | [Base assets](assets/quality/README.md), [forest assets](assets/forest/README.md), CC0 |
+| Engine sound | qubodup | [Audio credits](assets/audio/CREDITS.txt), CC BY 3.0 |
+| Forest, wind, and impact sounds | ktokrzysiek, SketchMan3, JaggedStone, and Kenney | [Audio sources](assets/audio/README.md), CC0 |
 
-Die Balken zeigen den Mikrofonpegel im persönlichen Maßstab. Die kurze Linie darunter zeigt den Fortschritt der Aufnahme. Jede Stufe braucht mehrere kurze Pegelmessungen. Die Stufe zählt erst am Wortende.
+The sources are free of charge. They use different licenses.
+The source lists give the creator names, source links, and our changes.
+The game packages include the asset credits and license files.
 
-Ein abgeschlossenes kurzes Wort genügt ab zwei gültigen Messungen. Ein zu kurzes Wort fordert zur Wiederholung auf. Eine kurze Bestätigung trennt die Stufen. Bei fast gleichen Pegeln fordert die Seite zum lauteren Sprechen auf.
+We also thank the people who make these tools and voice libraries:
 
-Das Spiel speichert erst nach allen drei Stufen ein neues Profil. Ein Abbruch behält das bisherige Profil. Das Profil gehört zum Namen des Mikrofons. Ein anderes Mikrofon verwendet die bisherigen festen Grenzen.
+- [Godot](https://godotengine.org/): the game engine.
+- [Vosk](https://alphacephei.com/vosk/): local speech recognition.
+- [Vosk models](https://alphacephei.com/vosk/models): the small English model 0.15, under Apache 2.0.
+- [sounddevice](https://python-sounddevice.readthedocs.io/): microphone access.
 
-Die drei persönlichen Stufen entsprechen einem, zwei und drei Balken. Sie bestimmen auch die Stärke beim Lenken, Beschleunigen und Bremsen. Das Spiel speichert keine Tonaufnahme.
+## Development
 
-![Die persönliche Lautstärke-Kalibrierung mit künstlichem Testpegel](docs/voice-calibration.png)
+The project uses Godot 4.5.1 and the Forward+ graphics mode.
+The English interface text is in `locales/en.po`.
+The [language guide](locales/README.md) describes how to add another interface language.
+The [track guide](tracks/README.md) describes how to add a track.
+Some of the detailed project notes are still in German.
 
-Nach der Kalibrierung beginnt automatisch die Wortübung. Sage das angezeigte Wort jeweils einmal. Die Übung fragt „left“, „right“, „fast“ und „slower“ jeweils dreimal ab. Das Wort steht direkt am passenden Pfeil.
-
-Für jeden Versuch bleiben vier Sekunden. Nach jeder Antwort blendet das Wort aus. Die kurze Pause dauert 0,8 Sekunden. Danach blendet die nächste Aufforderung ein. Die Pause nimmt keine weiteren Antworten an.
-
-Das Pfeilkreuz bestätigt den erkannten Fahrbefehl. Ein Haken zeigt eine richtige Antwort. Ein Kreuz zeigt eine falsche oder nicht erkannte Antwort. Während der Übung erscheint nur das gefragte Wort mit der Versuchsnummer. Die ausführliche Trefferzahl erscheint am Ende.
-
-Sie zählt falsche Befehle und nicht erkannte Antworten getrennt. Eine fehlende Antwort zählt nach vier Sekunden als nicht erkannt. Der Prozentwert gilt für diese Übungsrunde.
-
-Die Taste „Mode“ wechselt zwischen einem Erkenner und zwei Erkennern. Die Seite behält das letzte Ergebnis beider Modi bis zum Spielende. Eine neue Runde ersetzt das Ergebnis ihres Modus. Die Moduswahl gilt auch für die Fahrt. Das Spiel speichert diese Wahl.
-
-Die Übung prüft deine Stimme. Sie verändert das Sprachmodell nicht. Sie speichert keine Tonaufnahme. Die Übung greift auch mit der Tastensteuerung auf das Mikrofon zu. Beim Verlassen beendet sie diesen zusätzlichen Zugriff. Escape führt zurück zu den Einstellungen.
-
-![Die Sprachübung in der Spielszene, mit künstlichem Testbefehl](docs/voice-practice.png)
-
-Der Zeitvergleich steht in `docs/voice-direct-comparison.txt`. Er nutzt künstliche Tonproben. Er ersetzt keine Messung mit deinem Mikrofon. Der einzelne Erkenner erkennt in diesen Proben „brake“ und „pause“ nicht zuverlässig. Nutze „slower“ und Escape. Für den Vergleich bleibt „Two checks“ verfügbar.
-
-## Mikrofon und Einrichtung
-
-Das Spiel startet die Spracheingabe nach der Wahl „Voice + keys“. Es speichert diese Wahl für den nächsten Start. Die Wahl „Two keys“ beendet den Mikrofonzugriff.
-
-Das Spiel speichert die Steuerung, die Tasten, die Strecke, die Tonlautstärken und die persönliche Sprachkalibrierung.
-Beim normalen Start nutzt es die gespeicherten Werte.
-Du musst die Kalibrierung nicht bei jedem Start wiederholen.
-Unter „Settings → Voice practice“ kannst du sie bei Bedarf neu durchführen.
-
-Die Erkennung läuft lokal mit Vosk. Sie sendet keine Tonaufnahmen ins Internet. Sie speichert keine Mikrofonaufnahmen.
-
-Auf diesem Mac sind die Bibliotheken und Sprachmodelle bereits eingerichtet. Ein anderer Mac braucht einmalig Python 3.11 oder neuer. Öffne dort `tools/macos/Sprache einrichten.command`. Diese Einrichtung braucht eine Internetverbindung. Danach funktioniert die Sprachsteuerung ohne Internet.
-
-Die Einrichtung lädt nur das englische Modell. Alte zweisprachige Vergleichstests brauchen zusätzlich das deutsche Modell. `python3 voice/setup.py --with-german` richtet auch dieses Modell ein.
-
-Die Sprachmodelle liegen unter `.tools/voice-models`. Die Hilfsprogramme liegen unter `.tools/voice-env`. Diese lokalen Dateien gehören nicht zum Spielcode.
-
-Falls das Mikrofon fehlt, prüfe „Systemeinstellungen → Datenschutz & Sicherheit → Mikrofon“. Erlaube dort den Zugriff für die angezeigte Anwendung. Starte das Spiel danach erneut.
-
-Bei einem Mikrofonfehler pausiert eine aktive Fahrt. Die Tasten bleiben verfügbar. Wähle unter „Controls“ erneut „Voice + keys“. Setze die Fahrt danach bewusst mit „resume“ oder D fort.
-
-Die künstlichen Sprachproben prüfen die Erkennung technisch. Die neue Erkennung braucht noch einen Test mit deiner Stimme. Hintergrundgeräusche und die Aussprache können das Ergebnis verändern.
-
-## Stand und nächste Schritte
-
-Dieser Prototyp enthält vier Strecken, Sprünge, Tastensteuerung, Sprachsteuerung und die Tempowahl per Sprache. Loopings fehlen noch.
-
-Vor einem Sprung zeigt das Spiel eine nötige Korrektur an. Ein kurzer Druck zur Mitte richtet das Auto für die Landung aus. Das funktioniert auch noch während des Sprungs und kurz nach der Landung. Die Hilfe endet nach der Landung. Eine spätere Kurve braucht wieder deine Eingabe.
-
-Der Flug folgt einem vorgegebenen Bogen. So reicht jedes erlaubte Tempo für die Lücke. Das Auto hebt sichtbar ab und federt bei der Landung kurz ein. Die Kamera zeigt die Abfahrt und hält die Landung im Blick.
-
-Die Kurven haben eine geneigte Fahrbahn. Die Waldstrecke enthält Steilkurven mit 38, 45 und 42 Grad Neigung. Zwei Rampen führen über jeweils 50 Meter breite Lücken. Beim normalen Tempo dauert jeder Flug etwa 2,3 Sekunden. Das Auto erreicht rund 70 Meter Höhe über dem Nullpunkt der Spielwelt. Der Wald bleibt unten im Tal. Das Auto folgt der Neigung. Absprung und Landung bleiben quer zur Fahrbahn eben.
-
-Weitere Strecken entstehen aus `tracks/templates/strecke.json`. Jede Strecke ist eine eigene Textdatei mit einem Namen. Du kannst Dateien hinzufügen oder entfernen. `tools/macos/Strecken prüfen.command` prüft die Dateien mit einem Doppelklick. Die Anleitung steht in [tracks/README.md](tracks/README.md). Das Spiel nimmt gültige Streckendateien beim nächsten Start automatisch in die Auswahl auf.
-
-Die Tests prüfen die Spielregeln und die Fahrzeugbewegung. Sie belegen noch nicht das Spielgefühl für Menschen mit körperlichen Einschränkungen.
-
-Bei einem gemeinsamen Spieltest prüfen wir besonders die Spannung, den Hinweisvorlauf und die Wirkung der kurzen Korrekturen.
-
-Die Kamera folgt dem Auto tief über der Strecke. Die Kamera bleibt ruhig. Das Auto neigt sich am Rand leicht nach außen. Markierungen am Rand machen das Tempo sichtbar.
-
-Die Prüfergebnisse stehen in `docs/prototype-test.md`. Der ursprüngliche Plan steht unter `docs/superpowers/plans`.
-
-## Automatische Prüfungen
-
-Führe diese Aufrufe im Projektordner aus:
+Use these checks from the project folder on a Mac:
 
 ```sh
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_input_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_tension_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --fixed-fps 60 --path . --script tests/run_scene_test.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_bridge_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_scene_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_compass_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_strength_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_cues_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_auto_range_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_calibration_scene_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_practice_scene_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_speed_bank_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_track_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_selection_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_jump_scene_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_catalog_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_landscape_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_forest_tests.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --fixed-fps 60 --path . --script tests/run_forest_fall_test.gd
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_stunt_track_tests.gd
 .tools/voice-env/bin/python -m unittest discover -s voice/tests
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_runtime_tests.gd
 ```
 
-`tests/measure_voice_latency.gd` misst eine künstliche Wortfolge bis zum ausgeführten Befehl. Der Test ersetzt nur die Mikrofonquelle. Er speichert keine Mikrofonaufnahmen.
+The [Windows build guide](tools/release/README.md) describes the automatic package build and its checks.
+The automatic checks do not prove that the controls meet the needs of people with physical limitations.
+We need their feedback to improve the game.
 
-`tests/capture_preview.gd` erstellt Bilder der tatsächlichen Spielansicht. Dieser Aufruf braucht ein Fenster.
+## License
 
-## Quellen der Sprachsteuerung
-
-- [Vosk-Sprachmodelle](https://alphacephei.com/vosk/models): Kleine deutsche und englische Modelle 0.15. Beide nutzen die Lizenz Apache 2.0.
-- [Vosk](https://alphacephei.com/vosk/install): Lokale Spracherkennung.
-- [sounddevice](https://python-sounddevice.readthedocs.io/en/latest/installation.html): Zugriff auf das Mikrofon.
-
-## Spielton
-
-Der Motor folgt der Geschwindigkeit. Im Flug endet das Rollgeräusch.
-Die Landung erzeugt einen kurzen Stoß. Auf der Waldstrecke laufen leise Waldgeräusche.
-
-Unter „Einstellungen → Lautstärke“ lassen sich Motor, Umgebung und Hinweise getrennt einstellen.
-„Ton: Aus“ schaltet alle Spielgeräusche aus.
-Die Quellen und die Bearbeitung stehen in [assets/audio/README.md](assets/audio/README.md).
-Der Motorton stammt von qubodup und nutzt CC BY 3.0.
-Die Namensnennung in [assets/audio/CREDITS.txt](assets/audio/CREDITS.txt) muss der Weitergabe des Spiels beiliegen.
-Die Aufnahme [docs/tonprobe.wav](docs/tonprobe.wav) zeigt eine Fahrt mit einem Sprung.
-
-Zusätzlicher Tontest:
-
-```sh
-.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_audio_tests.gd
-```
-
-Der dynamische Motorton reagiert auf Gasgeben, Gaswegnehmen, Gangwechsel, Rampen und Sprünge.
-Eine zusätzliche Hörprobe steht unter [docs/motor-dynamisch.wav](docs/motor-dynamisch.wav).
-Der Test `tests/run_engine_audio_tests.gd` prüft die berechnete Drehzahl und den erzeugten Klanganteil.
+The game code uses the [Apache License 2.0](LICENSE).
+The models, images, sounds, and libraries keep their own licenses.
+See the source lists above for those licenses.

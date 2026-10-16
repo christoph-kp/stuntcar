@@ -13,15 +13,17 @@ import time
 import wave
 
 if __package__:
+    from .runtime_paths import model_root
     from .protocol import choose_command
     from .streaming import StreamingRecognizer
 else:
+    from runtime_paths import model_root
     from protocol import choose_command
     from streaming import StreamingRecognizer
 
 SAMPLE_RATE = 16000
 BLOCK = 800
-MODEL_ROOT = Path(__file__).resolve().parents[1] / '.tools' / 'voice-models'
+MODEL_ROOT = model_root()
 GRAMMARS = {
     'de': ['links', 'rechts', 'schneller', 'langsamer', 'gas', 'gas geben', 'bremsen', 'bremse',
            'pause', 'weiter', 'nächstes', 'wählen', 'start', 'starten', '[unk]'],
@@ -232,12 +234,18 @@ def run_microphone(connection, device=None, mode='checked'):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--check-runtime', action='store_true')
     parser.add_argument('--port', type=int)
     parser.add_argument('--token')
     parser.add_argument('--device', type=int)
     parser.add_argument('--wav', type=Path)
     parser.add_argument('--mode', choices=('direct', 'checked'), default='checked')
     args = parser.parse_args()
+    if args.check_runtime:
+        import sounddevice as sd
+        EnglishRecognizer(mode=args.mode)
+        print(json.dumps({'model_found': True, 'sounddevice_version': sd.__version__, 'host_apis': len(sd.query_hostapis())}))
+        return
     if args.wav:
         with wave.open(str(args.wav), 'rb') as source:
             if (source.getframerate(), source.getnchannels(), source.getsampwidth()) != (16000, 1, 2):

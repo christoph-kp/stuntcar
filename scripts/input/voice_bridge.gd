@@ -1,5 +1,6 @@
 extends Node
 
+const VoiceRuntime = preload("res://scripts/input/voice_runtime.gd")
 const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 
@@ -36,8 +37,8 @@ var feedback_ms := 0
 func start(mode: String = "direct") -> void:
 	stop()
 	recognition_mode = mode if mode in ["direct", "checked"] else "direct"
-	var python := ProjectSettings.globalize_path("res://.tools/voice-env/bin/python")
-	if not FileAccess.file_exists(python):
+	var launch := VoiceRuntime.command_for(OS.get_name(), OS.has_feature("editor"), OS.get_executable_path(), ProjectSettings.globalize_path("res://"))
+	if not FileAccess.file_exists(launch.executable):
 		fail(tr("I18N_VOICE_SETUP_MISSING"))
 		return
 	if server.listen(0, "127.0.0.1") != OK:
@@ -48,9 +49,9 @@ func start(mode: String = "direct") -> void:
 	started_ms = Time.get_ticks_msec()
 	last_message_ms = started_ms
 	status_text = tr("I18N_VOICE_STARTING")
-	child_pid = OS.create_process(python, PackedStringArray([
-		ProjectSettings.globalize_path("res://voice/recognizer.py"),
-		"--port", str(server.get_local_port()), "--token", token, "--mode", recognition_mode]))
+	var arguments: PackedStringArray = launch.arguments
+	arguments.append_array(PackedStringArray(["--port", str(server.get_local_port()), "--token", token, "--mode", recognition_mode]))
+	child_pid = OS.create_process(launch.executable, arguments, false)
 	if child_pid < 0: fail(tr("I18N_VOICE_START_FAILED"))
 
 func stop() -> void:
