@@ -39,10 +39,12 @@ Tell us what works, what fails, and what makes the game fun.
 
 ## Windows test version
 
-We are preparing a portable Windows x64 package for a tester.
+The Windows x64 preview is available as a portable test package.
 We use a Windows computer on GitHub to build the package and run automatic checks.
 A tester will then check the game, the microphone, and the voice control on a real Windows computer.
 We do not yet claim that this prototype works on every Windows computer.
+
+Download the [Windows test package](https://github.com/stefan-kp/stuntcar/releases/download/v0.0.0-preview.1/stuntcar-windows.zip).
 
 The [Windows build page](https://github.com/stefan-kp/stuntcar/actions/workflows/windows-preview.yml) has the build results and test packages.
 The [release page](https://github.com/stefan-kp/stuntcar/releases) has the published test packages.
